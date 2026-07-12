@@ -1,0 +1,18 @@
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
+
+<section class="tile tile-white page-hero notfound">
+  <div class="container">
+    <div class="page-hero-inner reveal">
+      <p class="eyebrow eyebrow-red">404</p>
+      <h1>Bu sayfa verimli değil.<br>Çünkü yok.</h1>
+      <p class="lede lede-dark">Aradığın sayfa taşınmış ya da hiç var olmamış olabilir.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="/">Ana sayfaya dön</a>
+        <a class="link-more" href="/projeler">Projelere göz at <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

@@ -1,0 +1,61 @@
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
+
+<section class="tile <%= project.theme === 'dark' ? 'tile-dark' : 'tile-white' %> project-hero">
+  <div class="hero-inner reveal">
+    <p class="eyebrow <%= project.theme === 'dark' ? '' : 'eyebrow-red' %>"><%= project.short %></p>
+    <h1 class="<%= project.theme === 'dark' ? 'display-light' : '' %>"><%= project.tagline %></h1>
+    <p class="lede <%= project.theme === 'dark' ? '' : 'lede-dark' %>"><%= project.summary %></p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="<%= project.external %>" target="_blank" rel="noopener">Proje sitesine git</a>
+      <a class="link-more" href="/katil">Ekipte yer al <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
+    </div>
+  </div>
+</section>
+
+<section class="tile tile-gray project-facts">
+  <div class="container">
+    <dl class="facts-row reveal">
+      <% project.facts.forEach(function (f) { %>
+      <div class="fact">
+        <dt><%= f.label %></dt>
+        <dd><%= f.value %></dd>
+      </div>
+      <% }) %>
+    </dl>
+  </div>
+</section>
+
+<section class="tile tile-white editorial">
+  <div class="container editorial-grid">
+    <div class="editorial-aside reveal">
+      <h2>Proje hakkında</h2>
+    </div>
+    <div class="editorial-body reveal">
+      <% project.body.forEach(function (para, i) { %>
+      <p class="<%= i === 0 ? 'lede-dark' : '' %>"><%= para %></p>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="tile tile-gray others">
+  <div class="container">
+    <div class="section-head reveal">
+      <h2>Diğer projeler</h2>
+      <a class="link-more" href="/projeler">Tümünü gör <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
+    </div>
+    <div class="card-row">
+      <% projects.filter(p => p.slug !== project.slug).slice(0, 4).forEach(function (p) { %>
+      <a class="card reveal" href="/projeler/<%= p.slug %>">
+        <span class="card-icon"><%- include('partials/icon', { name: p.icon }) %></span>
+        <h3><%= p.short %></h3>
+        <p><%= p.tagline %></p>
+        <span class="card-more">İncele <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></span>
+      </a>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

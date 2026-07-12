@@ -1,0 +1,31 @@
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
+
+<section class="tile tile-white page-hero">
+  <div class="container">
+    <div class="page-hero-inner reveal">
+      <p class="eyebrow eyebrow-red">Projeler</p>
+      <h1>Sekiz proje.<br>Seksenden fazla etkinlik.</h1>
+      <p class="lede lede-dark">Zirvelerden yarışmalara, veri biliminden sosyal sorumluluğa — hepsi ücretsiz, hepsi öğrenciler için.</p>
+    </div>
+  </div>
+</section>
+
+<section class="tile tile-gray project-index">
+  <div class="container">
+    <div class="project-list">
+      <% projects.forEach(function (p, i) { %>
+      <a class="project-row reveal <%= i === 0 ? 'project-row-lead' : '' %>" href="/projeler/<%= p.slug %>">
+        <span class="card-icon"><%- include('partials/icon', { name: p.icon }) %></span>
+        <span class="project-row-text">
+          <h2><%= p.name %></h2>
+          <p><%= p.summary %></p>
+        </span>
+        <span class="project-row-go"><%- include('partials/icon', { name: 'arrow' }) %></span>
+      </a>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

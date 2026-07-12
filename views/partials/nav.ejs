@@ -1,0 +1,23 @@
+<a class="skip-link" href="#icerik">İçeriğe atla</a>
+<header class="nav" id="nav">
+  <nav class="nav-inner" aria-label="Ana menü">
+    <a class="nav-brand" href="/" aria-label="ODTÜ VT ana sayfa">
+      <svg viewBox="0 0 40 40" width="22" height="22" aria-hidden="true">
+        <rect x="1" y="1" width="38" height="38" rx="10" fill="var(--vt-red)"/>
+        <text x="20" y="26.5" text-anchor="middle" font-family="inherit" font-size="15" font-weight="700" fill="#fff" letter-spacing="-.5">VT</text>
+      </svg>
+      <span>ODTÜ VT</span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navLinks" aria-label="Menüyü aç">
+      <span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="/projeler" <%= path.startsWith('/projeler') ? 'aria-current="page"' : '' %>>Projeler</a></li>
+      <li><a href="/hakkimizda" <%= path === '/hakkimizda' ? 'aria-current="page"' : '' %>>Hakkımızda</a></li>
+      <li><a href="/ekibimiz" <%= path === '/ekibimiz' ? 'aria-current="page"' : '' %>>Ekibimiz</a></li>
+      <li><a href="/iletisim" <%= path === '/iletisim' ? 'aria-current="page"' : '' %>>İletişim</a></li>
+      <li><a class="nav-cta" href="/katil">Aramıza katıl</a></li>
+    </ul>
+  </nav>
+</header>
+<main id="icerik">

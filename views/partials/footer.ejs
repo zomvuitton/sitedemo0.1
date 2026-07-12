@@ -1,0 +1,51 @@
+</main>
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-about">
+        <p class="footer-claim"><%= site.claim %></p>
+        <p class="footer-note">Bu etkinliklerin tamamı katılımcılara ücretsizdir; masraflar sponsorluklarla karşılanır.</p>
+      </div>
+      <nav aria-label="Site haritası">
+        <h3>Topluluk</h3>
+        <ul>
+          <li><a href="/hakkimizda">Hakkımızda</a></li>
+          <li><a href="/ekibimiz">Ekibimiz</a></li>
+          <li><a href="/katil">Aramıza katıl</a></li>
+          <li><a href="/iletisim">İletişim</a></li>
+        </ul>
+      </nav>
+      <nav aria-label="Projeler">
+        <h3>Projeler</h3>
+        <ul>
+          <% projects.slice(0, 6).forEach(function (p) { %>
+          <li><a href="/projeler/<%= p.slug %>"><%= p.short %></a></li>
+          <% }) %>
+        </ul>
+      </nav>
+      <div>
+        <h3>Bizi izleyin</h3>
+        <ul>
+          <li><a href="<%= site.social.instagram %>" rel="noopener" target="_blank">Instagram</a></li>
+          <li><a href="<%= site.social.youtube %>" rel="noopener" target="_blank">YouTube</a></li>
+          <li><a href="<%= site.social.original %>" rel="noopener" target="_blank">odtuvt.org.tr</a></li>
+        </ul>
+        <form class="footer-news" data-api="/api/newsletter" novalidate>
+          <label for="newsEmail">Etkinlik duyuruları</label>
+          <div class="footer-news-row">
+            <input type="email" id="newsEmail" name="email" placeholder="e-posta adresin" required autocomplete="email">
+            <button type="submit" aria-label="Abone ol"><%- include('icon', { name: 'arrow' }) %></button>
+          </div>
+          <p class="form-feedback" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </div>
+    <div class="footer-legal">
+      <p><%= site.address %> · <%= site.phone %></p>
+      <p>© <%= new Date().getFullYear() %> <%= site.name %>. <%= site.founded %>'den beri.</p>
+    </div>
+  </div>
+</footer>
+<script src="/js/main.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
+
+<section class="tile tile-white page-hero">
+  <div class="container">
+    <div class="page-hero-inner reveal">
+      <p class="eyebrow eyebrow-red">Hakkımızda</p>
+      <h1>Disiplinler arası bir köprü.<br>1992'den bugüne.</h1>
+    </div>
+  </div>
+</section>
+
+<section class="tile tile-white editorial">
+  <div class="container editorial-grid">
+    <div class="editorial-aside reveal">
+      <h2>Kimiz?</h2>
+    </div>
+    <div class="editorial-body reveal">
+      <p class="lede-dark">ODTÜ Verimlilik Topluluğu, 1992 yılından bu yana farklı disiplinlerden öğrencileri bir araya getirerek iş dünyası ve akademik çevrelerle güçlü bir köprü kurmayı hedefler.</p>
+      <p>Kurulduğu günden beri ODTÜ'deki tüm bölümlerden öğrencileri bünyesine katan topluluk; yaratıcı projeleri ve geniş kapsamlı etkinlikleriyle ulusal ve uluslararası alanda lider bir öğrenci topluluğu olma vizyonunu taşır.</p>
+      <p>Amacımız; yarattığımız farklılıklarla lider bir öğrenci topluluğu olmak, öğrenciler ile akademisyenler ve iş dünyasından profesyoneller arasında bilgi ve tecrübe akışını sağlamak, ulaştığımız kitlenin sosyal ve kişisel gelişimine katkıda bulunmaktır.</p>
+    </div>
+  </div>
+</section>
+
+<section class="tile tile-gray editorial">
+  <div class="container editorial-grid">
+    <div class="editorial-aside reveal">
+      <h2>Ne yapıyoruz?</h2>
+    </div>
+    <div class="editorial-body reveal">
+      <p class="lede-dark">Her sene 8 farklı proje ile 80'den fazla etkinlik düzenliyor; Türkiye ve Avrupa'dan yaklaşık 5.000 seçkin öğrenci ve akademisyeni ağırlıyoruz.</p>
+      <p>Vaka yarışmasından veri bilimine, toplumsal cinsiyet eşitliğinden sosyal sorumluluğa uzanan projelerimizin tamamı katılımcılara ücretsizdir. Etkinliklerin masrafları öğrencilerin cebinden değil, şirket sponsorluklarıyla karşılanır.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="/projeler">Projeleri incele</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="tile tile-dark quote-tile">
+  <div class="hero-inner reveal">
+    <p class="quote">"Yarattığı farklılıklarla lider bir öğrenci topluluğu olmak."</p>
+    <p class="quote-source">Topluluk vizyonu</p>
+  </div>
+</section>
+
+<section class="tile tile-white stats">
+  <div class="container stats-grid">
+    <div class="stats-head reveal">
+      <h2>Otuz yılı aşkın birikim.</h2>
+      <p>Kampüste bir öğrenci topluluğundan fazlası: bir okul.</p>
+    </div>
+    <dl class="stats-list reveal">
+      <% site.stats.forEach(function (s) { %>
+      <div class="stat">
+        <dt><%= s.label %></dt>
+        <dd><%= s.value %></dd>
+      </div>
+      <% }) %>
+    </dl>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

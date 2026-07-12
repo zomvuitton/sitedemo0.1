@@ -1,0 +1,66 @@
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
+
+<section class="tile tile-white page-hero">
+  <div class="container">
+    <div class="page-hero-inner reveal">
+      <p class="eyebrow eyebrow-red">İletişim</p>
+      <h1>Sorun, önerin,<br>iş birliği fikrin mi var?</h1>
+      <p class="lede lede-dark">Formu doldur; ilgili ekip arkadaşımız sana dönsün.</p>
+    </div>
+  </div>
+</section>
+
+<section class="tile tile-gray">
+  <div class="container contact-grid">
+    <form class="form reveal" data-api="/api/contact" novalidate>
+      <div class="form-row">
+        <div class="field">
+          <label for="cName">Ad Soyad</label>
+          <input type="text" id="cName" name="name" required autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="cEmail">E-posta</label>
+          <input type="email" id="cEmail" name="email" required autocomplete="email">
+        </div>
+      </div>
+      <div class="field">
+        <label for="cSubject">Konu <span class="optional">(isteğe bağlı)</span></label>
+        <input type="text" id="cSubject" name="subject">
+      </div>
+      <div class="field">
+        <label for="cMessage">Mesajın</label>
+        <textarea id="cMessage" name="message" rows="6" required minlength="10"></textarea>
+      </div>
+      <button class="btn btn-primary" type="submit">Gönder</button>
+      <p class="form-feedback" role="status" aria-live="polite"></p>
+    </form>
+
+    <aside class="contact-aside reveal">
+      <div class="contact-item">
+        <span class="card-icon"><%- include('partials/icon', { name: 'pin' }) %></span>
+        <div>
+          <h3>Adres</h3>
+          <p><%= site.address %></p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <span class="card-icon"><%- include('partials/icon', { name: 'phone' }) %></span>
+        <div>
+          <h3>Telefon</h3>
+          <p><a href="tel:+903122106012"><%= site.phone %></a></p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <span class="card-icon"><%- include('partials/icon', { name: 'mail' }) %></span>
+        <div>
+          <h3>Sosyal medya</h3>
+          <p><a href="<%= site.social.instagram %>" target="_blank" rel="noopener">Instagram · @odtu_vt</a><br>
+          <a href="<%= site.social.youtube %>" target="_blank" rel="noopener">YouTube · ODTÜ Verimlilik Topluluğu</a></p>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

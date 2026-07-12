@@ -1,0 +1,78 @@
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
+
+<section class="tile tile-dark page-hero project-hero">
+  <div class="hero-inner reveal">
+    <p class="eyebrow">Aramıza katıl</p>
+    <h1 class="display-light">Bölümün fark etmez.<br>Merakın yeter.</h1>
+    <p class="lede">1992'den beri ODTÜ'nün her bölümünden öğrenciyi bünyemize kattık. Sıra sende.</p>
+  </div>
+</section>
+
+<section class="tile tile-gray">
+  <div class="container contact-grid">
+    <form class="form reveal" data-api="/api/join" novalidate>
+      <div class="form-row">
+        <div class="field">
+          <label for="jName">Ad Soyad</label>
+          <input type="text" id="jName" name="name" required autocomplete="name">
+        </div>
+        <div class="field">
+          <label for="jEmail">E-posta</label>
+          <input type="email" id="jEmail" name="email" required autocomplete="email">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="field">
+          <label for="jDept">Bölüm</label>
+          <input type="text" id="jDept" name="department" required placeholder="örn. Endüstri Mühendisliği">
+        </div>
+        <div class="field">
+          <label for="jYear">Sınıf</label>
+          <select id="jYear" name="year">
+            <option value="Hazırlık">Hazırlık</option>
+            <option value="1">1. sınıf</option>
+            <option value="2">2. sınıf</option>
+            <option value="3">3. sınıf</option>
+            <option value="4">4. sınıf</option>
+            <option value="Lisansüstü">Lisansüstü</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label for="jInterest">İlgilendiğin proje <span class="optional">(isteğe bağlı)</span></label>
+        <select id="jInterest" name="interest">
+          <option value="">Kararsızım</option>
+          <% projects.forEach(function (p) { %>
+          <option value="<%= p.short %>"><%= p.name %></option>
+          <% }) %>
+        </select>
+      </div>
+      <div class="field">
+        <label for="jMotivation">Neden ODTÜ VT? <span class="optional">(isteğe bağlı)</span></label>
+        <textarea id="jMotivation" name="motivation" rows="4"></textarea>
+      </div>
+      <button class="btn btn-primary" type="submit">Başvuruyu gönder</button>
+      <p class="form-feedback" role="status" aria-live="polite"></p>
+    </form>
+
+    <aside class="contact-aside reveal">
+      <div class="contact-item">
+        <span class="card-icon"><%- include('partials/icon', { name: 'spark' }) %></span>
+        <div>
+          <h3>Süreç nasıl işliyor?</h3>
+          <p>Başvurular dönem başında toplanır; kısa bir tanışma görüşmesinin ardından proje ve komite tercihlerine göre yerleştirme yapılır.</p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <span class="card-icon"><%- include('partials/icon', { name: 'users' }) %></span>
+        <div>
+          <h3>Kimler başvurabilir?</h3>
+          <p>ODTÜ'nün tüm bölümlerinden, tüm sınıflardan öğrenciler. Kurulduğumuz günden beri disiplin ayrımı yapmıyoruz.</p>
+        </div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<%- include('partials/footer') %>
