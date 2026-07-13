@@ -51,7 +51,6 @@ kalıcı diske (volume) bağlayın.
 | Uç nokta          | Yöntem | Gövde                                              |
 |-------------------|--------|----------------------------------------------------|
 | `/api/contact`    | POST   | `name`, `email`, `subject?`, `message`             |
-| `/api/join`       | POST   | `name`, `email`, `department`, `year?`, `interest?`, `motivation?` |
 | `/api/newsletter` | POST   | `email`                                            |
 | `/api/health`     | GET    | —                                                  |
 
@@ -70,7 +69,10 @@ docker run -p 3000:3000 -v odtuvt-data:/app/data odtuvt-site
 
 ## Sayfalar
 
-`/` · `/hakkimizda` · `/projeler` · `/projeler/:slug` (6 proje) · `/komiteler` · `/ekibimiz` · `/iletisim` · `/katil` · 404
+`/` · `/hakkimizda` · `/projeler` · `/projeler/:slug` (6 proje) · `/komiteler` · `/komiteler/:slug` · `/ekibimiz` · `/iletisim` · 404
+
+Not: Topluluk internet üzerinden üyelik başvurusu almaz; sitede başvuru
+formu yoktur. Eski `/katil` bağlantıları `/iletisim`e yönlendirilir.
 
 ## Tasarım sistemi
 

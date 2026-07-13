@@ -8,7 +8,7 @@
     <p class="lede <%= project.theme === 'dark' ? '' : 'lede-dark' %>"><%= project.summary %></p>
     <div class="cta-row">
       <a class="btn btn-primary" href="<%= project.external %>" target="_blank" rel="noopener">Proje sitesine git</a>
-      <a class="link-more" href="/katil">Ekipte yer al <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
+      <a class="link-more" href="/projeler">Tüm projeler <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
     </div>
     <% if (project.hero) { %>
     <img class="feature-img" src="<%= project.hero %>" alt="<%= project.name %> etkinliğinden bir kare">

@@ -201,8 +201,9 @@ app.get("/iletisim", (req, res) => {
   res.render("iletisim", { title: `İletişim — ${site.short}` });
 });
 
+// Üyelik başvurusu internet üzerinden alınmaz; eski bağlantılar iletişime yönlenir
 app.get("/katil", (req, res) => {
-  res.render("katil", { title: `Aramıza Katıl — ${site.short}` });
+  res.redirect(301, "/iletisim");
 });
 
 // ---------- Genel API ----------
@@ -219,22 +220,6 @@ app.post("/api/contact", rateLimit, (req, res) => {
 
   appendRecord("contact.jsonl", { name, email, subject, message });
   res.json({ ok: true, message: "Mesajınız alındı. En kısa sürede dönüş yapacağız." });
-});
-
-app.post("/api/join", rateLimit, (req, res) => {
-  const name = clean(req.body.name, 120);
-  const email = clean(req.body.email, 200);
-  const department = clean(req.body.department, 160);
-  const year = clean(req.body.year, 20);
-  const interest = clean(req.body.interest, 160);
-  const motivation = clean(req.body.motivation, 2000);
-
-  if (name.length < 2) return res.status(400).json({ ok: false, error: "Lütfen adınızı yazın." });
-  if (!emailRe.test(email)) return res.status(400).json({ ok: false, error: "Geçerli bir e-posta adresi girin." });
-  if (!department) return res.status(400).json({ ok: false, error: "Bölümünüzü belirtin." });
-
-  appendRecord("join.jsonl", { name, email, department, year, interest, motivation });
-  res.json({ ok: true, message: "Başvurun alındı. Görüşme dönemi başladığında sana ulaşacağız." });
 });
 
 app.post("/api/newsletter", rateLimit, (req, res) => {
