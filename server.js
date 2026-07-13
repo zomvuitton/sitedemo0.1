@@ -1,7 +1,7 @@
 const path = require("path");
 const fs = require("fs");
 const express = require("express");
-const { site, projects, board, committees } = require("./lib/content");
+const { site, projects, board, advisors, committees, partners } = require("./lib/content");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -31,6 +31,7 @@ app.use(
 app.use((req, res, next) => {
   res.locals.site = site;
   res.locals.projects = projects;
+  res.locals.partners = partners;
   res.locals.path = req.path;
   next();
 });
@@ -41,7 +42,8 @@ app.get("/", (req, res) => {
   res.render("index", {
     title: `${site.short} — ${site.name}`,
     featured: projects.filter((p) => p.featured),
-    rest: projects.filter((p) => !p.featured)
+    rest: projects.filter((p) => !p.featured),
+    partners
   });
 });
 
@@ -60,7 +62,11 @@ app.get("/projeler/:slug", (req, res, next) => {
 });
 
 app.get("/ekibimiz", (req, res) => {
-  res.render("ekibimiz", { title: `Ekibimiz — ${site.short}`, board, committees });
+  res.render("ekibimiz", { title: `Ekibimiz — ${site.short}`, board, advisors, projectLeads: projects });
+});
+
+app.get("/komiteler", (req, res) => {
+  res.render("komiteler", { title: `Komiteler — ${site.short}`, committees });
 });
 
 app.get("/iletisim", (req, res) => {

@@ -54,8 +54,16 @@
       <div class="contact-item">
         <span class="card-icon"><%- include('partials/icon', { name: 'mail' }) %></span>
         <div>
+          <h3>E-posta</h3>
+          <p><a href="mailto:<%= site.email %>"><%= site.email %></a></p>
+        </div>
+      </div>
+      <div class="contact-item">
+        <span class="card-icon"><%- include('partials/icon', { name: 'users' }) %></span>
+        <div>
           <h3>Sosyal medya</h3>
           <p><a href="<%= site.social.instagram %>" target="_blank" rel="noopener">Instagram · @odtu_vt</a><br>
+          <a href="<%= site.social.linkedin %>" target="_blank" rel="noopener">LinkedIn · METU Productivity Club</a><br>
           <a href="<%= site.social.youtube %>" target="_blank" rel="noopener">YouTube · ODTÜ Verimlilik Topluluğu</a></p>
         </div>
       </div>

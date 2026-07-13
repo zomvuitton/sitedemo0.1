@@ -5,8 +5,8 @@
   <div class="container">
     <div class="page-hero-inner reveal">
       <p class="eyebrow eyebrow-red">Ekibimiz</p>
-      <h1>Topluluğu yürüten yapı.</h1>
-      <p class="lede lede-dark">Yönetim Kurulu, Denetleme ve Danışma Kurulu ile komiteler; 8 projeyi ve 80'den fazla etkinliği her yıl yeniden kurar.</p>
+      <h1>Topluluğu yürüten insanlar.</h1>
+      <p class="lede lede-dark">Yönetim Kurulu, Denetleme ve Danışma Kurulu, proje liderleri ve komite koordinatörleri; 8 projeyi ve 80'den fazla etkinliği her yıl yeniden kurar.</p>
     </div>
   </div>
 </section>
@@ -14,16 +14,52 @@
 <section class="tile tile-gray">
   <div class="container">
     <div class="section-head reveal">
-      <h2>Yönetim Kurulu</h2>
+      <h2>Yönetim Kurulumuz</h2>
     </div>
-    <div class="card-row card-row-3">
+    <div class="people-grid">
       <% board.forEach(function (m) { %>
-      <div class="card card-static reveal">
-        <span class="card-icon"><%- include('partials/icon', { name: 'users' }) %></span>
-        <h3><%= m.role %></h3>
-        <p><%= m.duty %></p>
+      <div class="person reveal">
+        <img class="person-photo" src="<%= m.photo %>" alt="<%= m.name %>" loading="lazy">
+        <h3><%= m.name %></h3>
+        <p><%= m.role %></p>
       </div>
       <% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="tile tile-white">
+  <div class="container">
+    <div class="section-head reveal">
+      <h2>Denetleme ve Danışma Kurulumuz</h2>
+    </div>
+    <div class="people-grid">
+      <% advisors.forEach(function (m) { %>
+      <div class="person reveal">
+        <img class="person-photo" src="<%= m.photo %>" alt="<%= m.name %>" loading="lazy">
+        <h3><%= m.name %></h3>
+        <p><%= m.role %></p>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="tile tile-gray">
+  <div class="container">
+    <div class="section-head reveal">
+      <h2>Proje liderlerimiz</h2>
+      <a class="link-more" href="/projeler">Projelere git <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
+    </div>
+    <div class="people-grid">
+      <% projectLeads.forEach(function (p) {
+           p.team.filter(t => !/Yönetim Kurulu Üyesi/.test(t.role)).forEach(function (m) { %>
+      <div class="person reveal">
+        <img class="person-photo" src="<%= m.photo %>" alt="<%= m.name %>" loading="lazy">
+        <h3><%= m.name %></h3>
+        <p><%= m.role %></p>
+      </div>
+      <% }) }) %>
     </div>
   </div>
 </section>
@@ -31,34 +67,20 @@
 <section class="tile tile-white editorial">
   <div class="container editorial-grid">
     <div class="editorial-aside reveal">
-      <h2>Denetleme ve Danışma Kurulu</h2>
+      <h2>Komite koordinatörlerimiz</h2>
     </div>
     <div class="editorial-body reveal">
-      <p class="lede-dark">Topluluğun kurumsal hafızası.</p>
-      <p>Denetleme ve Danışma Kurulu; yönetim kurulunun çalışmalarını izler, geçmiş dönemlerin deneyimini yeni ekiplere aktarır ve topluluğun 1992'den beri süren çizgisini korur.</p>
+      <p class="lede-dark">Dizayn, İletişim ve Pazarlama, İnovasyon ve Organizasyon komiteleri; topluluğun görünen ve görünmeyen tüm işlerini omuzlar.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="/komiteler">Komiteleri incele</a>
+      </div>
     </div>
   </div>
 </section>
-
-<% committees.forEach(function (c) { %>
-<section class="tile tile-gray editorial">
-  <div class="container editorial-grid">
-    <div class="editorial-aside reveal">
-      <h2><%= c.name %></h2>
-    </div>
-    <div class="editorial-body reveal">
-      <p class="lede-dark"><%= c.summary %></p>
-      <% c.body.forEach(function (para) { %>
-      <p><%= para %></p>
-      <% }) %>
-    </div>
-  </div>
-</section>
-<% }) %>
 
 <section class="tile tile-dark join-cta">
   <div class="hero-inner reveal">
-    <h2 class="display-light">Bu yapının içinde<br>senin de yerin var.</h2>
+    <h2 class="display-light">Bu ekibin içinde<br>senin de yerin var.</h2>
     <div class="cta-row">
       <a class="btn btn-primary" href="/katil">Aramıza katıl</a>
     </div>

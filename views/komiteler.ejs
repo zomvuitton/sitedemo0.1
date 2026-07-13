@@ -1,0 +1,50 @@
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
+
+<section class="tile tile-white page-hero">
+  <div class="container">
+    <div class="page-hero-inner reveal">
+      <p class="eyebrow eyebrow-red">Komiteler</p>
+      <h1>Topluluğun motor dairesi.</h1>
+      <p class="lede lede-dark">Dört komite; tasarımdan sosyal medyaya, veri analizinden kampüs içi etkinliklere topluluğun tüm işleyişini sırtlar.</p>
+    </div>
+  </div>
+</section>
+
+<% committees.forEach(function (c, i) { %>
+<section class="tile <%= i % 2 === 0 ? 'tile-gray' : 'tile-white' %> editorial">
+  <div class="container editorial-grid">
+    <div class="editorial-aside reveal">
+      <span class="card-icon"><%- include('partials/icon', { name: c.icon }) %></span>
+      <h2><%= c.name %></h2>
+    </div>
+    <div class="editorial-body reveal">
+      <p class="lede-dark"><%= c.summary %></p>
+      <% c.body.forEach(function (para) { %>
+      <p><%= para %></p>
+      <% }) %>
+      <div class="committee-team">
+        <% c.team.forEach(function (m) { %>
+        <div class="person person-sm">
+          <img class="person-photo" src="<%= m.photo %>" alt="<%= m.name %>" loading="lazy">
+          <h3><%= m.name %></h3>
+          <p><%= m.role %></p>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </div>
+</section>
+<% }) %>
+
+<section class="tile tile-dark join-cta">
+  <div class="hero-inner reveal">
+    <h2 class="display-light">Hangi komite sana göre?</h2>
+    <p class="lede">Başvururken tercihini belirtebilirsin.</p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/katil">Aramıza katıl</a>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

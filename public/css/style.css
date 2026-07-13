@@ -317,6 +317,8 @@ h3 {
   flex-shrink: 0;
 }
 
+.nav-logo { height: 26px; width: auto; }
+
 /* ---------- Öne çıkan karo ---------- */
 
 .feature-inner {
@@ -329,6 +331,15 @@ h3 {
   align-items: center;
 }
 .feature-inner .lede { margin-top: var(--s-3); }
+
+/* Karo içi büyük görsel — Apple'ın ürün karesi yerine gerçek etkinlik karesi */
+.feature-img {
+  margin-top: var(--s-6);
+  width: 100%;
+  max-width: 880px;
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-hover);
+}
 
 /* ---------- 2'li karo ızgarası ---------- */
 
@@ -352,6 +363,7 @@ h3 {
 }
 .duo-cell:hover { transform: translateY(-4px); box-shadow: var(--shadow-hover); }
 .duo-summary { color: var(--ink-2); max-width: 420px; }
+.duo-img { margin-top: var(--s-3); width: 100%; max-width: 480px; border-radius: 18px; }
 
 /* ---------- İstatistikler: kırık simetri (5/7 bölünmüş) ---------- */
 
@@ -492,6 +504,79 @@ h3 {
 .editorial-body p { color: var(--ink-2); }
 .editorial-body p.lede-dark { color: var(--ink); }
 .editorial-body .cta-row { margin-top: var(--s-4); }
+
+.aside-img { margin-top: var(--s-3); border-radius: 18px; width: 100%; max-width: 320px; }
+
+/* ---------- İnsanlar: ekip ızgarası ---------- */
+
+.people-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s-4) var(--s-3);
+}
+
+.person { display: flex; flex-direction: column; gap: var(--s-1); }
+
+.person-photo {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: 18px;
+  background: var(--paper-gray);
+}
+
+.person h3 { font-size: 17px; }
+.person p { font-size: 14px; color: var(--ink-2); }
+
+.person-sm .person-photo { border-radius: 14px; }
+.person-sm h3 { font-size: 15px; }
+.person-sm p { font-size: 13px; }
+
+.committee-team {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--s-3);
+  margin-top: var(--s-4);
+}
+
+/* ---------- Partner logoları ---------- */
+
+.section-sub { color: var(--ink-2); }
+
+.partner-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--s-2);
+}
+
+/* Koyu hücre: kaynaktaki logoların çoğu beyaz varyant */
+.partner-cell {
+  background: var(--ink);
+  border-radius: 16px;
+  padding: var(--s-2) var(--s-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 72px;
+  box-shadow: var(--shadow-rest);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.partner-cell:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
+.partner-cell img { max-height: 40px; width: auto; max-width: 100%; object-fit: contain; }
+
+/* ---------- Galeri ---------- */
+
+.gallery-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--s-2);
+}
+.gallery-grid img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border-radius: 18px;
+}
 
 /* ---------- Proje detay ---------- */
 
@@ -694,6 +779,9 @@ h3 {
   .card-row { grid-template-columns: repeat(2, 1fr); }
   .facts-row { grid-template-columns: repeat(3, 1fr); }
   .footer-grid { grid-template-columns: 1fr 1fr; }
+  .people-grid { grid-template-columns: repeat(3, 1fr); }
+  .partner-grid { grid-template-columns: repeat(4, 1fr); }
+  .gallery-grid { grid-template-columns: repeat(3, 1fr); }
 }
 
 @media (min-width: 768px) {
@@ -714,4 +802,6 @@ h3 {
   .card-row { grid-template-columns: repeat(4, 1fr); }
   .card-row-3 { grid-template-columns: repeat(3, 1fr); }
   .footer-grid { grid-template-columns: 1.4fr 1fr 1fr 1.2fr; }
+  .people-grid { grid-template-columns: repeat(4, 1fr); }
+  .partner-grid { grid-template-columns: repeat(7, 1fr); }
 }

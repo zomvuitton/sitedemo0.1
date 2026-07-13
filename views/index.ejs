@@ -4,9 +4,9 @@
 <!-- Hero: koyu tam genişlik karo -->
 <section class="tile tile-dark hero">
   <div class="hero-inner reveal">
-    <p class="eyebrow">ODTÜ Verimlilik Topluluğu</p>
-    <h1>Verimlilik.<br>1992'den beri kampüsün<br class="br-desktop"> üretim merkezi.</h1>
-    <p class="lede">Her yıl 8 proje, 80'den fazla etkinlik. Türkiye ve Avrupa'dan 5.000 katılımcı. Hepsi ücretsiz.</p>
+    <p class="eyebrow"><%= site.slogan %></p>
+    <h1>ODTÜ Verimlilik<br>Topluluğu</h1>
+    <p class="lede"><%= site.heroLede %></p>
     <div class="cta-row">
       <a class="btn btn-primary" href="/katil">Aramıza katıl</a>
       <a class="link-more" href="/projeler">Projeleri keşfet <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
@@ -23,8 +23,9 @@
     <p class="lede lede-dark"><%= ymg.summary %></p>
     <div class="cta-row">
       <a class="btn btn-primary" href="/projeler/<%= ymg.slug %>">YMG'yi incele</a>
-      <a class="link-more" href="<%= ymg.external %>" target="_blank" rel="noopener">ymg.odtuvt.org.tr <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
+      <a class="link-more" href="/projeler">Tüm projeler <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
     </div>
+    <img class="feature-img" src="<%= ymg.hero %>" alt="Yönetim ve Mühendislik Günleri etkinliğinden bir kare" loading="lazy">
   </div>
 </section>
 
@@ -36,16 +37,17 @@
     <h3><%= p.tagline %></h3>
     <p class="duo-summary"><%= p.summary %></p>
     <a class="link-more" href="/projeler/<%= p.slug %>">Daha fazla bilgi <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
+    <img class="duo-img" src="<%= p.hero %>" alt="<%= p.name %> etkinliğinden bir kare" loading="lazy">
   </article>
   <% }) %>
 </section>
 
-<!-- Rakamlar: kırık simetri -->
+<!-- Rakamlar: kırık simetri — değerler sitenin kendi sayaçlarından -->
 <section class="tile tile-white stats">
   <div class="container stats-grid">
     <div class="stats-head reveal">
       <h2>Rakamlarla<br>bir öğrenci topluluğu.</h2>
-      <p>Öğrenciler, akademisyenler ve iş dünyası arasında otuz yılı aşkın süredir işleyen bir köprü.</p>
+      <p>Öğrenciler, akademisyenler ve iş dünyası arasında 1992'den beri işleyen bir köprü.</p>
     </div>
     <dl class="stats-list reveal">
       <% site.stats.forEach(function (s) { %>
@@ -73,6 +75,40 @@
         <p><%= p.tagline %></p>
         <span class="card-more">İncele <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></span>
       </a>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<!-- Hakkımızda önizleme: kırık simetri, görselli -->
+<section class="tile tile-white editorial">
+  <div class="container editorial-grid">
+    <div class="editorial-aside reveal">
+      <h2>Biz kimiz?</h2>
+      <img class="aside-img" src="<%= site.aboutImage %>" alt="ODTÜ Verimlilik Topluluğu üyeleri bir arada" loading="lazy">
+    </div>
+    <div class="editorial-body reveal">
+      <p class="lede-dark"><%= site.about[0] %></p>
+      <p><%= site.about[1] %></p>
+      <div class="cta-row">
+        <a class="link-more" href="/hakkimizda">Hakkımızda <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Partner şirketler -->
+<section class="tile tile-gray partners">
+  <div class="container">
+    <div class="section-head reveal">
+      <h2>Partner şirketlerimiz</h2>
+      <p class="section-sub">90'dan fazla şirket iş birliğinden bazıları.</p>
+    </div>
+    <div class="partner-grid reveal">
+      <% partners.forEach(function (pt) { %>
+      <div class="partner-cell" title="<%= pt.name %>">
+        <img src="<%= pt.logo %>" alt="<%= pt.name %> logosu" loading="lazy">
+      </div>
       <% }) %>
     </div>
   </div>

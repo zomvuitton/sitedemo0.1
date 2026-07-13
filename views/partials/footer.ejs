@@ -24,11 +24,13 @@
         </ul>
       </nav>
       <div>
-        <h3>Bizi izleyin</h3>
+        <h3>Bizi takip et</h3>
         <ul>
+          <li><a href="<%= site.social.linkedin %>" rel="noopener" target="_blank">LinkedIn</a></li>
           <li><a href="<%= site.social.instagram %>" rel="noopener" target="_blank">Instagram</a></li>
           <li><a href="<%= site.social.youtube %>" rel="noopener" target="_blank">YouTube</a></li>
-          <li><a href="<%= site.social.original %>" rel="noopener" target="_blank">odtuvt.org.tr</a></li>
+          <li><a href="<%= site.social.x %>" rel="noopener" target="_blank">X (Twitter)</a></li>
+          <li><a href="<%= site.social.facebook %>" rel="noopener" target="_blank">Facebook</a></li>
         </ul>
         <form class="footer-news" data-api="/api/newsletter" novalidate>
           <label for="newsEmail">Etkinlik duyuruları</label>
@@ -41,8 +43,8 @@
       </div>
     </div>
     <div class="footer-legal">
-      <p><%= site.address %> · <%= site.phone %></p>
-      <p>© <%= new Date().getFullYear() %> <%= site.name %>. <%= site.founded %>'den beri.</p>
+      <p><%= site.address %> · <%= site.phone %> · <a href="mailto:<%= site.email %>"><%= site.email %></a></p>
+      <p>© <%= new Date().getFullYear() %> <%= site.name %>. Tüm hakları saklıdır.</p>
     </div>
   </div>
 </footer>
