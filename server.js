@@ -162,15 +162,11 @@ function rateLimit(req, res, next) {
 // ---------- Genel sayfalar ----------
 
 app.get("/", (req, res) => {
-  const projects = store.content.projects;
-  let featured = projects.filter((p) => p.featured);
-  let rest = projects.filter((p) => !p.featured);
-  // Hiçbir proje öne çıkarılmadıysa ana sayfa boş kalmasın: ilk üç proje kullanılır
-  if (!featured.length) {
-    featured = projects.slice(0, 3);
-    rest = projects.slice(3);
-  }
-  res.render("index", { title: `${site.short} — ${site.name}`, featured, rest });
+  // Ana sayfada tüm projeler alfabetik sırayla 3+3 ızgarada gösterilir
+  const homeProjects = [...store.content.projects].sort((a, b) =>
+    a.short.localeCompare(b.short, "tr")
+  );
+  res.render("index", { title: `${site.short} — ${site.name}`, homeProjects });
 });
 
 app.get("/hakkimizda", (req, res) => {
@@ -349,8 +345,7 @@ function sanitizeProject(input, existing) {
       gallery: cleanGallery(input.gallery),
       icon: ICONS.includes(input.icon) ? input.icon : "spark",
       external: clean(input.external, 400),
-      theme: input.theme === "dark" ? "dark" : "light",
-      featured: Boolean(input.featured)
+      theme: input.theme === "dark" ? "dark" : "light"
     }
   };
 }

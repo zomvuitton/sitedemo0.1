@@ -445,6 +445,13 @@ h3 {
 }
 .card-static:hover { transform: none; box-shadow: var(--shadow-rest); }
 
+.card-img {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: 14px;
+}
+
 /* ---------- Proje dizini: satır listesi ---------- */
 
 .project-list { display: flex; flex-direction: column; gap: var(--s-2); }

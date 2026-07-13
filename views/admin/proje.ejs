@@ -26,7 +26,7 @@
       <label>Açıklama paragrafları <span class="amuted">(paragraflar arasında boş satır bırak)</span>
         <textarea name="body" rows="10"><%= project.body.join("\n\n") %></textarea>
       </label>
-      <div class="agrid-3">
+      <div class="agrid-2">
         <label>İkon
           <select name="icon">
             <% icons.forEach(function (ic) { %>
@@ -39,10 +39,6 @@
             <option value="light" <%= project.theme !== "dark" ? "selected" : "" %>>Açık</option>
             <option value="dark" <%= project.theme === "dark" ? "selected" : "" %>>Koyu</option>
           </select>
-        </label>
-        <label class="acheck">
-          <input type="checkbox" name="featured" <%= project.featured ? "checked" : "" %>>
-          Ana sayfada öne çıkar
         </label>
       </div>
       <label>Dış bağlantı (proje sitesi)

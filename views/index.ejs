@@ -14,40 +14,29 @@
   </div>
 </section>
 
-<!-- Öne çıkan proje: tam genişlik açık karo -->
-<% if (featured.length) { const one = featured[0]; %>
-<section class="tile tile-gray feature-tile">
-  <div class="feature-inner reveal">
-    <p class="eyebrow eyebrow-red"><%= one.short %></p>
-    <h2 class="display"><%= one.tagline %></h2>
-    <p class="lede lede-dark"><%= one.summary %></p>
-    <div class="cta-row">
-      <a class="btn btn-primary" href="/projeler/<%= one.slug %>"><%= one.short %>'yi incele</a>
-      <a class="link-more" href="/projeler">Tüm projeler <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
+<!-- Projeler: 3+3 alfabetik ızgara -->
+<section class="tile tile-gray others">
+  <div class="container">
+    <div class="section-head reveal">
+      <h2>Altı proje. Tek amaç.</h2>
+      <a class="link-more" href="/projeler">Tümünü gör <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
     </div>
-    <% if (one.hero) { %>
-    <img class="feature-img" src="<%= one.hero %>" alt="<%= one.name %> etkinliğinden bir kare" loading="lazy">
-    <% } %>
+    <div class="card-row card-row-3">
+      <% homeProjects.forEach(function (p) { %>
+      <a class="card card-project reveal" href="/projeler/<%= p.slug %>">
+        <% if (p.hero) { %>
+        <img class="card-img" src="<%= p.hero %>" alt="<%= p.name %> etkinliğinden bir kare" loading="lazy">
+        <% } else { %>
+        <span class="card-icon"><%- include('partials/icon', { name: p.icon }) %></span>
+        <% } %>
+        <h3><%= p.short %></h3>
+        <p><%= p.tagline %></p>
+        <span class="card-more">İncele <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></span>
+      </a>
+      <% }) %>
+    </div>
   </div>
 </section>
-<% } %>
-
-<!-- 2'li karo: sonraki iki öne çıkan proje -->
-<% if (featured.length > 1) { %>
-<section class="tile-duo">
-  <% featured.slice(1, 3).forEach(function (p) { %>
-  <article class="tile tile-white duo-cell reveal">
-    <p class="eyebrow eyebrow-red"><%= p.short %></p>
-    <h3><%= p.tagline %></h3>
-    <p class="duo-summary"><%= p.summary %></p>
-    <a class="link-more" href="/projeler/<%= p.slug %>">Daha fazla bilgi <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
-    <% if (p.hero) { %>
-    <img class="duo-img" src="<%= p.hero %>" alt="<%= p.name %> etkinliğinden bir kare" loading="lazy">
-    <% } %>
-  </article>
-  <% }) %>
-</section>
-<% } %>
 
 <!-- Rakamlar: kırık simetri — değerler sitenin kendi sayaçlarından -->
 <section class="tile tile-white stats">
@@ -66,28 +55,6 @@
     </dl>
   </div>
 </section>
-
-<!-- Diğer projeler -->
-<% if (rest.length) { %>
-<section class="tile tile-gray others">
-  <div class="container">
-    <div class="section-head reveal">
-      <h2>Altı proje. Tek amaç.</h2>
-      <a class="link-more" href="/projeler">Tümünü gör <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
-    </div>
-    <div class="card-row">
-      <% rest.forEach(function (p) { %>
-      <a class="card reveal" href="/projeler/<%= p.slug %>">
-        <span class="card-icon"><%- include('partials/icon', { name: p.icon }) %></span>
-        <h3><%= p.short %></h3>
-        <p><%= p.tagline %></p>
-        <span class="card-more">İncele <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></span>
-      </a>
-      <% }) %>
-    </div>
-  </div>
-</section>
-<% } %>
 
 <!-- Hakkımızda önizleme: kırık simetri, görselli -->
 <section class="tile tile-white editorial">

@@ -12,7 +12,7 @@
 
   <table class="atable">
     <thead>
-      <tr><th>Proje</th><th>Ekip</th><th>Öne çıkan</th><th></th></tr>
+      <tr><th>Proje</th><th>Ekip</th><th></th></tr>
     </thead>
     <tbody>
       <% projects.forEach(function (p) { %>
@@ -22,7 +22,6 @@
           <span class="amuted">/projeler/<%= p.slug %></span>
         </td>
         <td><%= p.team.length %> kişi</td>
-        <td><%= p.featured ? "Evet" : "—" %></td>
         <td class="atable-actions">
           <a class="abtn abtn-ghost" href="/admin/projeler/<%= p.slug %>">Düzenle</a>
           <button class="abtn abtn-danger" type="button" data-delete="/admin/api/projeler/<%= p.slug %>" data-name="<%= p.name %>">Sil</button>
