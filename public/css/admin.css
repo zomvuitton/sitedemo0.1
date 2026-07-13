@@ -240,6 +240,13 @@ body.admin {
   flex: 1;
   min-width: 0;
 }
+.arow select {
+  margin-top: 0 !important;
+  background: var(--paper) !important;
+  width: auto !important;
+  flex: 0 0 130px;
+  font-size: 13px !important;
+}
 .arow-person input[data-field="name"] { flex: 1.1; }
 .arow-person input[data-field="role"] { flex: 1.6; }
 .arow-person input[data-field="photo"],
@@ -288,6 +295,15 @@ body.admin {
 }
 
 .aboard-actions { display: flex; gap: var(--s-2); }
+
+.agroup-head {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--vt-red);
+  margin: var(--s-4) 0 var(--s-2);
+}
+.amuted-block { font-size: 13px; color: var(--ink-2); margin-bottom: var(--s-2); max-width: 640px; }
 
 /* ---------- Giriş ---------- */
 

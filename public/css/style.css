@@ -528,6 +528,15 @@ h3 {
 .person h3 { font-size: 17px; }
 .person p { font-size: 14px; color: var(--ink-2); }
 
+.people-subhead {
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--vt-red);
+  margin: var(--s-6) 0 var(--s-3);
+}
+.people-subhead:first-of-type { margin-top: 0; }
+
 .person-sm .person-photo { border-radius: 14px; }
 .person-sm h3 { font-size: 15px; }
 .person-sm p { font-size: 13px; }

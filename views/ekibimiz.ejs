@@ -32,25 +32,29 @@
 
 <%
 // İdari Kurul: proje liderleri + komite koordinatörlerinden otomatik türetilir.
-// YK üyeleri (kurullar bölümünde zaten görünüyor) hariç tutulur, isimler tekilleştirilir.
-const idari = [];
-const seen = new Set();
+// YK üyeleri (kurullar bölümünde zaten görünüyor) hariç tutulur; her grup kendi
+// içinde isimlere göre tekilleştirilir.
+const ykRe = /Yönetim Kurulu Üyesi|YK Üyesi/;
+const leads = [];
+const leadSeen = new Set();
 projects.forEach(function (p) {
   (p.team || []).forEach(function (m) {
-    if (/Yönetim Kurulu Üyesi/.test(m.role) || seen.has(m.name)) return;
-    seen.add(m.name);
-    idari.push(m);
+    if (ykRe.test(m.role) || leadSeen.has(m.name)) return;
+    leadSeen.add(m.name);
+    leads.push(m);
   });
 });
+const coords = [];
+const coordSeen = new Set();
 committees.forEach(function (c) {
   (c.team || []).forEach(function (m) {
-    if (/YK Üyesi|Yönetim Kurulu Üyesi/.test(m.role) || seen.has(m.name)) return;
-    seen.add(m.name);
-    idari.push(m);
+    if (ykRe.test(m.role) || coordSeen.has(m.name)) return;
+    coordSeen.add(m.name);
+    coords.push(m);
   });
 });
 %>
-<% if (idari.length) { %>
+<% if (leads.length || coords.length) { %>
 <section class="tile tile-gray">
   <div class="container">
     <div class="section-head reveal">
@@ -60,8 +64,11 @@ committees.forEach(function (c) {
       </div>
       <a class="link-more" href="/komiteler">Komiteleri incele <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
     </div>
+
+    <% if (leads.length) { %>
+    <h3 class="people-subhead reveal">Proje Liderleri</h3>
     <div class="people-grid">
-      <% idari.forEach(function (m) { %>
+      <% leads.forEach(function (m) { %>
       <div class="person reveal">
         <img class="person-photo" src="<%= m.photo %>" alt="<%= m.name %>" loading="lazy">
         <h3><%= m.name %></h3>
@@ -69,6 +76,20 @@ committees.forEach(function (c) {
       </div>
       <% }) %>
     </div>
+    <% } %>
+
+    <% if (coords.length) { %>
+    <h3 class="people-subhead reveal">Komite Koordinatörleri</h3>
+    <div class="people-grid">
+      <% coords.forEach(function (m) { %>
+      <div class="person reveal">
+        <img class="person-photo" src="<%= m.photo %>" alt="<%= m.name %>" loading="lazy">
+        <h3><%= m.name %></h3>
+        <p><%= m.role %></p>
+      </div>
+      <% }) %>
+    </div>
+    <% } %>
   </div>
 </section>
 <% } %>

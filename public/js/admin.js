@@ -105,12 +105,13 @@ document.querySelectorAll("form[data-save]").forEach((form) => {
       if (el.type === "checkbox") payload[el.name] = el.checked;
       else payload[el.name] = el.value;
     });
-    ["facts", "team", "members"].forEach((key) => {
-      if (form.querySelector(`[data-list="${key}"]`)) payload[key] = readList(form, key);
+    form.querySelectorAll("[data-list]").forEach((list) => {
+      const key = list.dataset.list;
+      payload[key] =
+        key === "gallery"
+          ? readList(form, key).map((r) => r.url).filter(Boolean)
+          : readList(form, key);
     });
-    if (form.querySelector('[data-list="gallery"]')) {
-      payload.gallery = readList(form, "gallery").map((r) => r.url).filter(Boolean);
-    }
     const button = form.querySelector('button[type="submit"]');
     button.disabled = true;
     try {

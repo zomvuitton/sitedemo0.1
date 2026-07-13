@@ -272,8 +272,23 @@ app.get("/admin/komiteler/:slug", requireAdminPage, (req, res, next) => {
   res.render("admin/komite", { title: `${committee.name} — Yönetim paneli`, committee, icons: ICONS });
 });
 
+const YK_ROLE_RE = /Yönetim Kurulu Üyesi|YK Üyesi/;
+
 app.get("/admin/kurullar", requireAdminPage, (req, res) => {
-  res.render("admin/kurullar", { title: `Kurullar — Yönetim paneli` });
+  // İdari Kurul türetilir: kaynak proje/komite bilgisiyle birlikte listelenir
+  const leads = [];
+  store.content.projects.forEach((p) => {
+    (p.team || []).forEach((m) => {
+      if (!YK_ROLE_RE.test(m.role)) leads.push({ ...m, source: p.slug });
+    });
+  });
+  const coords = [];
+  store.content.committees.forEach((c) => {
+    (c.team || []).forEach((m) => {
+      if (!YK_ROLE_RE.test(m.role)) coords.push({ ...m, source: c.slug });
+    });
+  });
+  res.render("admin/kurullar", { title: `Kurullar — Yönetim paneli`, leads, coords });
 });
 
 // ---------- Admin: API ----------
@@ -402,6 +417,39 @@ app.delete("/admin/api/komiteler/:slug", requireAdminApi, (req, res) => {
   const i = store.content.committees.findIndex((c) => c.slug === req.params.slug);
   if (i === -1) return res.status(404).json({ ok: false, error: "Komite bulunamadı." });
   store.content.committees.splice(i, 1);
+  store.save();
+  res.json({ ok: true });
+});
+
+// İdari Kurul kaydı: satırlar kaynak proje/komite ekiplerine geri yazılır.
+// YK rolündeki üyeler korunur; diğer üyeler gönderilen listeyle değiştirilir.
+app.put("/admin/api/idari-kurul", requireAdminApi, (req, res) => {
+  function cleanAssigned(value, validSlugs) {
+    if (!Array.isArray(value)) return [];
+    return value
+      .map((m) => ({
+        source: clean(m.source, 80),
+        name: clean(m.name, 120),
+        role: clean(m.role, 160),
+        photo: clean(m.photo, 400)
+      }))
+      .filter((m) => m.name && validSlugs.includes(m.source))
+      .slice(0, 80);
+  }
+
+  const leads = cleanAssigned(req.body.leads, store.content.projects.map((p) => p.slug));
+  const coords = cleanAssigned(req.body.coords, store.content.committees.map((c) => c.slug));
+
+  store.content.projects.forEach((p) => {
+    const yk = (p.team || []).filter((m) => YK_ROLE_RE.test(m.role));
+    const assigned = leads.filter((l) => l.source === p.slug).map(({ name, role, photo }) => ({ name, role, photo }));
+    p.team = [...yk, ...assigned];
+  });
+  store.content.committees.forEach((c) => {
+    const yk = (c.team || []).filter((m) => YK_ROLE_RE.test(m.role));
+    const assigned = coords.filter((k) => k.source === c.slug).map(({ name, role, photo }) => ({ name, role, photo }));
+    c.team = [...yk, ...assigned];
+  });
   store.save();
   res.json({ ok: true });
 });

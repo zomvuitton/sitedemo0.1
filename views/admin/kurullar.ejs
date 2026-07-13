@@ -6,7 +6,6 @@
     <a class="abtn abtn-ghost" href="/ekibimiz" target="_blank" rel="noopener">Ekibimiz sayfasını gör ↗</a>
   </div>
   <p class="asub">Her kurulu ayrı ayrı kaydedebilirsin. Üye ekle, kaldır ya da bilgilerini güncelle.</p>
-  <p class="asub"><strong>İdari Kurul</strong> burada ayrıca yönetilmez: proje liderleri ve komite koordinatörlerinden otomatik oluşur. Projeler ve Komiteler sekmelerinden kişi atadıkça Ekibimiz sayfasındaki İdari Kurul bölümü kendiliğinden güncellenir.</p>
 
   <% boards.forEach(function (b) { %>
   <form class="asection aboard" data-save="/admin/api/kurullar/<%= b.slug %>">
@@ -34,6 +33,55 @@
   <% }) %>
 </div>
 
+<form class="asection aboard" data-save="/admin/api/idari-kurul">
+  <h2>İdari Kurul</h2>
+  <p class="amuted-block">Proje liderleri ve komite koordinatörlerinden oluşur. Buradaki değişiklikler doğrudan ilgili projenin/komitenin ekibine yazılır; Ekibimiz sayfası ve proje/komite sayfaları birlikte güncellenir.</p>
+
+  <h3 class="agroup-head">Proje Liderleri</h3>
+  <div class="alist" data-list="leads">
+    <% leads.forEach(function (m) { %>
+    <div class="arow arow-person">
+      <img class="aavatar" data-preview="photo" src="<%= m.photo %>" alt="">
+      <select data-field="source" aria-label="Proje">
+        <% projects.forEach(function (p) { %>
+        <option value="<%= p.slug %>" <%= m.source === p.slug ? "selected" : "" %>><%= p.short %></option>
+        <% }) %>
+      </select>
+      <input type="text" data-field="name" value="<%= m.name %>" placeholder="Ad Soyad">
+      <input type="text" data-field="role" value="<%= m.role %>" placeholder="Görev">
+      <input type="text" data-field="photo" value="<%= m.photo %>" placeholder="Fotoğraf yolu">
+      <label class="abtn abtn-ghost aupload">Foto<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="photo" hidden></label>
+      <button type="button" class="abtn abtn-danger arow-del" aria-label="Kişiyi kaldır">Sil</button>
+    </div>
+    <% }) %>
+  </div>
+  <button type="button" class="abtn abtn-ghost" data-add="leads">+ Proje lideri ekle</button>
+
+  <h3 class="agroup-head">Komite Koordinatörleri</h3>
+  <div class="alist" data-list="coords">
+    <% coords.forEach(function (m) { %>
+    <div class="arow arow-person">
+      <img class="aavatar" data-preview="photo" src="<%= m.photo %>" alt="">
+      <select data-field="source" aria-label="Komite">
+        <% committees.forEach(function (c) { %>
+        <option value="<%= c.slug %>" <%= m.source === c.slug ? "selected" : "" %>><%= c.name.replace(' Komitesi', '') %></option>
+        <% }) %>
+      </select>
+      <input type="text" data-field="name" value="<%= m.name %>" placeholder="Ad Soyad">
+      <input type="text" data-field="role" value="<%= m.role %>" placeholder="Görev">
+      <input type="text" data-field="photo" value="<%= m.photo %>" placeholder="Fotoğraf yolu">
+      <label class="abtn abtn-ghost aupload">Foto<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="photo" hidden></label>
+      <button type="button" class="abtn abtn-danger arow-del" aria-label="Kişiyi kaldır">Sil</button>
+    </div>
+    <% }) %>
+  </div>
+  <div class="aboard-actions">
+    <button type="button" class="abtn abtn-ghost" data-add="coords">+ Koordinatör ekle</button>
+    <button type="submit" class="abtn abtn-primary">Kaydet</button>
+  </div>
+  <p class="form-feedback" role="status" aria-live="polite"></p>
+</form>
+
 <template data-template="members">
   <div class="arow arow-person">
     <img class="aavatar" data-preview="photo" src="" alt="">
@@ -42,6 +90,36 @@
     <input type="text" data-field="photo" placeholder="Fotoğraf yolu">
     <label class="abtn abtn-ghost aupload">Foto<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="photo" hidden></label>
     <button type="button" class="abtn abtn-danger arow-del" aria-label="Üyeyi sil">Sil</button>
+  </div>
+</template>
+<template data-template="leads">
+  <div class="arow arow-person">
+    <img class="aavatar" data-preview="photo" src="" alt="">
+    <select data-field="source" aria-label="Proje">
+      <% projects.forEach(function (p) { %>
+      <option value="<%= p.slug %>"><%= p.short %></option>
+      <% }) %>
+    </select>
+    <input type="text" data-field="name" placeholder="Ad Soyad">
+    <input type="text" data-field="role" placeholder="Görev">
+    <input type="text" data-field="photo" placeholder="Fotoğraf yolu">
+    <label class="abtn abtn-ghost aupload">Foto<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="photo" hidden></label>
+    <button type="button" class="abtn abtn-danger arow-del" aria-label="Kişiyi kaldır">Sil</button>
+  </div>
+</template>
+<template data-template="coords">
+  <div class="arow arow-person">
+    <img class="aavatar" data-preview="photo" src="" alt="">
+    <select data-field="source" aria-label="Komite">
+      <% committees.forEach(function (c) { %>
+      <option value="<%= c.slug %>"><%= c.name.replace(' Komitesi', '') %></option>
+      <% }) %>
+    </select>
+    <input type="text" data-field="name" placeholder="Ad Soyad">
+    <input type="text" data-field="role" placeholder="Görev">
+    <input type="text" data-field="photo" placeholder="Fotoğraf yolu">
+    <label class="abtn abtn-ghost aupload">Foto<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="photo" hidden></label>
+    <button type="button" class="abtn abtn-danger arow-del" aria-label="Kişiyi kaldır">Sil</button>
   </div>
 </template>
 
