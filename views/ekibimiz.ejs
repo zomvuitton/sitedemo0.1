@@ -19,11 +19,7 @@
     </div>
     <div class="people-grid">
       <% b.members.forEach(function (m) { %>
-      <div class="person reveal">
-        <img class="person-photo" src="<%= m.photo %>" alt="<%= m.name %>" loading="lazy">
-        <h3><%= m.name %></h3>
-        <p><%= m.role %></p>
-      </div>
+      <%- include('partials/person', { m: m }) %>
       <% }) %>
     </div>
   </div>
@@ -39,7 +35,7 @@ const leads = [];
 const leadSeen = new Set();
 projects.forEach(function (p) {
   (p.team || []).forEach(function (m) {
-    if (ykRe.test(m.role) || leadSeen.has(m.name)) return;
+    if (ykRe.test(m.role) || m.onlyProject || leadSeen.has(m.name)) return;
     leadSeen.add(m.name);
     leads.push(m);
   });
@@ -48,7 +44,7 @@ const coords = [];
 const coordSeen = new Set();
 committees.forEach(function (c) {
   (c.team || []).forEach(function (m) {
-    if (ykRe.test(m.role) || coordSeen.has(m.name)) return;
+    if (ykRe.test(m.role) || m.onlyProject || coordSeen.has(m.name)) return;
     coordSeen.add(m.name);
     coords.push(m);
   });
@@ -69,11 +65,7 @@ committees.forEach(function (c) {
     <h3 class="people-subhead reveal">Proje Liderleri</h3>
     <div class="people-grid">
       <% leads.forEach(function (m) { %>
-      <div class="person reveal">
-        <img class="person-photo" src="<%= m.photo %>" alt="<%= m.name %>" loading="lazy">
-        <h3><%= m.name %></h3>
-        <p><%= m.role %></p>
-      </div>
+      <%- include('partials/person', { m: m }) %>
       <% }) %>
     </div>
     <% } %>
@@ -82,11 +74,7 @@ committees.forEach(function (c) {
     <h3 class="people-subhead reveal">Komite Koordinatörleri</h3>
     <div class="people-grid">
       <% coords.forEach(function (m) { %>
-      <div class="person reveal">
-        <img class="person-photo" src="<%= m.photo %>" alt="<%= m.name %>" loading="lazy">
-        <h3><%= m.name %></h3>
-        <p><%= m.role %></p>
-      </div>
+      <%- include('partials/person', { m: m }) %>
       <% }) %>
     </div>
     <% } %>

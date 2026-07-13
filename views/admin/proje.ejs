@@ -81,6 +81,10 @@
           <input type="text" data-field="role" value="<%= m.role %>" placeholder="Görev">
           <input type="text" data-field="photo" value="<%= m.photo %>" placeholder="Fotoğraf yolu">
           <label class="abtn abtn-ghost aupload">Foto<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="photo" hidden></label>
+          <label class="acheck-sm" title="İşaretliyse kişi yalnızca bu proje sayfasında görünür; Ekibimiz'e yansımaz">
+            <input type="checkbox" data-field="onlyProject" <%= m.onlyProject ? "checked" : "" %>>
+            Ekibimiz'de gizle
+          </label>
           <button type="button" class="abtn abtn-danger arow-del" aria-label="Kişiyi kaldır">Kaldır</button>
         </div>
         <% }) %>
@@ -124,6 +128,10 @@
     <input type="text" data-field="role" placeholder="Görev">
     <input type="text" data-field="photo" placeholder="Fotoğraf yolu">
     <label class="abtn abtn-ghost aupload">Foto<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="photo" hidden></label>
+    <label class="acheck-sm" title="İşaretliyse kişi yalnızca bu proje sayfasında görünür; Ekibimiz'e yansımaz">
+      <input type="checkbox" data-field="onlyProject">
+      Ekibimiz'de gizle
+    </label>
     <button type="button" class="abtn abtn-danger arow-del" aria-label="Kişiyi kaldır">Kaldır</button>
   </div>
 </template>

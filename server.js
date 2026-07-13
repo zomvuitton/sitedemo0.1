@@ -114,9 +114,14 @@ function cleanParagraphs(value, maxItems) {
 function cleanMembers(value) {
   if (!Array.isArray(value)) return [];
   return value
-    .map((m) => ({ name: clean(m.name, 120), role: clean(m.role, 160), photo: clean(m.photo, 400) }))
+    .map((m) => {
+      const member = { name: clean(m.name, 120), role: clean(m.role, 160), photo: clean(m.photo, 400) };
+      // onlyProject: kişi yalnızca proje sayfasında görünür, Ekibimiz'e (İdari Kurul) yansımaz
+      if (m.onlyProject) member.onlyProject = true;
+      return member;
+    })
     .filter((m) => m.name)
-    .slice(0, 40);
+    .slice(0, 60);
 }
 
 function cleanFacts(value) {
@@ -269,13 +274,13 @@ app.get("/admin/kurullar", requireAdminPage, (req, res) => {
   const leads = [];
   store.content.projects.forEach((p) => {
     (p.team || []).forEach((m) => {
-      if (!YK_ROLE_RE.test(m.role)) leads.push({ ...m, source: p.slug });
+      if (!YK_ROLE_RE.test(m.role) && !m.onlyProject) leads.push({ ...m, source: p.slug });
     });
   });
   const coords = [];
   store.content.committees.forEach((c) => {
     (c.team || []).forEach((m) => {
-      if (!YK_ROLE_RE.test(m.role)) coords.push({ ...m, source: c.slug });
+      if (!YK_ROLE_RE.test(m.role) && !m.onlyProject) coords.push({ ...m, source: c.slug });
     });
   });
   res.render("admin/kurullar", { title: `Kurullar — Yönetim paneli`, leads, coords });
@@ -431,15 +436,16 @@ app.put("/admin/api/idari-kurul", requireAdminApi, (req, res) => {
   const leads = cleanAssigned(req.body.leads, store.content.projects.map((p) => p.slug));
   const coords = cleanAssigned(req.body.coords, store.content.committees.map((c) => c.slug));
 
+  // YK üyeleri ve "yalnızca proje sayfasında" işaretli kişiler korunur
   store.content.projects.forEach((p) => {
-    const yk = (p.team || []).filter((m) => YK_ROLE_RE.test(m.role));
+    const kept = (p.team || []).filter((m) => YK_ROLE_RE.test(m.role) || m.onlyProject);
     const assigned = leads.filter((l) => l.source === p.slug).map(({ name, role, photo }) => ({ name, role, photo }));
-    p.team = [...yk, ...assigned];
+    p.team = [...kept, ...assigned];
   });
   store.content.committees.forEach((c) => {
-    const yk = (c.team || []).filter((m) => YK_ROLE_RE.test(m.role));
+    const kept = (c.team || []).filter((m) => YK_ROLE_RE.test(m.role) || m.onlyProject);
     const assigned = coords.filter((k) => k.source === c.slug).map(({ name, role, photo }) => ({ name, role, photo }));
-    c.team = [...yk, ...assigned];
+    c.team = [...kept, ...assigned];
   });
   store.save();
   res.json({ ok: true });

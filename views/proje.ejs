@@ -42,8 +42,23 @@
   </div>
 </section>
 
+<% if (project.team && project.team.length) { %>
+<section class="tile tile-gray">
+  <div class="container">
+    <div class="section-head reveal">
+      <h2>Proje ekibi</h2>
+    </div>
+    <div class="people-grid">
+      <% project.team.forEach(function (m) { %>
+      <%- include('partials/person', { m: m }) %>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>
+
 <% if (project.gallery && project.gallery.length) { %>
-<section class="tile tile-gray gallery-tile">
+<section class="tile tile-white gallery-tile">
   <div class="container">
     <div class="section-head reveal">
       <h2>Galeri</h2>
@@ -57,24 +72,6 @@
 </section>
 <% } %>
 
-<% if (project.team && project.team.length) { %>
-<section class="tile tile-white">
-  <div class="container">
-    <div class="section-head reveal">
-      <h2>Proje ekibi</h2>
-    </div>
-    <div class="people-grid">
-      <% project.team.forEach(function (m) { %>
-      <div class="person reveal">
-        <img class="person-photo" src="<%= m.photo %>" alt="<%= m.name %>" loading="lazy">
-        <h3><%= m.name %></h3>
-        <p><%= m.role %></p>
-      </div>
-      <% }) %>
-    </div>
-  </div>
-</section>
-<% } %>
 
 <section class="tile tile-gray others">
   <div class="container">

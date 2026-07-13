@@ -1,0 +1,9 @@
+<div class="person reveal">
+  <% if (m.photo) { %>
+  <img class="person-photo" src="<%= m.photo %>" alt="<%= m.name %>" loading="lazy">
+  <% } else { %>
+  <div class="person-photo person-initials" aria-hidden="true"><%= m.name.trim().split(/\s+/).map(w => w[0]).join("").slice(0, 2).toUpperCase() %></div>
+  <% } %>
+  <h3><%= m.name %></h3>
+  <p><%= m.role %></p>
+</div>

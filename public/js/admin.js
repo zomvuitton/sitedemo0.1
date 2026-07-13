@@ -91,7 +91,9 @@ function readList(scope, key) {
   if (!list) return [];
   return [...list.querySelectorAll(".arow")].map((row) => {
     const obj = {};
-    row.querySelectorAll("[data-field]").forEach((input) => { obj[input.dataset.field] = input.value.trim(); });
+    row.querySelectorAll("[data-field]").forEach((input) => {
+      obj[input.dataset.field] = input.type === "checkbox" ? input.checked : input.value.trim();
+    });
     return obj;
   });
 }
