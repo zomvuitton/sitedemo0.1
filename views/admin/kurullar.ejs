@@ -6,6 +6,7 @@
     <a class="abtn abtn-ghost" href="/ekibimiz" target="_blank" rel="noopener">Ekibimiz sayfasını gör ↗</a>
   </div>
   <p class="asub">Her kurulu ayrı ayrı kaydedebilirsin. Üye ekle, kaldır ya da bilgilerini güncelle.</p>
+  <p class="asub"><strong>İdari Kurul</strong> burada ayrıca yönetilmez: proje liderleri ve komite koordinatörlerinden otomatik oluşur. Projeler ve Komiteler sekmelerinden kişi atadıkça Ekibimiz sayfasındaki İdari Kurul bölümü kendiliğinden güncellenir.</p>
 
   <% boards.forEach(function (b) { %>
   <form class="asection aboard" data-save="/admin/api/kurullar/<%= b.slug %>">
