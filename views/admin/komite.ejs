@@ -3,7 +3,7 @@
 <div class="apage">
   <div class="apage-head">
     <h1><%= committee.name %></h1>
-    <a class="abtn abtn-ghost" href="/komiteler" target="_blank" rel="noopener">Sayfayı gör ↗</a>
+    <a class="abtn abtn-ghost" href="/komiteler/<%= committee.slug %>" target="_blank" rel="noopener">Sayfayı gör ↗</a>
   </div>
 
   <form id="editForm" data-save="/admin/api/komiteler/<%= committee.slug %>">
@@ -25,6 +25,32 @@
           <% }) %>
         </select>
       </label>
+    </section>
+
+    <section class="asection">
+      <h2>Kapak görseli <span class="amuted">(isteğe bağlı)</span></h2>
+      <div class="aimg-field">
+        <img class="aimg-preview" data-preview="hero" src="<%= committee.hero || '' %>" alt="">
+        <div class="aimg-controls">
+          <input type="text" name="hero" value="<%= committee.hero || '' %>" placeholder="/img/... veya https://...">
+          <label class="abtn abtn-ghost aupload">Görsel yükle<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="hero" hidden></label>
+        </div>
+      </div>
+    </section>
+
+    <section class="asection">
+      <h2>Galeri <span class="amuted">(isteğe bağlı)</span></h2>
+      <div class="alist" data-list="gallery">
+        <% (committee.gallery || []).forEach(function (g) { %>
+        <div class="arow arow-person">
+          <img class="aavatar" data-preview="url" src="<%= g %>" alt="">
+          <input type="text" data-field="url" value="<%= g %>" placeholder="Görsel yolu">
+          <label class="abtn abtn-ghost aupload">Görsel<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="url" hidden></label>
+          <button type="button" class="abtn abtn-danger arow-del" aria-label="Görseli kaldır">Kaldır</button>
+        </div>
+        <% }) %>
+      </div>
+      <button type="button" class="abtn abtn-ghost" data-add="gallery">+ Galeri görseli ekle</button>
     </section>
 
     <section class="asection">
@@ -51,6 +77,14 @@
   </form>
 </div>
 
+<template data-template="gallery">
+  <div class="arow arow-person">
+    <img class="aavatar" data-preview="url" src="" alt="">
+    <input type="text" data-field="url" placeholder="Görsel yolu">
+    <label class="abtn abtn-ghost aupload">Görsel<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="url" hidden></label>
+    <button type="button" class="abtn abtn-danger arow-del" aria-label="Görseli kaldır">Kaldır</button>
+  </div>
+</template>
 <template data-template="team">
   <div class="arow arow-person">
     <img class="aavatar" data-preview="photo" src="" alt="">

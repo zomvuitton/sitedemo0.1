@@ -1,0 +1,86 @@
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
+
+<section class="tile tile-white project-hero">
+  <div class="hero-inner reveal">
+    <p class="eyebrow eyebrow-red">Komite</p>
+    <h1><%= committee.name %></h1>
+    <p class="lede lede-dark"><%= committee.summary %></p>
+    <div class="cta-row">
+      <a class="btn btn-primary" href="/katil">Ekipte yer al</a>
+      <a class="link-more" href="/komiteler">Tüm komiteler <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
+    </div>
+    <% if (committee.hero) { %>
+    <img class="feature-img" src="<%= committee.hero %>" alt="<%= committee.name %> çalışmasından bir kare">
+    <% } %>
+  </div>
+</section>
+
+<section class="tile tile-gray editorial">
+  <div class="container editorial-grid">
+    <div class="editorial-aside reveal">
+      <span class="card-icon"><%- include('partials/icon', { name: committee.icon }) %></span>
+      <h2>Komite hakkında</h2>
+    </div>
+    <div class="editorial-body reveal">
+      <% committee.body.forEach(function (para, i) { %>
+      <p class="<%= i === 0 ? 'lede-dark' : '' %>"><%= para %></p>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<% if (committee.gallery && committee.gallery.length) { %>
+<section class="tile tile-white gallery-tile">
+  <div class="container">
+    <div class="section-head reveal">
+      <h2>Galeri</h2>
+    </div>
+    <div class="gallery-grid reveal">
+      <% committee.gallery.forEach(function (g, i) { %>
+      <img src="<%= g %>" alt="<%= committee.name %> galerisinden <%= i + 1 %>. kare" loading="lazy">
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<% if (committee.team && committee.team.length) { %>
+<section class="tile <%= committee.gallery && committee.gallery.length ? 'tile-gray' : 'tile-white' %>">
+  <div class="container">
+    <div class="section-head reveal">
+      <h2>Komite ekibi</h2>
+    </div>
+    <div class="people-grid">
+      <% committee.team.forEach(function (m) { %>
+      <div class="person reveal">
+        <img class="person-photo" src="<%= m.photo %>" alt="<%= m.name %>" loading="lazy">
+        <h3><%= m.name %></h3>
+        <p><%= m.role %></p>
+      </div>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>
+
+<section class="tile tile-gray others">
+  <div class="container">
+    <div class="section-head reveal">
+      <h2>Diğer komiteler</h2>
+      <a class="link-more" href="/komiteler">Tümünü gör <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
+    </div>
+    <div class="card-row">
+      <% committees.filter(c => c.slug !== committee.slug).slice(0, 4).forEach(function (c) { %>
+      <a class="card reveal" href="/komiteler/<%= c.slug %>">
+        <span class="card-icon"><%- include('partials/icon', { name: c.icon }) %></span>
+        <h3><%= c.name.replace(' Komitesi', '') %></h3>
+        <p><%= c.summary %></p>
+        <span class="card-more">İncele <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></span>
+      </a>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

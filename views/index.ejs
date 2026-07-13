@@ -14,22 +14,26 @@
   </div>
 </section>
 
-<!-- Öne çıkan: YMG, tam genişlik açık karo -->
-<% const ymg = featured[0]; %>
+<!-- Öne çıkan proje: tam genişlik açık karo -->
+<% if (featured.length) { const one = featured[0]; %>
 <section class="tile tile-gray feature-tile">
   <div class="feature-inner reveal">
-    <p class="eyebrow eyebrow-red"><%= ymg.short %></p>
-    <h2 class="display"><%= ymg.tagline %></h2>
-    <p class="lede lede-dark"><%= ymg.summary %></p>
+    <p class="eyebrow eyebrow-red"><%= one.short %></p>
+    <h2 class="display"><%= one.tagline %></h2>
+    <p class="lede lede-dark"><%= one.summary %></p>
     <div class="cta-row">
-      <a class="btn btn-primary" href="/projeler/<%= ymg.slug %>">YMG'yi incele</a>
+      <a class="btn btn-primary" href="/projeler/<%= one.slug %>"><%= one.short %>'yi incele</a>
       <a class="link-more" href="/projeler">Tüm projeler <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
     </div>
-    <img class="feature-img" src="<%= ymg.hero %>" alt="Yönetim ve Mühendislik Günleri etkinliğinden bir kare" loading="lazy">
+    <% if (one.hero) { %>
+    <img class="feature-img" src="<%= one.hero %>" alt="<%= one.name %> etkinliğinden bir kare" loading="lazy">
+    <% } %>
   </div>
 </section>
+<% } %>
 
-<!-- 2'li karo: VakaVT + Generation -->
+<!-- 2'li karo: sonraki iki öne çıkan proje -->
+<% if (featured.length > 1) { %>
 <section class="tile-duo">
   <% featured.slice(1, 3).forEach(function (p) { %>
   <article class="tile tile-white duo-cell reveal">
@@ -37,10 +41,13 @@
     <h3><%= p.tagline %></h3>
     <p class="duo-summary"><%= p.summary %></p>
     <a class="link-more" href="/projeler/<%= p.slug %>">Daha fazla bilgi <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
+    <% if (p.hero) { %>
     <img class="duo-img" src="<%= p.hero %>" alt="<%= p.name %> etkinliğinden bir kare" loading="lazy">
+    <% } %>
   </article>
   <% }) %>
 </section>
+<% } %>
 
 <!-- Rakamlar: kırık simetri — değerler sitenin kendi sayaçlarından -->
 <section class="tile tile-white stats">
@@ -61,6 +68,7 @@
 </section>
 
 <!-- Diğer projeler -->
+<% if (rest.length) { %>
 <section class="tile tile-gray others">
   <div class="container">
     <div class="section-head reveal">
@@ -79,6 +87,7 @@
     </div>
   </div>
 </section>
+<% } %>
 
 <!-- Hakkımızda önizleme: kırık simetri, görselli -->
 <section class="tile tile-white editorial">

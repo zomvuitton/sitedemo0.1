@@ -163,11 +163,14 @@ function rateLimit(req, res, next) {
 
 app.get("/", (req, res) => {
   const projects = store.content.projects;
-  res.render("index", {
-    title: `${site.short} — ${site.name}`,
-    featured: projects.filter((p) => p.featured),
-    rest: projects.filter((p) => !p.featured)
-  });
+  let featured = projects.filter((p) => p.featured);
+  let rest = projects.filter((p) => !p.featured);
+  // Hiçbir proje öne çıkarılmadıysa ana sayfa boş kalmasın: ilk üç proje kullanılır
+  if (!featured.length) {
+    featured = projects.slice(0, 3);
+    rest = projects.slice(3);
+  }
+  res.render("index", { title: `${site.short} — ${site.name}`, featured, rest });
 });
 
 app.get("/hakkimizda", (req, res) => {
@@ -186,6 +189,12 @@ app.get("/projeler/:slug", (req, res, next) => {
 
 app.get("/komiteler", (req, res) => {
   res.render("komiteler", { title: `Komiteler — ${site.short}` });
+});
+
+app.get("/komiteler/:slug", (req, res, next) => {
+  const committee = store.content.committees.find((c) => c.slug === req.params.slug);
+  if (!committee) return next();
+  res.render("komite", { title: `${committee.name} — ${site.short}`, committee });
 });
 
 app.get("/ekibimiz", (req, res) => {
@@ -386,6 +395,8 @@ function sanitizeCommittee(input, existing) {
       summary: clean(input.summary, 500),
       body: cleanParagraphs(input.body),
       icon: ICONS.includes(input.icon) ? input.icon : "users",
+      hero: clean(input.hero, 400),
+      gallery: cleanGallery(input.gallery),
       team: cleanMembers(input.team)
     }
   };
