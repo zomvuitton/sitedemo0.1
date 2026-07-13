@@ -47,7 +47,7 @@ docker run -p 3000:3000 -v odtuvt-data:/app/data odtuvt-site
 
 ## Sayfalar
 
-`/` · `/hakkimizda` · `/projeler` · `/projeler/:slug` (8 proje) · `/ekibimiz` · `/iletisim` · `/katil` · 404
+`/` · `/hakkimizda` · `/projeler` · `/projeler/:slug` (6 proje) · `/komiteler` · `/ekibimiz` · `/iletisim` · `/katil` · 404
 
 ## Tasarım sistemi
 
