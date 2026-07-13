@@ -1,0 +1,47 @@
+<%- include('partials/top') %>
+
+<div class="apage">
+  <div class="apage-head">
+    <h1>Kurullar</h1>
+    <a class="abtn abtn-ghost" href="/ekibimiz" target="_blank" rel="noopener">Ekibimiz sayfasını gör ↗</a>
+  </div>
+  <p class="asub">Her kurulu ayrı ayrı kaydedebilirsin. Üye ekle, kaldır ya da bilgilerini güncelle.</p>
+
+  <% boards.forEach(function (b) { %>
+  <form class="asection aboard" data-save="/admin/api/kurullar/<%= b.slug %>">
+    <label>Kurul adı
+      <input type="text" name="name" value="<%= b.name %>" required>
+    </label>
+    <div class="alist" data-list="members">
+      <% b.members.forEach(function (m) { %>
+      <div class="arow arow-person">
+        <img class="aavatar" data-preview="photo" src="<%= m.photo %>" alt="">
+        <input type="text" data-field="name" value="<%= m.name %>" placeholder="Ad Soyad">
+        <input type="text" data-field="role" value="<%= m.role %>" placeholder="Görev">
+        <input type="text" data-field="photo" value="<%= m.photo %>" placeholder="Fotoğraf yolu">
+        <label class="abtn abtn-ghost aupload">Foto<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="photo" hidden></label>
+        <button type="button" class="abtn abtn-danger arow-del" aria-label="Üyeyi sil">Sil</button>
+      </div>
+      <% }) %>
+    </div>
+    <div class="aboard-actions">
+      <button type="button" class="abtn abtn-ghost" data-add="members">+ Üye ekle</button>
+      <button type="submit" class="abtn abtn-primary">Kaydet</button>
+    </div>
+    <p class="form-feedback" role="status" aria-live="polite"></p>
+  </form>
+  <% }) %>
+</div>
+
+<template data-template="members">
+  <div class="arow arow-person">
+    <img class="aavatar" data-preview="photo" src="" alt="">
+    <input type="text" data-field="name" placeholder="Ad Soyad">
+    <input type="text" data-field="role" placeholder="Görev">
+    <input type="text" data-field="photo" placeholder="Fotoğraf yolu">
+    <label class="abtn abtn-ghost aupload">Foto<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="photo" hidden></label>
+    <button type="button" class="abtn abtn-danger arow-del" aria-label="Üyeyi sil">Sil</button>
+  </div>
+</template>
+
+<%- include('partials/bottom') %>

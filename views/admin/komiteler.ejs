@@ -1,0 +1,35 @@
+<%- include('partials/top') %>
+
+<div class="apage">
+  <div class="apage-head">
+    <h1>Komiteler</h1>
+    <form id="createForm" class="ainline-form" data-create="/admin/api/komiteler">
+      <input type="text" name="name" placeholder="Yeni komite adı" required>
+      <button class="abtn abtn-primary" type="submit">Ekle</button>
+    </form>
+  </div>
+  <p class="form-feedback" role="status" aria-live="polite"></p>
+
+  <table class="atable">
+    <thead>
+      <tr><th>Komite</th><th>Ekip</th><th></th></tr>
+    </thead>
+    <tbody>
+      <% committees.forEach(function (c) { %>
+      <tr>
+        <td>
+          <a class="atable-title" href="/admin/komiteler/<%= c.slug %>"><%= c.name %></a>
+          <span class="amuted"><%= c.summary %></span>
+        </td>
+        <td><%= c.team.length %> kişi</td>
+        <td class="atable-actions">
+          <a class="abtn abtn-ghost" href="/admin/komiteler/<%= c.slug %>">Düzenle</a>
+          <button class="abtn abtn-danger" type="button" data-delete="/admin/api/komiteler/<%= c.slug %>" data-name="<%= c.name %>">Sil</button>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
+<%- include('partials/bottom') %>

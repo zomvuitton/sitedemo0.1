@@ -1,0 +1,36 @@
+<%- include('partials/top') %>
+
+<div class="apage">
+  <div class="apage-head">
+    <h1>Projeler</h1>
+    <form id="createForm" class="ainline-form" data-create="/admin/api/projeler">
+      <input type="text" name="name" placeholder="Yeni proje adı" required>
+      <button class="abtn abtn-primary" type="submit">Ekle</button>
+    </form>
+  </div>
+  <p class="form-feedback" role="status" aria-live="polite"></p>
+
+  <table class="atable">
+    <thead>
+      <tr><th>Proje</th><th>Ekip</th><th>Öne çıkan</th><th></th></tr>
+    </thead>
+    <tbody>
+      <% projects.forEach(function (p) { %>
+      <tr>
+        <td>
+          <a class="atable-title" href="/admin/projeler/<%= p.slug %>"><%= p.name %></a>
+          <span class="amuted">/projeler/<%= p.slug %></span>
+        </td>
+        <td><%= p.team.length %> kişi</td>
+        <td><%= p.featured ? "Evet" : "—" %></td>
+        <td class="atable-actions">
+          <a class="abtn abtn-ghost" href="/admin/projeler/<%= p.slug %>">Düzenle</a>
+          <button class="abtn abtn-danger" type="button" data-delete="/admin/api/projeler/<%= p.slug %>" data-name="<%= p.name %>">Sil</button>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
+<%- include('partials/bottom') %>

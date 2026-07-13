@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= title %></title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin">
+<header class="atop">
+  <div class="atop-inner">
+    <a class="atop-brand" href="/admin">
+      <img src="/img/odtuvt/logo-red.png" alt="" height="22">
+      <span>Yönetim paneli</span>
+    </a>
+    <nav class="atop-links">
+      <a href="/admin/projeler" <%= path.startsWith('/admin/projeler') ? 'aria-current="page"' : '' %>>Projeler</a>
+      <a href="/admin/komiteler" <%= path.startsWith('/admin/komiteler') ? 'aria-current="page"' : '' %>>Komiteler</a>
+      <a href="/admin/kurullar" <%= path.startsWith('/admin/kurullar') ? 'aria-current="page"' : '' %>>Kurullar</a>
+      <a href="/" target="_blank" rel="noopener">Siteyi gör ↗</a>
+      <button type="button" id="logoutBtn" class="abtn abtn-ghost">Çıkış</button>
+    </nav>
+  </div>
+</header>
+<main class="amain">

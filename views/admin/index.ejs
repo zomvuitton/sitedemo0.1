@@ -1,0 +1,26 @@
+<%- include('partials/top') %>
+
+<div class="apage">
+  <h1>Panel</h1>
+  <p class="asub">Site içeriğini buradan yönetebilirsin. Yaptığın her kayıt anında yayına yansır.</p>
+
+  <div class="acard-row">
+    <a class="acard" href="/admin/projeler">
+      <h2>Projeler</h2>
+      <p class="abig"><%= projects.length %></p>
+      <p>Proje detayları, ekip atamaları, galeri ve görseller.</p>
+    </a>
+    <a class="acard" href="/admin/komiteler">
+      <h2>Komiteler</h2>
+      <p class="abig"><%= committees.length %></p>
+      <p>Komite açıklamaları ve koordinatör atamaları.</p>
+    </a>
+    <a class="acard" href="/admin/kurullar">
+      <h2>Kurullar</h2>
+      <p class="abig"><%= boards.reduce((n, b) => n + b.members.length, 0) %></p>
+      <p>Yönetim, Denetleme ve Danışma ile İdari Kurul üyeleri.</p>
+    </a>
+  </div>
+</div>
+
+<%- include('partials/bottom') %>

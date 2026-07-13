@@ -1,0 +1,65 @@
+<%- include('partials/top') %>
+
+<div class="apage">
+  <div class="apage-head">
+    <h1><%= committee.name %></h1>
+    <a class="abtn abtn-ghost" href="/komiteler" target="_blank" rel="noopener">Sayfayı gör ↗</a>
+  </div>
+
+  <form id="editForm" data-save="/admin/api/komiteler/<%= committee.slug %>">
+    <section class="asection">
+      <h2>Temel bilgiler</h2>
+      <label>Komite adı
+        <input type="text" name="name" value="<%= committee.name %>" required>
+      </label>
+      <label>Özet
+        <textarea name="summary" rows="2"><%= committee.summary %></textarea>
+      </label>
+      <label>Açıklama paragrafları <span class="amuted">(paragraflar arasında boş satır bırak)</span>
+        <textarea name="body" rows="8"><%= committee.body.join("\n\n") %></textarea>
+      </label>
+      <label>İkon
+        <select name="icon">
+          <% icons.forEach(function (ic) { %>
+          <option value="<%= ic %>" <%= committee.icon === ic ? "selected" : "" %>><%= ic %></option>
+          <% }) %>
+        </select>
+      </label>
+    </section>
+
+    <section class="asection">
+      <h2>Komite ekibi <span class="amuted">(görev alanları buradan ata veya kaldır)</span></h2>
+      <div class="alist" data-list="team">
+        <% committee.team.forEach(function (m) { %>
+        <div class="arow arow-person">
+          <img class="aavatar" data-preview="photo" src="<%= m.photo %>" alt="">
+          <input type="text" data-field="name" value="<%= m.name %>" placeholder="Ad Soyad">
+          <input type="text" data-field="role" value="<%= m.role %>" placeholder="Görev">
+          <input type="text" data-field="photo" value="<%= m.photo %>" placeholder="Fotoğraf yolu">
+          <label class="abtn abtn-ghost aupload">Foto<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="photo" hidden></label>
+          <button type="button" class="abtn abtn-danger arow-del" aria-label="Kişiyi kaldır">Kaldır</button>
+        </div>
+        <% }) %>
+      </div>
+      <button type="button" class="abtn abtn-ghost" data-add="team">+ Kişi ata</button>
+    </section>
+
+    <div class="asave-bar">
+      <button type="submit" class="abtn abtn-primary">Kaydet</button>
+      <p class="form-feedback" role="status" aria-live="polite"></p>
+    </div>
+  </form>
+</div>
+
+<template data-template="team">
+  <div class="arow arow-person">
+    <img class="aavatar" data-preview="photo" src="" alt="">
+    <input type="text" data-field="name" placeholder="Ad Soyad">
+    <input type="text" data-field="role" placeholder="Görev">
+    <input type="text" data-field="photo" placeholder="Fotoğraf yolu">
+    <label class="abtn abtn-ghost aupload">Foto<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="photo" hidden></label>
+    <button type="button" class="abtn abtn-danger arow-del" aria-label="Kişiyi kaldır">Kaldır</button>
+  </div>
+</template>
+
+<%- include('partials/bottom') %>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title><%= title %></title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/admin.css">
+</head>
+<body class="admin login-body">
+<main class="login-wrap">
+  <form class="login-card" id="loginForm">
+    <img src="/img/odtuvt/logo-red.png" alt="ODTÜ VT" height="34">
+    <h1>Yönetim paneli</h1>
+    <p class="login-sub">Devam etmek için yönetici parolasını gir.</p>
+    <label for="password">Parola</label>
+    <input type="password" id="password" name="password" autocomplete="current-password" required autofocus>
+    <button type="submit" class="abtn abtn-primary">Giriş yap</button>
+    <p class="form-feedback" role="status" aria-live="polite"></p>
+  </form>
+</main>
+<script>
+document.getElementById("loginForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const feedback = document.querySelector(".form-feedback");
+  feedback.textContent = "";
+  feedback.className = "form-feedback";
+  try {
+    const res = await fetch("/admin/api/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ password: document.getElementById("password").value })
+    });
+    const data = await res.json();
+    if (data.ok) { location.href = "/admin"; return; }
+    feedback.textContent = data.error || "Giriş başarısız.";
+    feedback.classList.add("err");
+  } catch {
+    feedback.textContent = "Bağlantı kurulamadı.";
+    feedback.classList.add("err");
+  }
+});
+</script>
+</body>
+</html>

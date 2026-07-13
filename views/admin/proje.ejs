@@ -1,0 +1,143 @@
+<%- include('partials/top') %>
+
+<div class="apage">
+  <div class="apage-head">
+    <h1><%= project.name %></h1>
+    <a class="abtn abtn-ghost" href="/projeler/<%= project.slug %>" target="_blank" rel="noopener">Sayfayı gör ↗</a>
+  </div>
+
+  <form id="editForm" data-save="/admin/api/projeler/<%= project.slug %>">
+    <section class="asection">
+      <h2>Temel bilgiler</h2>
+      <div class="agrid-2">
+        <label>Proje adı
+          <input type="text" name="name" value="<%= project.name %>" required>
+        </label>
+        <label>Kısa ad
+          <input type="text" name="short" value="<%= project.short %>">
+        </label>
+      </div>
+      <label>Slogan (tagline)
+        <input type="text" name="tagline" value="<%= project.tagline %>">
+      </label>
+      <label>Özet
+        <textarea name="summary" rows="3"><%= project.summary %></textarea>
+      </label>
+      <label>Açıklama paragrafları <span class="amuted">(paragraflar arasında boş satır bırak)</span>
+        <textarea name="body" rows="10"><%= project.body.join("\n\n") %></textarea>
+      </label>
+      <div class="agrid-3">
+        <label>İkon
+          <select name="icon">
+            <% icons.forEach(function (ic) { %>
+            <option value="<%= ic %>" <%= project.icon === ic ? "selected" : "" %>><%= ic %></option>
+            <% }) %>
+          </select>
+        </label>
+        <label>Sayfa teması
+          <select name="theme">
+            <option value="light" <%= project.theme !== "dark" ? "selected" : "" %>>Açık</option>
+            <option value="dark" <%= project.theme === "dark" ? "selected" : "" %>>Koyu</option>
+          </select>
+        </label>
+        <label class="acheck">
+          <input type="checkbox" name="featured" <%= project.featured ? "checked" : "" %>>
+          Ana sayfada öne çıkar
+        </label>
+      </div>
+      <label>Dış bağlantı (proje sitesi)
+        <input type="url" name="external" value="<%= project.external %>">
+      </label>
+    </section>
+
+    <section class="asection">
+      <h2>Kapak görseli</h2>
+      <div class="aimg-field">
+        <img class="aimg-preview" data-preview="hero" src="<%= project.hero %>" alt="">
+        <div class="aimg-controls">
+          <input type="text" name="hero" value="<%= project.hero %>" placeholder="/img/... veya https://...">
+          <label class="abtn abtn-ghost aupload">Görsel yükle<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="hero" hidden></label>
+        </div>
+      </div>
+    </section>
+
+    <section class="asection">
+      <h2>Bilgi kutuları <span class="amuted">(proje sayfasındaki üçlü şerit)</span></h2>
+      <div class="alist" data-list="facts">
+        <% project.facts.forEach(function (f) { %>
+        <div class="arow">
+          <input type="text" data-field="label" value="<%= f.label %>" placeholder="Etiket">
+          <input type="text" data-field="value" value="<%= f.value %>" placeholder="Değer">
+          <button type="button" class="abtn abtn-danger arow-del" aria-label="Satırı sil">Sil</button>
+        </div>
+        <% }) %>
+      </div>
+      <button type="button" class="abtn abtn-ghost" data-add="facts">+ Bilgi kutusu ekle</button>
+    </section>
+
+    <section class="asection">
+      <h2>Proje ekibi <span class="amuted">(görev alanları buradan ata veya kaldır)</span></h2>
+      <div class="alist" data-list="team">
+        <% project.team.forEach(function (m) { %>
+        <div class="arow arow-person">
+          <img class="aavatar" data-preview="photo" src="<%= m.photo %>" alt="">
+          <input type="text" data-field="name" value="<%= m.name %>" placeholder="Ad Soyad">
+          <input type="text" data-field="role" value="<%= m.role %>" placeholder="Görev">
+          <input type="text" data-field="photo" value="<%= m.photo %>" placeholder="Fotoğraf yolu">
+          <label class="abtn abtn-ghost aupload">Foto<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="photo" hidden></label>
+          <button type="button" class="abtn abtn-danger arow-del" aria-label="Kişiyi kaldır">Kaldır</button>
+        </div>
+        <% }) %>
+      </div>
+      <button type="button" class="abtn abtn-ghost" data-add="team">+ Kişi ata</button>
+    </section>
+
+    <section class="asection">
+      <h2>Galeri</h2>
+      <div class="alist" data-list="gallery">
+        <% project.gallery.forEach(function (g) { %>
+        <div class="arow arow-person">
+          <img class="aavatar" data-preview="url" src="<%= g %>" alt="">
+          <input type="text" data-field="url" value="<%= g %>" placeholder="Görsel yolu">
+          <label class="abtn abtn-ghost aupload">Görsel<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="url" hidden></label>
+          <button type="button" class="abtn abtn-danger arow-del" aria-label="Görseli kaldır">Kaldır</button>
+        </div>
+        <% }) %>
+      </div>
+      <button type="button" class="abtn abtn-ghost" data-add="gallery">+ Galeri görseli ekle</button>
+    </section>
+
+    <div class="asave-bar">
+      <button type="submit" class="abtn abtn-primary">Kaydet</button>
+      <p class="form-feedback" role="status" aria-live="polite"></p>
+    </div>
+  </form>
+</div>
+
+<template data-template="facts">
+  <div class="arow">
+    <input type="text" data-field="label" placeholder="Etiket">
+    <input type="text" data-field="value" placeholder="Değer">
+    <button type="button" class="abtn abtn-danger arow-del" aria-label="Satırı sil">Sil</button>
+  </div>
+</template>
+<template data-template="team">
+  <div class="arow arow-person">
+    <img class="aavatar" data-preview="photo" src="" alt="">
+    <input type="text" data-field="name" placeholder="Ad Soyad">
+    <input type="text" data-field="role" placeholder="Görev">
+    <input type="text" data-field="photo" placeholder="Fotoğraf yolu">
+    <label class="abtn abtn-ghost aupload">Foto<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="photo" hidden></label>
+    <button type="button" class="abtn abtn-danger arow-del" aria-label="Kişiyi kaldır">Kaldır</button>
+  </div>
+</template>
+<template data-template="gallery">
+  <div class="arow arow-person">
+    <img class="aavatar" data-preview="url" src="" alt="">
+    <input type="text" data-field="url" placeholder="Görsel yolu">
+    <label class="abtn abtn-ghost aupload">Görsel<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="url" hidden></label>
+    <button type="button" class="abtn abtn-danger arow-del" aria-label="Görseli kaldır">Kaldır</button>
+  </div>
+</template>
+
+<%- include('partials/bottom') %>

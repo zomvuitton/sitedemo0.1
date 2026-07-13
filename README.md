@@ -21,11 +21,30 @@ Geliştirme modu (dosya izleme): `npm run dev`
 
 ## Ortam değişkenleri
 
-| Değişken   | Varsayılan | Açıklama                         |
-|------------|------------|----------------------------------|
-| `PORT`     | `3000`     | Sunucu portu                     |
-| `DATA_DIR` | `./data`   | Form kayıtlarının yazıldığı yer  |
-| `NODE_ENV` | —          | `production` → statik önbellek   |
+| Değişken         | Varsayılan        | Açıklama                                        |
+|------------------|-------------------|-------------------------------------------------|
+| `PORT`           | `3000`            | Sunucu portu                                    |
+| `DATA_DIR`       | `./data`          | Form kayıtları + düzenlenebilir içerik deposu   |
+| `NODE_ENV`       | —                 | `production` → statik önbellek                  |
+| `ADMIN_PASSWORD` | `verimlilik1992`  | Yönetim paneli parolası — **canlıda mutlaka değiştir** |
+| `SESSION_SECRET` | rastgele (boot)   | Oturum çerezi imza anahtarı; sabitlersen oturumlar sunucu yeniden başlasa da geçerli kalır |
+
+## Yönetim paneli
+
+`/admin/giris` üzerinden parola ile girilir. Panelden:
+
+- **Projeler:** oluştur/sil; ad, slogan, özet, açıklama paragrafları, bilgi
+  kutuları, kapak görseli, galeri, ikon, tema, öne çıkarma ve **proje ekibi**
+  (kişi ata/kaldır, fotoğraf yükle) düzenlenir.
+- **Komiteler:** oluştur/sil; açıklamalar ve koordinatör atamaları.
+- **Kurullar:** Yönetim Kurulu, Denetleme ve Danışma Kurulu, İdari Kurul —
+  üye ekle/sil/düzenle. Üyesi olmayan kurul sitede gizlenir.
+
+Düzenlemeler `data/content.json` dosyasına yazılır ve kaydedildiği anda
+yayına yansır. Dosya silinirse site `lib/content.js` içindeki tohum veriyle
+yeniden başlar. Görsel yüklemeleri `public/img/uploads/` altına gider.
+Kalıcılık için deploy ortamında `data/` ve `public/img/uploads/` dizinlerini
+kalıcı diske (volume) bağlayın.
 
 ## API
 
@@ -37,6 +56,10 @@ Geliştirme modu (dosya izleme): `npm run dev`
 | `/api/health`     | GET    | —                                                  |
 
 Tüm POST uçları IP başına dakikada 10 istekle sınırlıdır.
+
+Yönetim API'leri (`/admin/api/...`) HMAC imzalı `vt_admin` çerezi ister:
+`login`, `logout`, `upload` (ham görsel gövdesi) ve projeler/komiteler için
+POST-PUT-DELETE, kurullar için PUT uçları.
 
 ## Docker ile dağıtım
 

@@ -11,13 +11,14 @@
   </div>
 </section>
 
-<section class="tile tile-gray">
+<% boards.filter(b => b.members.length).forEach(function (b, i) { %>
+<section class="tile <%= i % 2 === 0 ? 'tile-gray' : 'tile-white' %>">
   <div class="container">
     <div class="section-head reveal">
-      <h2>Yönetim Kurulumuz</h2>
+      <h2><%= b.name %></h2>
     </div>
     <div class="people-grid">
-      <% board.forEach(function (m) { %>
+      <% b.members.forEach(function (m) { %>
       <div class="person reveal">
         <img class="person-photo" src="<%= m.photo %>" alt="<%= m.name %>" loading="lazy">
         <h3><%= m.name %></h3>
@@ -27,23 +28,7 @@
     </div>
   </div>
 </section>
-
-<section class="tile tile-white">
-  <div class="container">
-    <div class="section-head reveal">
-      <h2>Denetleme ve Danışma Kurulumuz</h2>
-    </div>
-    <div class="people-grid">
-      <% advisors.forEach(function (m) { %>
-      <div class="person reveal">
-        <img class="person-photo" src="<%= m.photo %>" alt="<%= m.name %>" loading="lazy">
-        <h3><%= m.name %></h3>
-        <p><%= m.role %></p>
-      </div>
-      <% }) %>
-    </div>
-  </div>
-</section>
+<% }) %>
 
 <section class="tile tile-gray">
   <div class="container">
@@ -52,8 +37,8 @@
       <a class="link-more" href="/projeler">Projelere git <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
     </div>
     <div class="people-grid">
-      <% projectLeads.forEach(function (p) {
-           p.team.filter(t => !/Yönetim Kurulu Üyesi/.test(t.role)).forEach(function (m) { %>
+      <% projects.forEach(function (p) {
+           (p.team || []).filter(t => !/Yönetim Kurulu Üyesi/.test(t.role)).forEach(function (m) { %>
       <div class="person reveal">
         <img class="person-photo" src="<%= m.photo %>" alt="<%= m.name %>" loading="lazy">
         <h3><%= m.name %></h3>
@@ -70,7 +55,7 @@
       <h2>Komite koordinatörlerimiz</h2>
     </div>
     <div class="editorial-body reveal">
-      <p class="lede-dark">Dizayn, İletişim ve Pazarlama, İnovasyon ve Organizasyon komiteleri; topluluğun görünen ve görünmeyen tüm işlerini omuzlar.</p>
+      <p class="lede-dark"><%= committees.map(c => c.name.replace(' Komitesi', '')).join(', ') %> komiteleri; topluluğun görünen ve görünmeyen tüm işlerini omuzlar.</p>
       <div class="cta-row">
         <a class="btn btn-primary" href="/komiteler">Komiteleri incele</a>
       </div>
