@@ -6,39 +6,25 @@
     <div class="page-hero-inner reveal">
       <p class="eyebrow eyebrow-red">Komiteler</p>
       <h1>Topluluğun motor dairesi.</h1>
-      <p class="lede lede-dark">Dört komite; tasarımdan sosyal medyaya, veri analizinden kampüs içi etkinliklere topluluğun tüm işleyişini sırtlar.</p>
+      <p class="lede lede-dark">Tasarımdan sosyal medyaya, veri analizinden kampüs içi etkinliklere — topluluğun tüm işleyişini komiteler sırtlar.</p>
     </div>
   </div>
 </section>
 
-<% committees.forEach(function (c, i) { %>
-<section class="tile <%= i % 2 === 0 ? 'tile-gray' : 'tile-white' %> editorial">
-  <div class="container editorial-grid">
-    <div class="editorial-aside reveal">
-      <span class="card-icon"><%- include('partials/icon', { name: c.icon }) %></span>
-      <h2><%= c.name %></h2>
-    </div>
-    <div class="editorial-body reveal">
-      <p class="lede-dark"><%= c.summary %></p>
-      <% c.body.forEach(function (para) { %>
-      <p><%= para %></p>
+<section class="tile tile-gray">
+  <div class="container">
+    <div class="card-row card-row-2">
+      <% committees.forEach(function (c) { %>
+      <a class="card card-committee reveal" href="/komiteler/<%= c.slug %>">
+        <span class="card-icon"><%- include('partials/icon', { name: c.icon }) %></span>
+        <h2><%= c.name %></h2>
+        <p><%= c.summary %></p>
+        <span class="card-more">Sayfayı incele <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></span>
+      </a>
       <% }) %>
-      <div class="committee-team">
-        <% c.team.forEach(function (m) { %>
-        <div class="person person-sm">
-          <img class="person-photo" src="<%= m.photo %>" alt="<%= m.name %>" loading="lazy">
-          <h3><%= m.name %></h3>
-          <p><%= m.role %></p>
-        </div>
-        <% }) %>
-      </div>
-      <div class="cta-row">
-        <a class="link-more" href="/komiteler/<%= c.slug %>"><%= c.name %> sayfası <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
-      </div>
     </div>
   </div>
 </section>
-<% }) %>
 
 <section class="tile tile-dark join-cta">
   <div class="hero-inner reveal">

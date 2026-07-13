@@ -452,6 +452,10 @@ h3 {
   border-radius: 14px;
 }
 
+/* Komite kartları: yalnızca isim + slogan, ferah dolgu */
+.card-committee { padding: var(--s-6) var(--s-4); }
+.card-committee h2 { font-size: clamp(21px, 2.5vw, 27px); letter-spacing: -0.01em; }
+
 /* ---------- Proje dizini: satır listesi ---------- */
 
 .project-list { display: flex; flex-direction: column; gap: var(--s-2); }
@@ -817,6 +821,7 @@ h3 {
 @media (min-width: 1024px) {
   .card-row { grid-template-columns: repeat(4, 1fr); }
   .card-row-3 { grid-template-columns: repeat(3, 1fr); }
+  .card-row-2 { grid-template-columns: repeat(2, 1fr); }
   .footer-grid { grid-template-columns: 1.4fr 1fr 1fr 1.2fr; }
   .people-grid { grid-template-columns: repeat(4, 1fr); }
   .partner-grid { grid-template-columns: repeat(7, 1fr); }
