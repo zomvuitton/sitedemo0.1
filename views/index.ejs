@@ -1,8 +1,9 @@
 <%- include('partials/head') %>
 <%- include('partials/nav') %>
 
-<!-- Hero: koyu tam genişlik karo -->
+<!-- Hero: koyu tam genişlik karo + imleci takip eden partikül animasyonu -->
 <section class="tile tile-dark hero">
+  <div class="hero-particles" id="heroParticles" aria-hidden="true"></div>
   <div class="hero-inner reveal">
     <p class="eyebrow"><%= site.slogan %></p>
     <h1>ODTÜ Verimlilik<br>Topluluğu</h1>
@@ -102,4 +103,5 @@
   </div>
 </section>
 
+<script type="module" src="/js/hero-particles.js"></script>
 <%- include('partials/footer') %>
