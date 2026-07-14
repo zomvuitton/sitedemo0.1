@@ -342,7 +342,7 @@ if (container && section && !reduceMotion) {
       container,
       hoverTarget: section,
       morphAnchor: anchor,
-      image: "/img/odtuvt/logo-white.png",
+      image: "/img/odtuvt/logo-mark-white.png",
       colors: { color1: "#ff5063", color2: "#a6192e", color3: "#000000" }
     });
   } catch (err) {
