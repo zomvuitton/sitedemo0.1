@@ -91,17 +91,22 @@
   </div>
 </section>
 
-<!-- Kampüste buluşalım -->
-<section class="tile tile-dark join-cta">
-  <div class="hero-inner reveal">
-    <h2 class="display-light">Bizi kampüste bul.</h2>
-    <p class="lede">Üyelik internet üzerinden değil, yüz yüze: Endüstri Mühendisliği Binası'ndaki Verimlilik Topluluğu Odası'na uğra ya da etkinliklerimizde tanışalım.</p>
-    <div class="cta-row">
-      <a class="btn btn-primary" href="/iletisim">İletişime geç</a>
-      <a class="link-more" href="<%= site.social.instagram %>" target="_blank" rel="noopener">Instagram'da takip et <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
+<!-- Kampüste buluşalım — morph partikül animasyonlu geniş karo -->
+<section class="tile tile-dark join-cta campus" id="campusSection">
+  <div class="hero-particles" id="campusParticles" aria-hidden="true"></div>
+  <div class="container campus-grid">
+    <div class="campus-text reveal">
+      <h2 class="display-light">Bizi kampüste bul.</h2>
+      <p class="lede">Üyelik internet üzerinden değil, yüz yüze: Endüstri Mühendisliği Binası'ndaki Verimlilik Topluluğu Odası'na uğra ya da etkinliklerimizde tanışalım.</p>
+      <div class="cta-row">
+        <a class="btn btn-primary" href="/iletisim">İletişime geç</a>
+        <a class="link-more" href="<%= site.social.instagram %>" target="_blank" rel="noopener">Instagram'da takip et <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
+      </div>
     </div>
+    <div class="campus-morph-zone" id="campusMorphZone" aria-hidden="true"></div>
   </div>
 </section>
 
 <script type="module" src="/js/hero-particles.js"></script>
+<script type="module" src="/js/campus-morph.js"></script>
 <%- include('partials/footer') %>
