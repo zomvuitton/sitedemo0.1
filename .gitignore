@@ -1,5 +1,6 @@
 node_modules/
-data/
-public/img/uploads/
+# Form kayıtları (kişisel veri) repoya girmez; içerik deposu content.json girer
+data/*
+!data/content.json
 .env
 *.log

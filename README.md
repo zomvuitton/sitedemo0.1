@@ -43,8 +43,15 @@ Geliştirme modu (dosya izleme): `npm run dev`
 Düzenlemeler `data/content.json` dosyasına yazılır ve kaydedildiği anda
 yayına yansır. Dosya silinirse site `lib/content.js` içindeki tohum veriyle
 yeniden başlar. Görsel yüklemeleri `public/img/uploads/` altına gider.
-Kalıcılık için deploy ortamında `data/` ve `public/img/uploads/` dizinlerini
-kalıcı diske (volume) bağlayın.
+
+**İçerik git ile taşınır:** `data/content.json` ve `public/img/uploads/`
+repoya dahildir — siteyi nereye kurarsanız kurun aynı içerik gelir.
+Önerilen akış: içeriği kendi bilgisayarınızda panelden düzenleyin, sonra
+`git add . && git commit -m "içerik güncellendi" && git push` ile yayınlayın.
+Deploy platformu push'u görünce siteyi otomatik günceller. (Canlı sunucu
+üzerinde yapılan panel düzenlemeleri o sunucuda kalır; kalıcı olmaları için
+ya oradan da git push kurgusu ya da düzenlemeleri lokalde yapmak gerekir.)
+Form kayıtları (`data/*.jsonl`) kişisel veri içerdiği için repoya girmez.
 
 ## API
 
