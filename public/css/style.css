@@ -365,7 +365,7 @@ h3 {
   flex-shrink: 0;
 }
 
-.nav-logo { height: 26px; width: auto; }
+.nav-logo { height: 32px; width: auto; }
 
 /* ---------- Öne çıkan karo ---------- */
 
@@ -462,10 +462,14 @@ h3 {
   margin-bottom: var(--s-6);
 }
 
+/* Kart sıraları: eksik satırlar ortalanır (flex tabanlı) */
 .card-row {
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: var(--s-2);
 }
+.card-row > * { flex: 0 0 100%; }
 
 .card {
   background: var(--paper);
@@ -568,10 +572,16 @@ h3 {
 
 /* ---------- İnsanlar: ekip ızgarası ---------- */
 
+/* Kişi ızgarası: eksik satırlar ortalanır (flex tabanlı) */
 .people-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   gap: var(--s-4) var(--s-3);
+}
+.people-grid .person {
+  flex: 0 0 calc((100% - var(--s-3)) / 2);
+  text-align: center;
 }
 
 .person { display: flex; flex-direction: column; gap: var(--s-1); }
@@ -596,6 +606,23 @@ h3 {
 
 .person h3 { font-size: 17px; }
 .person p { font-size: 14px; color: var(--ink-2); }
+
+/* Görev başlığı: isimden ayrışması için küçük ve aralıklı */
+.person-role {
+  margin-top: 2px;
+  font-size: 13px !important;
+  letter-spacing: 0.01em;
+}
+
+/* Kişi alıntısı: silik ve italik, yalnızca proje/komite sayfalarında */
+.person-quote {
+  margin-top: var(--s-1);
+  font-size: 13px !important;
+  font-style: italic;
+  color: var(--ink-2);
+  opacity: 0.65;
+  line-height: 1.4;
+}
 
 .people-subhead {
   font-size: 14px;
@@ -854,10 +881,10 @@ h3 {
 
 @media (min-width: 600px) {
   .form-row { grid-template-columns: 1fr 1fr; }
-  .card-row { grid-template-columns: repeat(2, 1fr); }
+  .card-row > * { flex-basis: calc((100% - var(--s-2)) / 2); }
   .facts-row { grid-template-columns: repeat(3, 1fr); }
   .footer-grid { grid-template-columns: 1fr 1fr; }
-  .people-grid { grid-template-columns: repeat(3, 1fr); }
+  .people-grid .person { flex-basis: calc((100% - 2 * var(--s-3)) / 3); }
   .partner-grid { grid-template-columns: repeat(4, 1fr); }
   .gallery-grid { grid-template-columns: repeat(3, 1fr); }
 }
@@ -877,10 +904,14 @@ h3 {
 }
 
 @media (min-width: 1024px) {
-  .card-row { grid-template-columns: repeat(4, 1fr); }
-  .card-row-3 { grid-template-columns: repeat(3, 1fr); }
-  .card-row-2 { grid-template-columns: repeat(2, 1fr); }
+  .card-row > * { flex-basis: calc((100% - 3 * var(--s-2)) / 4); }
+  .card-row-3 > * { flex-basis: calc((100% - 2 * var(--s-2)) / 3); }
+  .card-row-2 > * { flex-basis: calc((100% - var(--s-2)) / 2); }
+  /* 5'li sıra: diğer projeler tek satıra sığsın diye hafif sıkıştırılmış */
+  .card-row-5 > * { flex-basis: calc((100% - 4 * var(--s-2)) / 5); }
+  .card-row-5 .card { padding: var(--s-3); }
+  .card-row-5 .card h3 { font-size: 19px; }
   .footer-grid { grid-template-columns: 1.4fr 1fr 1fr 1.2fr; }
-  .people-grid { grid-template-columns: repeat(4, 1fr); }
+  .people-grid .person { flex-basis: calc((100% - 3 * var(--s-3)) / 4); }
   .partner-grid { grid-template-columns: repeat(7, 1fr); }
 }

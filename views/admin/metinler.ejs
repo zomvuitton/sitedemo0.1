@@ -1,0 +1,35 @@
+<%- include('partials/top') %>
+
+<div class="apage">
+  <div class="apage-head">
+    <h1>Metinler</h1>
+    <a class="abtn abtn-ghost" href="/" target="_blank" rel="noopener">Siteyi gör ↗</a>
+  </div>
+  <p class="asub">Sitedeki tüm sabit yazılar buradan düzenlenir. Kaydettiğin anda yayına yansır. Proje ve komite içerikleri kendi sayfalarından düzenlenir.</p>
+
+  <form id="editForm" data-save="/admin/api/metinler">
+    <% schema.forEach(function (g) { %>
+    <section class="asection">
+      <h2><%= g.group %></h2>
+      <div class="<%= g.group === 'İstatistikler' ? 'agrid-2' : '' %>">
+        <% g.items.forEach(function (item) { const [path, label, type] = item; %>
+        <label><%= label %>
+          <% if (type === "textarea") { %>
+          <textarea name="<%= path %>" rows="3"><%= getValue(path) %></textarea>
+          <% } else { %>
+          <input type="text" name="<%= path %>" value="<%= getValue(path) %>">
+          <% } %>
+        </label>
+        <% }) %>
+      </div>
+    </section>
+    <% }) %>
+
+    <div class="asave-bar">
+      <button type="submit" class="abtn abtn-primary">Kaydet</button>
+      <p class="form-feedback" role="status" aria-live="polite"></p>
+    </div>
+  </form>
+</div>
+
+<%- include('partials/bottom') %>

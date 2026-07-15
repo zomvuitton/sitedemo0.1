@@ -6,11 +6,11 @@
   <div class="hero-particles" id="heroParticles" aria-hidden="true"></div>
   <div class="hero-inner reveal">
     <p class="eyebrow"><%= site.slogan %></p>
-    <h1>ODTÜ Verimlilik<br>Topluluğu</h1>
+    <h1><%- br(texts.homeHeroTitle) %></h1>
     <p class="lede"><%= site.heroLede %></p>
     <div class="cta-row">
-      <a class="btn btn-primary" href="/projeler">Projeleri keşfet</a>
-      <a class="link-more" href="/hakkimizda">Topluluğu tanı <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
+      <a class="btn btn-primary" href="/projeler"><%= texts.homeHeroButton %></a>
+      <a class="link-more" href="/hakkimizda"><%= texts.homeHeroLink %> <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
     </div>
   </div>
 </section>
@@ -19,7 +19,7 @@
 <section class="tile tile-gray others">
   <div class="container">
     <div class="section-head reveal">
-      <h2>Altı proje. Tek amaç.</h2>
+      <h2><%= texts.homeProjectsTitle %></h2>
       <a class="link-more" href="/projeler">Tümünü gör <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
     </div>
     <div class="card-row card-row-3">
@@ -43,8 +43,8 @@
 <section class="tile tile-white stats">
   <div class="container stats-grid">
     <div class="stats-head reveal">
-      <h2>Rakamlarla<br>bir öğrenci topluluğu.</h2>
-      <p>Öğrenciler, akademisyenler ve iş dünyası arasında 1992'den beri işleyen bir köprü.</p>
+      <h2><%- br(texts.homeStatsTitle) %></h2>
+      <p><%= texts.homeStatsLede %></p>
     </div>
     <dl class="stats-list reveal">
       <% site.stats.forEach(function (s) { %>
@@ -61,7 +61,7 @@
 <section class="tile tile-white editorial">
   <div class="container editorial-grid">
     <div class="editorial-aside reveal">
-      <h2>Biz kimiz?</h2>
+      <h2><%= texts.homeAboutTitle %></h2>
       <img class="aside-img" src="<%= site.aboutImage %>" alt="ODTÜ Verimlilik Topluluğu üyeleri bir arada" loading="lazy">
     </div>
     <div class="editorial-body reveal">
@@ -78,8 +78,8 @@
 <section class="tile tile-gray partners">
   <div class="container">
     <div class="section-head reveal">
-      <h2>Partner şirketlerimiz</h2>
-      <p class="section-sub">90'dan fazla şirket iş birliğinden bazıları.</p>
+      <h2><%= texts.homePartnersTitle %></h2>
+      <p class="section-sub"><%= texts.homePartnersSub %></p>
     </div>
     <div class="partner-grid reveal">
       <% partners.forEach(function (pt) { %>
@@ -96,11 +96,11 @@
   <div class="hero-particles" id="campusParticles" aria-hidden="true"></div>
   <div class="container campus-grid">
     <div class="campus-text reveal">
-      <h2 class="display-light">Bizi kampüste bul.</h2>
-      <p class="lede">Üyelik internet üzerinden değil, yüz yüze: Endüstri Mühendisliği Binası'ndaki Verimlilik Topluluğu Odası'na uğra ya da etkinliklerimizde tanışalım.</p>
+      <h2 class="display-light"><%- br(texts.campusTitle) %></h2>
+      <p class="lede"><%= texts.campusLede %></p>
       <div class="cta-row">
-        <a class="btn btn-primary" href="/iletisim">İletişime geç</a>
-        <a class="link-more" href="<%= site.social.instagram %>" target="_blank" rel="noopener">Instagram'da takip et <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
+        <a class="btn btn-primary" href="/iletisim"><%= texts.campusButton %></a>
+        <a class="link-more" href="<%= site.social.instagram %>" target="_blank" rel="noopener"><%= texts.campusLink %> <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
       </div>
     </div>
     <div class="campus-morph-zone" id="campusMorphZone" aria-hidden="true"></div>

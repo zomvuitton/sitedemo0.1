@@ -49,7 +49,7 @@
         "/img/odtuvt/yonetim-ve-muhendislik-gunleri-galeri-resmi-3MTDWL.jpg"
       ],
       "icon": "mic",
-      "external": "https://www.odtuvt.org.tr/proje-yonetim-ve-muhendislik-gunleri",
+      "external": "https://ymg.odtuvt.org.tr/",
       "theme": "dark",
       "featured": false
     },
@@ -97,7 +97,7 @@
         "/img/odtuvt/vakavt-galeri-resmi-AJ17WN.jpeg"
       ],
       "icon": "target",
-      "external": "https://www.odtuvt.org.tr/proje-vakavt",
+      "external": "",
       "theme": "light",
       "featured": false
     },
@@ -150,7 +150,7 @@
         "/img/odtuvt/wequal-galeri-resmi-81TKA6.jpeg"
       ],
       "icon": "scale",
-      "external": "https://www.odtuvt.org.tr/proje-wequal",
+      "external": "",
       "theme": "light",
       "featured": false
     },
@@ -229,7 +229,7 @@
         "/img/odtuvt/estiem-galeri-resmi-LU240G.jpeg"
       ],
       "icon": "globe",
-      "external": "https://www.odtuvt.org.tr/proje-estiem",
+      "external": "",
       "theme": "light"
     },
     {
@@ -285,7 +285,7 @@
         "/img/odtuvt/odtululer-icin-gelecek-planlari-galeri-resmi-8QJOB8.jpeg"
       ],
       "icon": "compass",
-      "external": "https://www.odtuvt.org.tr/proje-odtululer-icin-gelecek-planlari",
+      "external": "",
       "theme": "light"
     },
     {
@@ -333,7 +333,7 @@
         "/img/odtuvt/kybele-galeri-resmi-YYJRU1.jpeg"
       ],
       "icon": "book",
-      "external": "https://www.odtuvt.org.tr/proje-kybele",
+      "external": "",
       "theme": "light"
     }
   ],
@@ -527,5 +527,89 @@
         }
       ]
     }
-  ]
+  ],
+  "site": {
+    "name": "ODTÜ Verimlilik Topluluğu",
+    "short": "ODTÜ VT",
+    "founded": 1992,
+    "slogan": "Become a Leader With Us",
+    "claim": "1992'den beri kampüsün üretim merkezi.",
+    "heroLede": "Farklı disiplinlerden öğrenciler, yaratıcı projeler, geniş kapsamlı etkinlikler, sosyal sorumluluk, kariyer fırsatları ve çok daha fazlası...",
+    "description": "ODTÜ Verimlilik Topluluğu, 1992 yılından bu yana farklı disiplinlerden öğrencileri bir araya getirerek, iş dünyası ve akademik çevrelerle güçlü bir köprü kurmayı hedeflemektedir.",
+    "about": [
+      "Orta Doğu Teknik Üniversitesi Verimlilik Topluluğu, 1992 yılında kurulmuş, kurulduğu günden beri ODTÜ'de bulunan tüm bölümlerden öğrencileri bünyesine katmıştır. Topluluk olarak amacımız; yarattığımız farklılıklarla lider bir öğrenci topluluğu olmak, öğrenciler ile akademisyenler ve iş dünyasından profesyoneller arasında bilgi ve tecrübe akışını sağlamak, ulaştığı kitlenin sosyal ve kişisel gelişimine katkıda bulunmaktır.",
+      "ODTÜ VT, her sene iş dünyasından profesyoneller ve akademik dünyadan uzmanlar ile öğrencileri; gündem oluşturan, yaratıcı ve ilgi çekici konularda buluşturur. Her sene düzenlediği farklı projelerle 80'den fazla etkinlik gerçekleştiren ODTÜ VT, Türkiye ve Avrupa'dan yaklaşık olarak 5000 seçkin öğrenci ve akademisyeni katılımcı olarak ağırlamaktadır. Topluluğumuz gerçekleştirdiği tüm etkinlikleri, katılımcılara ücretsiz olarak sunmaktadır."
+    ],
+    "vision": "Verimlilik Topluluğu, geleceğe yönelik adımlarında, “Yarattığı farklılıklarla ulusal ve uluslararası alanda lider öğrenci topluluğu olmak” düşüncesini taşımaktadır. Öğrencilerin sosyal, kişisel ve akademik gelişimlerine katkı sağlayarak, iş dünyası ve akademi arasında kalıcı bağlar kurmayı hedeflemektedir.",
+    "mission": "Farklı alanlarda düzenlediği etkinlikler yoluyla; paydaşlarına değer katarak, ulusal ve uluslararası alanda etkili bir iletişim ortamı sağlamayı, öğrenciler ile akademisyenler ve iş dünyasından profesyoneller arasında bilgi ve tecrübe akışını sağlamayı, ulaştığı kitlenin farklı disiplinlerdeki bilgi birikimini arttırmayı, ODTÜ öğrencilerinin sosyal ve kişisel gelişimine katkıda bulunmayı amaçlamaktadır.",
+    "address": "Üniversiteler Mahallesi, ODTÜ Endüstri Mühendisliği Binası, Verimlilik Topluluğu Odası, Ankara / Türkiye",
+    "phone": "0 (312) 210 60 12",
+    "email": "info@odtuvt.org.tr",
+    "aboutImage": "/img/odtuvt/anasayfa-hakkimizda-resim-BGY7ZZ.png",
+    "social": {
+      "instagram": "https://www.instagram.com/odtu_vt",
+      "youtube": "https://www.youtube.com/c/ODT%C3%9CVerimlilikToplulu%C4%9Fu",
+      "linkedin": "https://www.linkedin.com/company/metu-productivity-club/",
+      "x": "https://x.com/odtu_vt",
+      "facebook": "https://www.facebook.com/odtuverimliliktoplulugu"
+    },
+    "stats": [
+      {
+        "value": "34",
+        "label": "yıllık tecrübe"
+      },
+      {
+        "value": "6",
+        "label": "farklı proje"
+      },
+      {
+        "value": "90+",
+        "label": "şirket iş birliği"
+      },
+      {
+        "value": "300+",
+        "label": "aktif üye"
+      },
+      {
+        "value": "%100",
+        "label": "etkinlikler ücretsiz"
+      }
+    ]
+  },
+  "texts": {
+    "homeHeroTitle": "ODTÜ Verimlilik\nTopluluğu",
+    "homeHeroButton": "Projeleri keşfet",
+    "homeHeroLink": "Topluluğu tanı",
+    "homeProjectsTitle": "Altı proje. Tek amaç.",
+    "homeStatsTitle": "Rakamlarla\nbir öğrenci topluluğu.",
+    "homeStatsLede": "Öğrenciler, akademisyenler ve iş dünyası arasında 1992'den beri işleyen bir köprü.",
+    "homeAboutTitle": "Biz kimiz?",
+    "homePartnersTitle": "Partner şirketlerimiz",
+    "homePartnersSub": "90'dan fazla şirket iş birliğinden bazıları.",
+    "campusTitle": "Bizi kampüste bul.",
+    "campusLede": "Üyelik internet üzerinden değil, yüz yüze: Endüstri Mühendisliği Binası'ndaki Verimlilik Topluluğu Odası'na uğra ya da etkinliklerimizde tanışalım.",
+    "campusButton": "İletişime geç",
+    "campusLink": "Instagram'da takip et",
+    "aboutTitle": "Disiplinler arası bir köprü.\n1992'den bugüne.",
+    "aboutQuote": "Yarattığı farklılıklarla ulusal ve uluslararası alanda lider öğrenci topluluğu olmak.",
+    "aboutQuoteSource": "Topluluk vizyonu",
+    "aboutStatsTitle": "Otuz yılı aşkın birikim.",
+    "aboutStatsLede": "Kampüste bir öğrenci topluluğundan fazlası: bir okul.",
+    "aboutPartnersSub": "Etkinliklerin tamamı, bu iş birlikleri sayesinde katılımcılara ücretsiz.",
+    "projectsTitle": "Altı proje.\nSeksenden fazla etkinlik.",
+    "projectsLede": "Zirvelerden yarışmalara, veri biliminden sosyal sorumluluğa — hepsi ücretsiz, hepsi öğrenciler için.",
+    "committeesTitle": "Topluluğun motor dairesi.",
+    "committeesLede": "Tasarımdan sosyal medyaya, veri analizinden kampüs içi etkinliklere — topluluğun tüm işleyişini komiteler sırtlar.",
+    "committeesCtaTitle": "Hangi komite sana göre?",
+    "committeesCtaLede": "Komiteleri en iyi kampüste, etkinliklerimizde ve topluluk odamızda tanırsın.",
+    "teamTitle": "Topluluğu yürüten insanlar.",
+    "teamLede": "Yönetim Kurulu, Denetleme ve Danışma Kurulu, proje liderleri ve komite koordinatörleri; altı projeyi ve 80'den fazla etkinliği her yıl yeniden kurar.",
+    "teamIdariSub": "Proje liderleri ve komite koordinatörlerinden oluşur.",
+    "teamCtaTitle": "Bu ekibin içinde\nsenin de yerin var.",
+    "teamCtaLede": "Bizi kampüste bul: Endüstri Mühendisliği Binası, Verimlilik Topluluğu Odası.",
+    "contactTitle": "Sorun, önerin,\niş birliği fikrin mi var?",
+    "contactLede": "Formu doldur; ilgili ekip arkadaşımız sana dönsün.",
+    "footerNote": "Bu etkinliklerin tamamı katılımcılara ücretsizdir; masraflar sponsorluklarla karşılanır.",
+    "newsletterLabel": "Etkinlik duyuruları"
+  }
 }

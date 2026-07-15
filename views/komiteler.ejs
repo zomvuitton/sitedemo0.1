@@ -5,8 +5,8 @@
   <div class="container">
     <div class="page-hero-inner reveal">
       <p class="eyebrow eyebrow-red">Komiteler</p>
-      <h1>Topluluğun motor dairesi.</h1>
-      <p class="lede lede-dark">Tasarımdan sosyal medyaya, veri analizinden kampüs içi etkinliklere — topluluğun tüm işleyişini komiteler sırtlar.</p>
+      <h1><%- br(texts.committeesTitle) %></h1>
+      <p class="lede lede-dark"><%= texts.committeesLede %></p>
     </div>
   </div>
 </section>
@@ -28,10 +28,10 @@
 
 <section class="tile tile-dark join-cta">
   <div class="hero-inner reveal">
-    <h2 class="display-light">Hangi komite sana göre?</h2>
-    <p class="lede">Komiteleri en iyi kampüste, etkinliklerimizde ve topluluk odamızda tanırsın.</p>
+    <h2 class="display-light"><%- br(texts.committeesCtaTitle) %></h2>
+    <p class="lede"><%= texts.committeesCtaLede %></p>
     <div class="cta-row">
-      <a class="btn btn-primary" href="/iletisim">İletişime geç</a>
+      <a class="btn btn-primary" href="/iletisim"><%= texts.campusButton %></a>
     </div>
   </div>
 </section>

@@ -40,9 +40,19 @@ app.use(
   })
 );
 
+// Çok satırlı metinleri güvenle <br>'e çevirir (önce HTML kaçışı yapılır)
+function escapeHtml(s) {
+  return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+}
+function br(s) {
+  return String(s ?? "").split("\n").map(escapeHtml).join("<br>");
+}
+
 // Her şablona ortak veri — depo üzerinden, düzenlemeler anında yansır
 app.use((req, res, next) => {
-  res.locals.site = site;
+  res.locals.site = store.content.site;
+  res.locals.texts = store.content.texts;
+  res.locals.br = br;
   res.locals.partners = partners;
   res.locals.projects = store.content.projects;
   res.locals.committees = store.content.committees;
@@ -118,6 +128,8 @@ function cleanMembers(value) {
       const member = { name: clean(m.name, 120), role: clean(m.role, 160), photo: clean(m.photo, 400) };
       // onlyProject: kişi yalnızca proje sayfasında görünür, Ekibimiz'e (İdari Kurul) yansımaz
       if (m.onlyProject) member.onlyProject = true;
+      // quote: bir cümlelik kişisel alıntı — yalnızca proje/komite sayfasında gösterilir
+      if (m.quote) member.quote = clean(m.quote, 240);
       return member;
     })
     .filter((m) => m.name)
@@ -268,6 +280,135 @@ app.get("/admin/komiteler/:slug", requireAdminPage, (req, res, next) => {
 });
 
 const YK_ROLE_RE = /Yönetim Kurulu Üyesi|YK Üyesi/;
+
+// Metinler sayfası şeması: yalnızca burada listelenen yollar düzenlenebilir
+const TEXT_SCHEMA = [
+  {
+    group: "Marka & Genel",
+    items: [
+      ["site.slogan", "Hero üst yazısı (slogan)"],
+      ["site.claim", "Alt bilgi sloganı"],
+      ["texts.footerNote", "Alt bilgi notu", "textarea"],
+      ["texts.newsletterLabel", "Bülten kutusu başlığı"],
+      ["site.address", "Adres", "textarea"],
+      ["site.phone", "Telefon"],
+      ["site.email", "E-posta"]
+    ]
+  },
+  {
+    group: "Ana sayfa",
+    items: [
+      ["texts.homeHeroTitle", "Hero başlığı (satır bölmek için Enter)", "textarea"],
+      ["site.heroLede", "Hero alt yazısı", "textarea"],
+      ["texts.homeHeroButton", "Hero butonu"],
+      ["texts.homeHeroLink", "Hero bağlantısı"],
+      ["texts.homeProjectsTitle", "Projeler bölümü başlığı"],
+      ["texts.homeStatsTitle", "Rakamlar başlığı", "textarea"],
+      ["texts.homeStatsLede", "Rakamlar açıklaması", "textarea"],
+      ["texts.homeAboutTitle", "Biz kimiz başlığı"],
+      ["texts.homePartnersTitle", "Partnerler başlığı"],
+      ["texts.homePartnersSub", "Partnerler alt yazısı"],
+      ["texts.campusTitle", "Kampüste bul başlığı"],
+      ["texts.campusLede", "Kampüste bul metni", "textarea"],
+      ["texts.campusButton", "Kampüste bul butonu"],
+      ["texts.campusLink", "Kampüste bul bağlantısı"]
+    ]
+  },
+  {
+    group: "İstatistikler",
+    items: [
+      ["site.stats.0.value", "1. değer"], ["site.stats.0.label", "1. etiket"],
+      ["site.stats.1.value", "2. değer"], ["site.stats.1.label", "2. etiket"],
+      ["site.stats.2.value", "3. değer"], ["site.stats.2.label", "3. etiket"],
+      ["site.stats.3.value", "4. değer"], ["site.stats.3.label", "4. etiket"],
+      ["site.stats.4.value", "5. değer"], ["site.stats.4.label", "5. etiket"]
+    ]
+  },
+  {
+    group: "Hakkımızda sayfası",
+    items: [
+      ["texts.aboutTitle", "Sayfa başlığı", "textarea"],
+      ["site.description", "Sayfa alt yazısı", "textarea"],
+      ["site.about.0", "Biz kimiz — 1. paragraf", "textarea"],
+      ["site.about.1", "Biz kimiz — 2. paragraf", "textarea"],
+      ["site.vision", "Vizyon", "textarea"],
+      ["site.mission", "Misyon", "textarea"],
+      ["texts.aboutQuote", "Koyu bölümdeki alıntı", "textarea"],
+      ["texts.aboutQuoteSource", "Alıntı kaynağı"],
+      ["texts.aboutStatsTitle", "Rakamlar başlığı"],
+      ["texts.aboutStatsLede", "Rakamlar açıklaması"],
+      ["texts.aboutPartnersSub", "Partnerler alt yazısı"]
+    ]
+  },
+  {
+    group: "Projeler sayfası",
+    items: [
+      ["texts.projectsTitle", "Sayfa başlığı", "textarea"],
+      ["texts.projectsLede", "Sayfa alt yazısı", "textarea"]
+    ]
+  },
+  {
+    group: "Komiteler sayfası",
+    items: [
+      ["texts.committeesTitle", "Sayfa başlığı"],
+      ["texts.committeesLede", "Sayfa alt yazısı", "textarea"],
+      ["texts.committeesCtaTitle", "Alt koyu bölüm başlığı"],
+      ["texts.committeesCtaLede", "Alt koyu bölüm metni"]
+    ]
+  },
+  {
+    group: "Ekibimiz sayfası",
+    items: [
+      ["texts.teamTitle", "Sayfa başlığı"],
+      ["texts.teamLede", "Sayfa alt yazısı", "textarea"],
+      ["texts.teamIdariSub", "İdari Kurul alt yazısı"],
+      ["texts.teamCtaTitle", "Alt koyu bölüm başlığı", "textarea"],
+      ["texts.teamCtaLede", "Alt koyu bölüm metni"]
+    ]
+  },
+  {
+    group: "İletişim sayfası",
+    items: [
+      ["texts.contactTitle", "Sayfa başlığı", "textarea"],
+      ["texts.contactLede", "Sayfa alt yazısı"]
+    ]
+  }
+];
+
+const TEXT_PATHS = new Set(TEXT_SCHEMA.flatMap((g) => g.items.map((i) => i[0])));
+
+function getPath(obj, path) {
+  return path.split(".").reduce((o, k) => (o == null ? undefined : o[k]), obj);
+}
+
+function setPath(obj, path, value) {
+  const keys = path.split(".");
+  let o = obj;
+  for (let i = 0; i < keys.length - 1; i++) {
+    if (o[keys[i]] == null) o[keys[i]] = /^\d+$/.test(keys[i + 1]) ? [] : {};
+    o = o[keys[i]];
+  }
+  o[keys[keys.length - 1]] = value;
+}
+
+app.get("/admin/metinler", requireAdminPage, (req, res) => {
+  res.render("admin/metinler", {
+    title: "Metinler — Yönetim paneli",
+    schema: TEXT_SCHEMA,
+    getValue: (p) => getPath(store.content, p) ?? ""
+  });
+});
+
+app.put("/admin/api/metinler", requireAdminApi, (req, res) => {
+  let updated = 0;
+  for (const [path, value] of Object.entries(req.body || {})) {
+    if (!TEXT_PATHS.has(path) || typeof value !== "string") continue;
+    setPath(store.content, path, value.trim().slice(0, 4000));
+    updated++;
+  }
+  store.save();
+  res.json({ ok: true, updated });
+});
 
 app.get("/admin/kurullar", requireAdminPage, (req, res) => {
   // İdari Kurul türetilir: kaynak proje/komite bilgisiyle birlikte listelenir
@@ -427,7 +568,8 @@ app.put("/admin/api/idari-kurul", requireAdminApi, (req, res) => {
         source: clean(m.source, 80),
         name: clean(m.name, 120),
         role: clean(m.role, 160),
-        photo: clean(m.photo, 400)
+        photo: clean(m.photo, 400),
+        quote: clean(m.quote, 240)
       }))
       .filter((m) => m.name && validSlugs.includes(m.source))
       .slice(0, 80);
@@ -436,15 +578,23 @@ app.put("/admin/api/idari-kurul", requireAdminApi, (req, res) => {
   const leads = cleanAssigned(req.body.leads, store.content.projects.map((p) => p.slug));
   const coords = cleanAssigned(req.body.coords, store.content.committees.map((c) => c.slug));
 
-  // YK üyeleri ve "yalnızca proje sayfasında" işaretli kişiler korunur
+  // YK üyeleri ve "yalnızca proje sayfasında" işaretli kişiler korunur.
+  // Quote, kurullar sayfasından düzenlenmediği için mevcut kayıttan (isimle eşleşerek) taşınır.
+  function carryQuote(team, m) {
+    const existing = (team || []).find((t) => t.name === m.name);
+    const member = { name: m.name, role: m.role, photo: m.photo };
+    const quote = m.quote || (existing && existing.quote);
+    if (quote) member.quote = quote;
+    return member;
+  }
   store.content.projects.forEach((p) => {
     const kept = (p.team || []).filter((m) => YK_ROLE_RE.test(m.role) || m.onlyProject);
-    const assigned = leads.filter((l) => l.source === p.slug).map(({ name, role, photo }) => ({ name, role, photo }));
+    const assigned = leads.filter((l) => l.source === p.slug).map((m) => carryQuote(p.team, m));
     p.team = [...kept, ...assigned];
   });
   store.content.committees.forEach((c) => {
     const kept = (c.team || []).filter((m) => YK_ROLE_RE.test(m.role) || m.onlyProject);
-    const assigned = coords.filter((k) => k.source === c.slug).map(({ name, role, photo }) => ({ name, role, photo }));
+    const assigned = coords.filter((k) => k.source === c.slug).map((m) => carryQuote(c.team, m));
     c.team = [...kept, ...assigned];
   });
   store.save();

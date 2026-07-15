@@ -5,7 +5,7 @@
   <div class="container">
     <div class="page-hero-inner reveal">
       <p class="eyebrow eyebrow-red">Hakkımızda</p>
-      <h1>Disiplinler arası bir köprü.<br>1992'den bugüne.</h1>
+      <h1><%- br(texts.aboutTitle) %></h1>
       <p class="lede lede-dark"><%= site.description %></p>
     </div>
   </div>
@@ -48,16 +48,16 @@
 
 <section class="tile tile-dark quote-tile">
   <div class="hero-inner reveal">
-    <p class="quote">"Yarattığı farklılıklarla ulusal ve uluslararası alanda lider öğrenci topluluğu olmak."</p>
-    <p class="quote-source">Topluluk vizyonu</p>
+    <p class="quote">"<%= texts.aboutQuote %>"</p>
+    <p class="quote-source"><%= texts.aboutQuoteSource %></p>
   </div>
 </section>
 
 <section class="tile tile-white stats">
   <div class="container stats-grid">
     <div class="stats-head reveal">
-      <h2>Otuz yılı aşkın birikim.</h2>
-      <p>Kampüste bir öğrenci topluluğundan fazlası: bir okul.</p>
+      <h2><%= texts.aboutStatsTitle %></h2>
+      <p><%= texts.aboutStatsLede %></p>
     </div>
     <dl class="stats-list reveal">
       <% site.stats.forEach(function (s) { %>
@@ -74,7 +74,7 @@
   <div class="container">
     <div class="section-head reveal">
       <h2>Partner şirketlerimiz</h2>
-      <p class="section-sub">Etkinliklerin tamamı, bu iş birlikleri sayesinde katılımcılara ücretsiz.</p>
+      <p class="section-sub"><%= texts.aboutPartnersSub %></p>
     </div>
     <div class="partner-grid reveal">
       <% partners.forEach(function (pt) { %>

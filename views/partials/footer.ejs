@@ -4,7 +4,7 @@
     <div class="footer-grid">
       <div class="footer-about">
         <p class="footer-claim"><%= site.claim %></p>
-        <p class="footer-note">Bu etkinliklerin tamamı katılımcılara ücretsizdir; masraflar sponsorluklarla karşılanır.</p>
+        <p class="footer-note"><%= texts.footerNote %></p>
       </div>
       <nav aria-label="Site haritası">
         <h3>Topluluk</h3>
@@ -33,7 +33,7 @@
           <li><a href="<%= site.social.facebook %>" rel="noopener" target="_blank">Facebook</a></li>
         </ul>
         <form class="footer-news" data-api="/api/newsletter" novalidate>
-          <label for="newsEmail">Etkinlik duyuruları</label>
+          <label for="newsEmail"><%= texts.newsletterLabel %></label>
           <div class="footer-news-row">
             <input type="email" id="newsEmail" name="email" placeholder="e-posta adresin" required autocomplete="email">
             <button type="submit" aria-label="Abone ol"><%- include('icon', { name: 'arrow' }) %></button>

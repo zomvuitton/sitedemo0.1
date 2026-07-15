@@ -38,7 +38,7 @@
     </div>
     <div class="people-grid">
       <% committee.team.forEach(function (m) { %>
-      <%- include('partials/person', { m: m }) %>
+      <%- include('partials/person', { m: m, showQuote: true }) %>
       <% }) %>
     </div>
   </div>
