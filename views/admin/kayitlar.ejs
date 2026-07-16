@@ -1,0 +1,61 @@
+<%- include('partials/top') %>
+
+<div class="apage">
+  <div class="apage-head">
+    <h1>Kayıtlar</h1>
+  </div>
+  <p class="asub">İletişim formundan gelen mesajlar ve bülten aboneleri. CSV dosyaları Excel'de doğrudan açılır.</p>
+
+  <section class="asection">
+    <div class="apage-head">
+      <h2>Gelen mesajlar (<%= messages.length %>)</h2>
+      <a class="abtn abtn-ghost" href="/admin/api/kayitlar/mesajlar.csv">CSV indir</a>
+    </div>
+    <% if (!messages.length) { %>
+    <p class="amuted-block">Henüz mesaj yok.</p>
+    <% } else { %>
+    <div class="atable-scroll">
+      <table class="atable">
+        <thead><tr><th>Tarih</th><th>Ad</th><th>E-posta</th><th>Konu</th><th>Mesaj</th></tr></thead>
+        <tbody>
+          <% messages.forEach(function (m) { %>
+          <tr>
+            <td class="anowrap"><%= (m.at || "").slice(0, 16).replace("T", " ") %></td>
+            <td class="anowrap"><%= m.name %></td>
+            <td class="anowrap"><a href="mailto:<%= m.email %>"><%= m.email %></a></td>
+            <td><%= m.subject %></td>
+            <td class="amesaj"><%= m.message %></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+    <% } %>
+  </section>
+
+  <section class="asection">
+    <div class="apage-head">
+      <h2>Bülten aboneleri (<%= subscribers.length %>)</h2>
+      <a class="abtn abtn-ghost" href="/admin/api/kayitlar/aboneler.csv">CSV indir</a>
+    </div>
+    <% if (!subscribers.length) { %>
+    <p class="amuted-block">Henüz abone yok.</p>
+    <% } else { %>
+    <div class="atable-scroll">
+      <table class="atable">
+        <thead><tr><th>Tarih</th><th>E-posta</th></tr></thead>
+        <tbody>
+          <% subscribers.forEach(function (s) { %>
+          <tr>
+            <td class="anowrap"><%= (s.at || "").slice(0, 16).replace("T", " ") %></td>
+            <td><a href="mailto:<%= s.email %>"><%= s.email %></a></td>
+          </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+    <% } %>
+  </section>
+</div>
+
+<%- include('partials/bottom') %>

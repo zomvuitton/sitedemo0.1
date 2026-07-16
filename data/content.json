@@ -532,7 +532,7 @@
     "name": "ODTÜ Verimlilik Topluluğu",
     "short": "ODTÜ VT",
     "founded": 1992,
-    "slogan": "Become a Leader Wıth Us",
+    "slogan": "Become a Leader With Us",
     "claim": "1992'den beri kampüsün üretim merkezi.",
     "heroLede": "Farklı disiplinlerden öğrenciler, yaratıcı projeler, geniş kapsamlı etkinlikler, sosyal sorumluluk, kariyer fırsatları ve çok daha fazlası...",
     "description": "ODTÜ Verimlilik Topluluğu, 1992 yılından bu yana farklı disiplinlerden öğrencileri bir araya getirerek, iş dünyası ve akademik çevrelerle güçlü bir köprü kurmayı hedeflemektedir.",
@@ -610,6 +610,8 @@
     "contactTitle": "Sorun, önerin,\niş birliği fikrin mi var?",
     "contactLede": "Formu doldur; ilgili ekip arkadaşımız sana dönsün.",
     "footerNote": "Bu etkinliklerin tamamı katılımcılara ücretsizdir; masraflar sponsorluklarla karşılanır.",
-    "newsletterLabel": "Etkinlik duyuruları"
-  }
+    "newsletterLabel": "Etkinlik duyuruları",
+    "homeEventsTitle": "Yaklaşan etkinlikler"
+  },
+  "events": []
 }

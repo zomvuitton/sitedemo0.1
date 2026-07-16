@@ -4,7 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title><%= title %></title>
-  <meta name="description" content="<%= site.description %>">
+  <% const pageDesc = typeof desc !== "undefined" && desc ? desc : site.description; %>
+  <meta name="description" content="<%= pageDesc %>">
+  <link rel="canonical" href="<%= siteUrl + path %>">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="<%= site.name %>">
+  <meta property="og:title" content="<%= title %>">
+  <meta property="og:description" content="<%= pageDesc %>">
+  <meta property="og:url" content="<%= siteUrl + path %>">
+  <meta property="og:image" content="<%= siteUrl %>/img/og-image.png">
+  <meta property="og:locale" content="tr_TR">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="<%= title %>">
+  <meta name="twitter:description" content="<%= pageDesc %>">
+  <meta name="twitter:image" content="<%= siteUrl %>/img/og-image.png">
   <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/css/style.css">
 </head>

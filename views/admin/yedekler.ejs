@@ -1,0 +1,49 @@
+<%- include('partials/top') %>
+
+<div class="apage">
+  <div class="apage-head">
+    <h1>Yedekler</h1>
+  </div>
+  <p class="asub">Panelde her kayıt işleminden önce içeriğin bir yedeği alınır (son 10 tanesi saklanır). Yanlış bir değişiklik yaptıysan buradan önceki hâline dönebilirsin.</p>
+  <p class="form-feedback" role="status" aria-live="polite"></p>
+
+  <% if (!backups.length) { %>
+  <section class="asection"><p class="amuted-block">Henüz yedek yok. İlk kayıt işleminden sonra burada görünecek.</p></section>
+  <% } else { %>
+  <table class="atable">
+    <thead><tr><th>Yedek zamanı</th><th></th></tr></thead>
+    <tbody>
+      <% backups.forEach(function (b) { %>
+      <tr>
+        <td><%= b.at.toLocaleString("tr-TR", { dateStyle: "long", timeStyle: "short" }) %></td>
+        <td class="atable-actions">
+          <button class="abtn abtn-danger" type="button" data-restore="<%= b.file %>">Bu hâle geri dön</button>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+  <% } %>
+</div>
+
+<script>
+document.querySelectorAll("button[data-restore]").forEach((btn) => {
+  btn.addEventListener("click", async () => {
+    if (!confirm("İçerik bu yedekteki hâline dönecek; şu anki hâl de ayrıca yedeklenecek. Devam?")) return;
+    const res = await fetch("/admin/api/yedekler/geri-yukle", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ file: btn.dataset.restore })
+    });
+    const data = await res.json();
+    if (data.ok) location.reload();
+    else {
+      const f = document.querySelector(".form-feedback");
+      f.textContent = data.error || "Geri yüklenemedi.";
+      f.className = "form-feedback err";
+    }
+  });
+});
+</script>
+
+<%- include('partials/bottom') %>

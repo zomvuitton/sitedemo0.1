@@ -2,6 +2,7 @@ const path = require("path");
 const fs = require("fs");
 const crypto = require("crypto");
 const express = require("express");
+const compression = require("compression");
 const store = require("./lib/store");
 
 const { site, partners } = store;
@@ -33,6 +34,7 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(compression());
 app.use(express.json({ limit: "512kb" }));
 app.use(
   express.static(path.join(__dirname, "public"), {
@@ -57,7 +59,9 @@ app.use((req, res, next) => {
   res.locals.projects = store.content.projects;
   res.locals.committees = store.content.committees;
   res.locals.boards = store.content.boards;
+  res.locals.events = store.content.events;
   res.locals.path = req.path;
+  res.locals.siteUrl = (process.env.SITE_URL || "http://localhost:3000").replace(/\/$/, "");
   next();
 });
 
@@ -178,12 +182,24 @@ function rateLimit(req, res, next) {
 
 // ---------- Genel sayfalar ----------
 
+const AY_KISA = ["Oca", "Şub", "Mar", "Nis", "May", "Haz", "Tem", "Ağu", "Eyl", "Eki", "Kas", "Ara"];
+
 app.get("/", (req, res) => {
   // Ana sayfada tüm projeler alfabetik sırayla 3+3 ızgarada gösterilir
   const homeProjects = [...store.content.projects].sort((a, b) =>
     a.short.localeCompare(b.short, "tr")
   );
-  res.render("index", { title: `${site.short} — ${site.name}`, homeProjects });
+  // Yaklaşan etkinlikler: bugünden itibaren, tarihe göre, en fazla 4
+  const today = new Date().toISOString().slice(0, 10);
+  const upcoming = (store.content.events || [])
+    .filter((e) => e.date >= today)
+    .sort((a, b) => a.date.localeCompare(b.date))
+    .slice(0, 4)
+    .map((e) => {
+      const d = new Date(e.date + "T00:00:00");
+      return { ...e, day: d.getDate(), month: AY_KISA[d.getMonth()] };
+    });
+  res.render("index", { title: `${site.short} — ${site.name}`, homeProjects, upcoming });
 });
 
 app.get("/hakkimizda", (req, res) => {
@@ -197,7 +213,7 @@ app.get("/projeler", (req, res) => {
 app.get("/projeler/:slug", (req, res, next) => {
   const project = store.content.projects.find((p) => p.slug === req.params.slug);
   if (!project) return next();
-  res.render("proje", { title: `${project.name} — ${site.short}`, project });
+  res.render("proje", { title: `${project.name} — ${site.short}`, project, desc: project.summary });
 });
 
 app.get("/komiteler", (req, res) => {
@@ -207,7 +223,7 @@ app.get("/komiteler", (req, res) => {
 app.get("/komiteler/:slug", (req, res, next) => {
   const committee = store.content.committees.find((c) => c.slug === req.params.slug);
   if (!committee) return next();
-  res.render("komite", { title: `${committee.name} — ${site.short}`, committee });
+  res.render("komite", { title: `${committee.name} — ${site.short}`, committee, desc: committee.summary });
 });
 
 app.get("/ekibimiz", (req, res) => {
@@ -247,6 +263,27 @@ app.post("/api/newsletter", rateLimit, (req, res) => {
 });
 
 app.get("/api/health", (req, res) => res.json({ ok: true, uptime: process.uptime() }));
+
+// ---------- SEO: sitemap + robots ----------
+
+const SITE_URL = (process.env.SITE_URL || "http://localhost:3000").replace(/\/$/, "");
+
+app.get("/sitemap.xml", (req, res) => {
+  const urls = [
+    "/", "/hakkimizda", "/projeler", "/komiteler", "/ekibimiz", "/iletisim",
+    ...store.content.projects.map((p) => `/projeler/${p.slug}`),
+    ...store.content.committees.map((c) => `/komiteler/${c.slug}`)
+  ];
+  res.type("application/xml").send(
+    `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
+      urls.map((u) => `  <url><loc>${SITE_URL}${u}</loc></url>`).join("\n") +
+      `\n</urlset>`
+  );
+});
+
+app.get("/robots.txt", (req, res) => {
+  res.type("text/plain").send(`User-agent: *\nAllow: /\nDisallow: /admin\n\nSitemap: ${SITE_URL}/sitemap.xml\n`);
+});
 
 // ---------- Admin: sayfalar ----------
 
@@ -303,6 +340,7 @@ const TEXT_SCHEMA = [
       ["texts.homeHeroButton", "Hero butonu"],
       ["texts.homeHeroLink", "Hero bağlantısı"],
       ["texts.homeProjectsTitle", "Projeler bölümü başlığı"],
+      ["texts.homeEventsTitle", "Yaklaşan etkinlikler başlığı"],
       ["texts.homeStatsTitle", "Rakamlar başlığı", "textarea"],
       ["texts.homeStatsLede", "Rakamlar açıklaması", "textarea"],
       ["texts.homeAboutTitle", "Biz kimiz başlığı"],
@@ -390,6 +428,94 @@ function setPath(obj, path, value) {
   }
   o[keys[keys.length - 1]] = value;
 }
+
+// ---------- Admin: Kayıtlar (form gönderileri) ----------
+
+function readRecords(file) {
+  try {
+    return fs
+      .readFileSync(path.join(DATA_DIR, file), "utf8")
+      .split("\n")
+      .filter(Boolean)
+      .map((line) => {
+        try { return JSON.parse(line); } catch { return null; }
+      })
+      .filter(Boolean)
+      .reverse();
+  } catch {
+    return [];
+  }
+}
+
+app.get("/admin/kayitlar", requireAdminPage, (req, res) => {
+  res.render("admin/kayitlar", {
+    title: "Kayıtlar — Yönetim paneli",
+    messages: readRecords("contact.jsonl").slice(0, 300),
+    subscribers: readRecords("newsletter.jsonl").slice(0, 1000)
+  });
+});
+
+// CSV dışa aktarma (Türkçe Excel için BOM + noktalı virgül)
+function sendCsv(res, name, headers, rows) {
+  const esc = (v) => `"${String(v ?? "").replace(/"/g, '""')}"`;
+  const body = [headers.map(esc).join(";"), ...rows.map((r) => r.map(esc).join(";"))].join("\r\n");
+  res.setHeader("Content-Type", "text/csv; charset=utf-8");
+  res.setHeader("Content-Disposition", `attachment; filename="${name}"`);
+  res.send("﻿" + body);
+}
+
+app.get("/admin/api/kayitlar/mesajlar.csv", requireAdminApi, (req, res) => {
+  sendCsv(res, "mesajlar.csv", ["Tarih", "Ad", "E-posta", "Konu", "Mesaj"],
+    readRecords("contact.jsonl").map((r) => [r.at, r.name, r.email, r.subject, r.message]));
+});
+
+app.get("/admin/api/kayitlar/aboneler.csv", requireAdminApi, (req, res) => {
+  sendCsv(res, "aboneler.csv", ["Tarih", "E-posta"],
+    readRecords("newsletter.jsonl").map((r) => [r.at, r.email]));
+});
+
+// ---------- Admin: Etkinlikler ----------
+
+function sanitizeEvents(value) {
+  if (!Array.isArray(value)) return [];
+  return value
+    .map((e) => ({
+      title: clean(e.title, 160),
+      date: /^\d{4}-\d{2}-\d{2}$/.test(e.date) ? e.date : "",
+      time: clean(e.time, 40),
+      place: clean(e.place, 160),
+      link: clean(e.link, 400),
+      image: clean(e.image, 400)
+    }))
+    .filter((e) => e.title && e.date)
+    .sort((a, b) => a.date.localeCompare(b.date))
+    .slice(0, 50);
+}
+
+app.get("/admin/etkinlikler", requireAdminPage, (req, res) => {
+  res.render("admin/etkinlikler", { title: "Etkinlikler — Yönetim paneli", events: store.content.events });
+});
+
+app.put("/admin/api/etkinlikler", requireAdminApi, (req, res) => {
+  store.content.events = sanitizeEvents(req.body.events);
+  store.save();
+  res.json({ ok: true, count: store.content.events.length });
+});
+
+// ---------- Admin: Yedekler ----------
+
+app.get("/admin/yedekler", requireAdminPage, (req, res) => {
+  res.render("admin/yedekler", { title: "Yedekler — Yönetim paneli", backups: store.listBackups() });
+});
+
+app.post("/admin/api/yedekler/geri-yukle", requireAdminApi, (req, res) => {
+  try {
+    store.restore(clean(req.body.file, 80));
+    res.json({ ok: true });
+  } catch (err) {
+    res.status(400).json({ ok: false, error: "Geri yüklenemedi: " + err.message });
+  }
+});
 
 app.get("/admin/metinler", requireAdminPage, (req, res) => {
   res.render("admin/metinler", {

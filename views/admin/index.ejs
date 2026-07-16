@@ -25,6 +25,21 @@
       <p class="abig">Aa</p>
       <p>Sitedeki tüm sabit yazılar: hero, bölüm başlıkları, iletişim bilgileri.</p>
     </a>
+    <a class="acard" href="/admin/etkinlikler">
+      <h2>Etkinlikler</h2>
+      <p class="abig"><%= (typeof events !== "undefined" ? events : []).length %></p>
+      <p>Ana sayfadaki "Yaklaşan etkinlikler" duyuruları.</p>
+    </a>
+    <a class="acard" href="/admin/kayitlar">
+      <h2>Kayıtlar</h2>
+      <p class="abig">✉</p>
+      <p>İletişim mesajları ve bülten aboneleri; CSV dışa aktarma.</p>
+    </a>
+    <a class="acard" href="/admin/yedekler">
+      <h2>Yedekler</h2>
+      <p class="abig">↺</p>
+      <p>İçeriğin son 10 yedeği; tek tıkla geri yükleme.</p>
+    </a>
   </div>
 </div>
 

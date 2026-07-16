@@ -295,6 +295,14 @@ body.admin {
 .aimg-controls input { margin-top: 0 !important; }
 .aimg-controls .abtn { align-self: flex-start; }
 
+/* ---------- Kayıtlar tabloları ---------- */
+
+.atable-scroll { overflow-x: auto; border-radius: var(--radius-card); }
+.anowrap { white-space: nowrap; }
+.amesaj { min-width: 280px; max-width: 480px; font-size: 14px !important; }
+.arow input[type="date"] { flex: 0 0 150px; }
+.ain-sm { flex: 0 0 130px !important; }
+
 /* ---------- Kaydet çubuğu ---------- */
 
 .asave-bar {
