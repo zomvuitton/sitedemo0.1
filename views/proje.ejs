@@ -14,10 +14,22 @@
     </div>
     <% if (project.hero) { %>
     <img class="feature-img" src="<%= project.hero %>" alt="<%= project.name %> etkinliğinden bir kare">
+    <% if (project.facts.length) { %>
+    <!-- Liquid glass bilgi kutuları: kapak görselinin üstüne bindirilmiş -->
+    <dl class="facts-glass reveal">
+      <% project.facts.forEach(function (f) { %>
+      <div class="fact">
+        <dt><%= f.label %></dt>
+        <dd><%= f.value %></dd>
+      </div>
+      <% }) %>
+    </dl>
+    <% } %>
     <% } %>
   </div>
 </section>
 
+<% if (!project.hero && project.facts.length) { %>
 <section class="tile tile-gray project-facts">
   <div class="container">
     <dl class="facts-row reveal">
@@ -30,6 +42,7 @@
     </dl>
   </div>
 </section>
+<% } %>
 
 <section class="tile tile-white editorial">
   <div class="container editorial-grid">
