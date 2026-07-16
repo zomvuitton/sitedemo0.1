@@ -19,6 +19,16 @@ npm start            # http://localhost:3000
 
 Geliştirme modu (dosya izleme): `npm run dev`
 
+## Tek komutla güncelleme / yayınlama
+
+Panel düzenlemeleri `data/content.json`'ı değiştirdiği için düz `git pull`
+sık sık "local changes would be overwritten" hatası verir. Bunun yerine:
+
+- `npm run guncelle` — yerel değişiklikleri güvene alıp GitHub'daki
+  yenilikleri çeker (pull etmenin güvenli hâli)
+- `npm run yayinla` — aynısını yapar ve kendi değişikliklerini
+  GitHub'a da gönderir (push dahil)
+
 ## Ortam değişkenleri
 
 | Değişken         | Varsayılan        | Açıklama                                        |

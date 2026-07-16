@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "node --watch server.js"
+    "dev": "node --watch server.js",
+    "yayinla": "git add -A && (git commit -m \"içerik güncellendi\" || cd .) && git pull --no-edit && git push",
+    "guncelle": "git add -A && (git commit -m \"yerel içerik\" || cd .) && git pull --no-edit"
   },
   "engines": {
     "node": ">=18"
