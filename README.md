@@ -19,6 +19,16 @@ npm start            # http://localhost:3000
 
 Geliştirme modu (dosya izleme): `npm run dev`
 
+## Tek komutla güncelleme / yayınlama
+
+Panel düzenlemeleri `data/content.json`'ı değiştirdiği için düz `git pull`
+sık sık "local changes would be overwritten" hatası verir. Bunun yerine:
+
+- `npm run guncelle` — yerel değişiklikleri güvene alıp GitHub'daki
+  yenilikleri çeker (pull etmenin güvenli hâli)
+- `npm run yayinla` — aynısını yapar ve kendi değişikliklerini
+  GitHub'a da gönderir (push dahil)
+
 ## Ortam değişkenleri
 
 | Değişken         | Varsayılan        | Açıklama                                        |
@@ -28,6 +38,7 @@ Geliştirme modu (dosya izleme): `npm run dev`
 | `NODE_ENV`       | —                 | `production` → statik önbellek                  |
 | `ADMIN_PASSWORD` | `verimlilik1992`  | Yönetim paneli parolası — **canlıda mutlaka değiştir** |
 | `SESSION_SECRET` | rastgele (boot)   | Oturum çerezi imza anahtarı; sabitlersen oturumlar sunucu yeniden başlasa da geçerli kalır |
+| `SITE_URL`       | `http://localhost:3000` | Canlı alan adı (örn. `https://odtuvt.org.tr`) — sitemap, canonical ve paylaşım kartları bunu kullanır |
 
 ## Yönetim paneli
 
@@ -39,6 +50,13 @@ Geliştirme modu (dosya izleme): `npm run dev`
 - **Komiteler:** oluştur/sil; açıklamalar ve koordinatör atamaları.
 - **Kurullar:** Yönetim Kurulu, Denetleme ve Danışma Kurulu, İdari Kurul —
   üye ekle/sil/düzenle. Üyesi olmayan kurul sitede gizlenir.
+- **Metinler:** hero, bölüm başlıkları, istatistikler, iletişim bilgileri
+  dahil sitedeki tüm sabit yazılar.
+- **Etkinlikler:** ana sayfadaki "Yaklaşan etkinlikler" duyuruları;
+  tarihi geçenler otomatik gizlenir.
+- **Kayıtlar:** iletişim mesajları ve bülten aboneleri, CSV dışa aktarma.
+- **Yedekler:** her kayıttan önce alınan son 10 içerik yedeği,
+  tek tıkla geri yükleme.
 
 Düzenlemeler `data/content.json` dosyasına yazılır ve kaydedildiği anda
 yayına yansır. Dosya silinirse site `lib/content.js` içindeki tohum veriyle

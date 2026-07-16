@@ -694,6 +694,43 @@ h3 {
 .partner-cell:hover { transform: translateY(-2px); box-shadow: var(--shadow-hover); }
 .partner-cell img { max-height: 40px; width: auto; max-width: 100%; object-fit: contain; }
 
+/* ---------- Yaklaşan etkinlikler ---------- */
+
+.event-card {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--s-3);
+}
+
+.event-date {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: rgba(166, 25, 46, 0.08);
+  color: var(--vt-red);
+  flex-shrink: 0;
+}
+.event-date strong {
+  font-family: var(--font-display);
+  font-size: 26px;
+  font-weight: 700;
+  line-height: 1;
+}
+.event-date span {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-top: 2px;
+}
+
+.event-info { display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+.event-info h3 { font-size: 19px; }
+.event-info p { flex-grow: 0 !important; }
+
 /* ---------- Galeri ---------- */
 
 .gallery-grid {

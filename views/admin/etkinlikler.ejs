@@ -1,0 +1,45 @@
+<%- include('partials/top') %>
+
+<div class="apage">
+  <div class="apage-head">
+    <h1>Etkinlikler</h1>
+    <a class="abtn abtn-ghost" href="/" target="_blank" rel="noopener">Ana sayfayı gör ↗</a>
+  </div>
+  <p class="asub">Tarihi bugünden ileri olan etkinlikler ana sayfada "Yaklaşan etkinlikler" bölümünde görünür (en fazla 4). Tarihi geçenler otomatik gizlenir; listeden silmene gerek yok.</p>
+
+  <form id="editForm" data-save="/admin/api/etkinlikler">
+    <section class="asection">
+      <div class="alist" data-list="events">
+        <% events.forEach(function (e) { %>
+        <div class="arow arow-person">
+          <input type="date" data-field="date" value="<%= e.date %>" aria-label="Tarih">
+          <input type="text" data-field="time" value="<%= e.time || '' %>" placeholder="Saat (örn. 13.30)" class="ain-sm">
+          <input type="text" data-field="title" value="<%= e.title %>" placeholder="Etkinlik adı">
+          <input type="text" data-field="place" value="<%= e.place || '' %>" placeholder="Yer">
+          <input type="text" data-field="link" value="<%= e.link || '' %>" placeholder="Bağlantı (isteğe bağlı)">
+          <button type="button" class="abtn abtn-danger arow-del" aria-label="Etkinliği sil">Sil</button>
+        </div>
+        <% }) %>
+      </div>
+      <button type="button" class="abtn abtn-ghost" data-add="events">+ Etkinlik ekle</button>
+    </section>
+
+    <div class="asave-bar">
+      <button type="submit" class="abtn abtn-primary">Kaydet</button>
+      <p class="form-feedback" role="status" aria-live="polite"></p>
+    </div>
+  </form>
+</div>
+
+<template data-template="events">
+  <div class="arow arow-person">
+    <input type="date" data-field="date" aria-label="Tarih">
+    <input type="text" data-field="time" placeholder="Saat (örn. 13.30)" class="ain-sm">
+    <input type="text" data-field="title" placeholder="Etkinlik adı">
+    <input type="text" data-field="place" placeholder="Yer">
+    <input type="text" data-field="link" placeholder="Bağlantı (isteğe bağlı)">
+    <button type="button" class="abtn abtn-danger arow-del" aria-label="Etkinliği sil">Sil</button>
+  </div>
+</template>
+
+<%- include('partials/bottom') %>

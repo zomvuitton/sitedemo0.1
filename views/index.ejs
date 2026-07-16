@@ -15,6 +15,32 @@
   </div>
 </section>
 
+<!-- Yaklaşan etkinlikler: panelden yönetilir, tarihi geçince otomatik düşer -->
+<% if (upcoming.length) { %>
+<section class="tile tile-white events">
+  <div class="container">
+    <div class="section-head reveal">
+      <h2><%= texts.homeEventsTitle %></h2>
+    </div>
+    <div class="card-row card-row-2">
+      <% upcoming.forEach(function (e) { %>
+      <<%= e.link ? 'a href="' + e.link + '" target="_blank" rel="noopener"' : 'div' %> class="card event-card reveal">
+        <span class="event-date" aria-hidden="true">
+          <strong><%= e.day %></strong>
+          <span><%= e.month %></span>
+        </span>
+        <span class="event-info">
+          <h3><%= e.title %></h3>
+          <p><%= [e.time, e.place].filter(Boolean).join(" · ") %></p>
+          <% if (e.link) { %><span class="card-more">Detay <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></span><% } %>
+        </span>
+      </<%= e.link ? 'a' : 'div' %>>
+      <% }) %>
+    </div>
+  </div>
+</section>
+<% } %>
+
 <!-- Projeler: 3+3 alfabetik ızgara -->
 <section class="tile tile-gray others">
   <div class="container">
@@ -107,6 +133,13 @@
   </div>
 </section>
 
-<script type="module" src="/js/hero-particles.js"></script>
-<script type="module" src="/js/campus-morph.js"></script>
+<script>
+  // Animasyon modülleri (Three.js dahil ~700KB) sayfa çizildikten sonra
+  // boşta yüklenir — ilk açılışı bloklamaz
+  window.addEventListener("load", function () {
+    var go = function () { import("/js/hero-particles.js"); import("/js/campus-morph.js"); };
+    if ("requestIdleCallback" in window) requestIdleCallback(go, { timeout: 2500 });
+    else setTimeout(go, 400);
+  });
+</script>
 <%- include('partials/footer') %>
