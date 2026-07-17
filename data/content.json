@@ -355,12 +355,14 @@
         {
           "name": "İnanç Deniz Gözgözoğlu",
           "role": "Dizayn Komitesinden Sorumlu YK Üyesi",
-          "photo": "/img/odtuvt/inanc-deniz-gozgozoglu-UASM5F.jpeg"
+          "photo": "/img/odtuvt/inanc-deniz-gozgozoglu-UASM5F.jpeg",
+          "quote": "\"Don't tell me what I can't do\" - John Locke"
         },
         {
           "name": "Başbuğ Ergenekon Önder",
           "role": "Dizayn Komitesi Koordinatörü",
-          "photo": "/img/odtuvt/basbug-ergenekon-onder-XJXFXT.jpeg"
+          "photo": "/img/odtuvt/basbug-ergenekon-onder-XJXFXT.jpeg",
+          "quote": "Büyük dönüşümler devasa sıçramalarla değil, her gün dünden bir adım daha iyi olmayı hedefleyen küçük ve kesintisiz adımlarla inşa edilir"
         },
         {
           "name": "Sudegül Şen",
