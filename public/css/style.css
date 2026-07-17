@@ -203,35 +203,24 @@ h3 {
 .nav-links a[aria-current="page"] { color: var(--vt-red); opacity: 1; font-weight: 600; }
 
 .nav-cta {
-  position: relative;
-  isolation: isolate;
-  background: transparent;
   color: var(--vt-red) !important;
   font-weight: 600;
   opacity: 1 !important;
   padding: 6px 14px;
   border-radius: var(--radius-pill);
-  transition: transform 0.3s ease;
+  background: rgba(255, 255, 255, 0.5);
+  -webkit-backdrop-filter: blur(10px) saturate(160%);
+  backdrop-filter: blur(10px) saturate(160%);
+  border: 1px solid rgba(29, 29, 31, 0.1);
+  box-shadow: 0 2px 8px rgba(29, 29, 31, 0.06);
+  transition: transform 0.25s ease, background 0.25s ease;
 }
-.nav-cta::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  border-radius: inherit;
-  -webkit-backdrop-filter: blur(5px) saturate(160%);
-  backdrop-filter: blur(5px) saturate(160%);
-  box-shadow:
-    inset 2px 2px 0.5px -2px rgba(0, 0, 0, 0.9),
-    inset -2px -2px 0.5px -2px rgba(0, 0, 0, 0.85),
-    inset 1px 1px 1px -0.5px rgba(0, 0, 0, 0.6),
-    inset -1px -1px 1px -0.5px rgba(0, 0, 0, 0.6),
-    inset 0 0 5px 5px rgba(0, 0, 0, 0.1),
-    0 2px 6px rgba(0, 0, 0, 0.08);
-  transition: background 0.25s ease;
+.nav-cta:hover {
+  transform: scale(1.04);
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--vt-red) !important;
+  text-decoration: none;
 }
-.nav-cta:hover { transform: scale(1.05); color: var(--vt-red) !important; text-decoration: none; }
-.nav-cta:hover::after { background: rgba(166, 25, 46, 0.07); }
 
 .nav-toggle {
   display: none;
@@ -338,84 +327,42 @@ h3 {
   margin-top: var(--s-4);
 }
 
-/* ---------- Liquid glass hap butonlar ----------
-   Şeffaf gövde + kabartma cam halkası (inset gölge yığını) +
-   arka planı büken SVG kırılma katmanı (#liquidGlass).
-   Filtreyi desteklemeyen tarayıcılar bulanık cama düşer. */
-
-.svg-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
+/* ---------- Buzlu cam hap butonlar ----------
+   Düz ve sade: yarı saydam gövde + blur + tek ince kenarlık. */
 
 .btn {
-  position: relative;
-  isolation: isolate;
   display: inline-block;
   font-family: var(--font-text);
   font-size: 17px;
   font-weight: 600;
   padding: 12px 24px;
   border-radius: var(--radius-pill);
-  border: none;
   cursor: pointer;
-  background: transparent;
   color: var(--vt-red);
-  transition: transform 0.3s ease;
+  background: rgba(255, 255, 255, 0.55);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  backdrop-filter: blur(14px) saturate(160%);
+  border: 1px solid rgba(29, 29, 31, 0.1);
+  box-shadow: 0 4px 16px rgba(29, 29, 31, 0.08);
+  transition: transform 0.25s ease, background 0.25s ease;
 }
-.btn:hover { transform: scale(1.05); text-decoration: none; }
+.btn:hover {
+  transform: scale(1.03);
+  background: rgba(255, 255, 255, 0.8);
+  text-decoration: none;
+}
 .btn:active { transform: scale(0.98); }
 
-/* Kırılma katmanı: arka plan noise ile bükülür (Chromium); diğerlerinde no-op */
-.btn::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -2;
-  border-radius: inherit;
-  -webkit-backdrop-filter: url(#liquidGlass);
-  backdrop-filter: url(#liquidGlass);
-}
-
-/* Cam gövde + kabartma halka (açık zemin reçetesi) */
-.btn::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  border-radius: inherit;
-  -webkit-backdrop-filter: blur(6px) saturate(160%);
-  backdrop-filter: blur(6px) saturate(160%);
-  box-shadow:
-    inset 3px 3px 0.5px -3px rgba(0, 0, 0, 0.9),
-    inset -3px -3px 0.5px -3px rgba(0, 0, 0, 0.85),
-    inset 1px 1px 1px -0.5px rgba(0, 0, 0, 0.6),
-    inset -1px -1px 1px -0.5px rgba(0, 0, 0, 0.6),
-    inset 0 0 6px 6px rgba(0, 0, 0, 0.12),
-    inset 0 0 2px 2px rgba(0, 0, 0, 0.06),
-    0 0 12px rgba(255, 255, 255, 0.15),
-    0 2px 6px rgba(0, 0, 0, 0.08);
-  transition: background 0.25s ease;
-}
-.btn:hover::after { background: rgba(166, 25, 46, 0.06); }
-
-/* Koyu zemin reçetesi: beyaz kabartma halkası + hafif kırmızı ton */
+/* Koyu zemin: nötr beyaz cam, partiküller içinden bulanık geçer */
 .tile-dark .btn,
 .btn-glass {
   color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
 }
-.tile-dark .btn::after,
-.btn-glass::after {
-  background: rgba(166, 25, 46, 0.2);
-  box-shadow:
-    inset 3px 3px 0.5px -3.5px rgba(255, 255, 255, 0.09),
-    inset -3px -3px 0.5px -3.5px rgba(255, 255, 255, 0.85),
-    inset 1px 1px 1px -0.5px rgba(255, 255, 255, 0.6),
-    inset -1px -1px 1px -0.5px rgba(255, 255, 255, 0.6),
-    inset 0 0 6px 6px rgba(255, 255, 255, 0.12),
-    inset 0 0 2px 2px rgba(255, 255, 255, 0.06),
-    0 0 12px rgba(0, 0, 0, 0.15),
-    0 2px 6px rgba(0, 0, 0, 0.2);
-}
-.tile-dark .btn:hover::after,
-.btn-glass:hover::after { background: rgba(166, 25, 46, 0.38); }
+.tile-dark .btn:hover,
+.btn-glass:hover { background: rgba(255, 255, 255, 0.22); }
 
 .link-more {
   display: inline-flex;
@@ -958,11 +905,10 @@ h3 {
 }
 .footer-news input:focus { outline: none; border-color: var(--vt-red); }
 .footer-news button {
-  position: relative;
-  isolation: isolate;
-  background: transparent;
+  background: rgba(255, 255, 255, 0.75);
   color: var(--vt-red);
-  border: none;
+  border: 1px solid rgba(29, 29, 31, 0.1);
+  box-shadow: 0 2px 8px rgba(29, 29, 31, 0.06);
   border-radius: 50%;
   width: 38px;
   height: 38px;
@@ -971,25 +917,9 @@ h3 {
   justify-content: center;
   cursor: pointer;
   flex-shrink: 0;
-  transition: transform 0.3s ease;
+  transition: transform 0.25s ease, background 0.25s ease;
 }
-.footer-news button::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  border-radius: inherit;
-  box-shadow:
-    inset 2px 2px 0.5px -2px rgba(0, 0, 0, 0.9),
-    inset -2px -2px 0.5px -2px rgba(0, 0, 0, 0.85),
-    inset 1px 1px 1px -0.5px rgba(0, 0, 0, 0.6),
-    inset -1px -1px 1px -0.5px rgba(0, 0, 0, 0.6),
-    inset 0 0 5px 5px rgba(0, 0, 0, 0.1),
-    0 2px 6px rgba(0, 0, 0, 0.08);
-  transition: background 0.25s ease;
-}
-.footer-news button:hover { transform: scale(1.08); }
-.footer-news button:hover::after { background: rgba(166, 25, 46, 0.08); }
+.footer-news button:hover { transform: scale(1.08); background: #fff; }
 .footer-news .icon { width: 16px; height: 16px; }
 
 .footer-legal {
