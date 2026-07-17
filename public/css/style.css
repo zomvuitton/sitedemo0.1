@@ -174,6 +174,33 @@ h3 {
   gap: var(--s-3);
 }
 
+.nav-left {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--s-2);
+}
+
+/* Tema anahtarı: nav'ın solunda küçük ikon düğmesi */
+.theme-toggle {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--ink);
+  opacity: 0.7;
+  transition: opacity 0.2s ease, background 0.2s ease;
+}
+.theme-toggle:hover { opacity: 1; background: rgba(29, 29, 31, 0.06); }
+.theme-toggle .icon { width: 17px; height: 17px; }
+.theme-toggle .icon-moon { display: none; }
+html[data-theme="dark"] .theme-toggle .icon-moon { display: block; }
+html[data-theme="dark"] .theme-toggle .icon-sun { display: none; }
+html[data-theme="dark"] .theme-toggle:hover { background: rgba(255, 255, 255, 0.1); }
+
 .nav-brand {
   display: inline-flex;
   align-items: center;
@@ -614,6 +641,36 @@ h3 {
 
 .person { display: flex; flex-direction: column; gap: var(--s-1); }
 
+.person-photo-wrap { position: relative; }
+.person-photo-wrap .person-photo { display: block; }
+
+/* Mail / LinkedIn baloncukları: fotoğrafın alt köşesinde buzlu cam */
+.person-links {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  display: flex;
+  gap: 6px;
+}
+.person-links a {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.78);
+  -webkit-backdrop-filter: blur(10px) saturate(150%);
+  backdrop-filter: blur(10px) saturate(150%);
+  border: 1px solid rgba(29, 29, 31, 0.08);
+  color: var(--vt-red);
+  transition: transform 0.18s ease, background 0.18s ease;
+}
+.person-links a:hover {
+  transform: scale(1.1);
+  background: rgba(255, 255, 255, 0.95);
+}
+.person-links .icon { width: 15px; height: 15px; }
+
 .person-photo {
   width: 100%;
   aspect-ratio: 1 / 1;
@@ -682,9 +739,10 @@ h3 {
   gap: var(--s-2);
 }
 
-/* Koyu hücre: kaynaktaki logoların çoğu beyaz varyant */
+/* Koyu hücre: kaynaktaki logoların çoğu beyaz varyant.
+   Not: koyu temada da koyu kalması için sabit değer, --ink değil. */
 .partner-cell {
-  background: var(--ink);
+  background: #1d1d1f;
   border-radius: 16px;
   padding: var(--s-2) var(--s-3);
   display: flex;
@@ -1013,4 +1071,125 @@ h3 {
   .footer-grid { grid-template-columns: 1.4fr 1fr 1fr 1.2fr; }
   .people-grid .person { flex-basis: calc((100% - 3 * var(--s-3)) / 4); }
   .partner-grid { grid-template-columns: repeat(7, 1fr); }
+}
+
+/* ============================================================
+   Koyu tema — html[data-theme="dark"]
+   Belirteçler ters çevrilir; sabit açık değerler tek tek düzeltilir.
+   Yönetim paneli tema script'i yüklemediği için hep açık kalır.
+   ============================================================ */
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --vt-red: #ff5063;          /* koyu zeminde okunur vurgu */
+  --vt-red-deep: #ff7280;
+  --ink: #f5f5f7;
+  --ink-2: #a1a1a6;
+  --paper: #000000;
+  --paper-gray: #161617;
+  --shadow-rest: 0 1px 2px rgba(0, 0, 0, 0.35), 0 4px 16px rgba(0, 0, 0, 0.45);
+  --shadow-hover: 0 4px 12px rgba(0, 0, 0, 0.55), 0 12px 32px rgba(0, 0, 0, 0.5);
+  --border-soft: 1px solid rgba(255, 80, 99, 0.28);
+}
+
+/* Nav: buzlu şerit koyulaşır */
+html[data-theme="dark"] .nav {
+  background: rgba(18, 18, 20, 0.65);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 1px 16px rgba(0, 0, 0, 0.45);
+}
+html[data-theme="dark"] .nav-cta {
+  background: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.16);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+html[data-theme="dark"] .nav-cta:hover { background: rgba(255, 255, 255, 0.18); }
+
+/* Butonlar: açık zemin camı yerine koyu zemin camı */
+html[data-theme="dark"] .btn {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+html[data-theme="dark"] .btn:hover { background: rgba(255, 255, 255, 0.2); }
+
+/* Yüzeyler: kart katmanı zeminden bir ton açık */
+html[data-theme="dark"] .card,
+html[data-theme="dark"] .project-row,
+html[data-theme="dark"] .form,
+html[data-theme="dark"] .duo-cell { background: #1d1d1f; }
+
+/* Kırmızı yumuşak dolgular: koyu zeminde görünür kalsın */
+html[data-theme="dark"] .card-icon,
+html[data-theme="dark"] .event-date,
+html[data-theme="dark"] .person-initials { background: rgba(255, 80, 99, 0.14); }
+
+/* Form alanları */
+html[data-theme="dark"] .field input,
+html[data-theme="dark"] .field textarea,
+html[data-theme="dark"] .field select { background: #2a2a2d; }
+html[data-theme="dark"] .field input:hover,
+html[data-theme="dark"] .field textarea:hover,
+html[data-theme="dark"] .field select:hover { background: #323236; }
+html[data-theme="dark"] .field input:focus,
+html[data-theme="dark"] .field textarea:focus,
+html[data-theme="dark"] .field select:focus { background: #1d1d1f; }
+html[data-theme="dark"] .form-feedback.ok { color: #30d158; }
+
+/* Alt bilgi */
+html[data-theme="dark"] .footer { border-top-color: rgba(255, 255, 255, 0.1); }
+html[data-theme="dark"] .footer-legal { border-top-color: rgba(255, 255, 255, 0.1); }
+html[data-theme="dark"] .footer-news input {
+  background: #1d1d1f;
+  border-color: rgba(255, 255, 255, 0.15);
+}
+html[data-theme="dark"] .footer-news button {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.18);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+html[data-theme="dark"] .footer-news button:hover { background: rgba(255, 255, 255, 0.22); }
+
+/* Erişilebilirlik: atlama bağlantısı parlak kırmızıda koyu metin ister */
+html[data-theme="dark"] .skip-link { color: #1d1d1f; }
+
+/* ============================================================
+   Ekibimiz: kayan ızgara (grid reveal)
+   Sağ alt çapraza sürekli akan çizgi ızgarası; radial maske ile
+   yalnız imlecin (--mx/--my) çevresi görünür, kalanı gizli.
+   ============================================================ */
+
+.grid-reveal-hero { position: relative; overflow: hidden; }
+.grid-reveal-hero .container { position: relative; z-index: 1; }
+
+.grid-reveal {
+  --mx: -9999px;
+  --my: -9999px;
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(166, 25, 46, 0.4) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(166, 25, 46, 0.4) 1px, transparent 1px);
+  background-size: 44px 44px;
+  animation: grid-drift 5s linear infinite;
+  -webkit-mask-image: radial-gradient(230px circle at var(--mx) var(--my), rgba(0, 0, 0, 0.95), transparent 72%);
+  mask-image: radial-gradient(230px circle at var(--mx) var(--my), rgba(0, 0, 0, 0.95), transparent 72%);
+}
+
+@keyframes grid-drift {
+  from { background-position: 0 0; }
+  to { background-position: 44px 44px; }
+}
+
+html[data-theme="dark"] .grid-reveal {
+  background-image:
+    linear-gradient(to right, rgba(255, 80, 99, 0.35) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 80, 99, 0.35) 1px, transparent 1px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grid-reveal { animation: none; }
 }

@@ -1,57 +1,186 @@
 {
   "projects": [
     {
-      "slug": "ymg",
-      "name": "Yönetim ve Mühendislik Günleri",
-      "short": "YMG",
-      "tagline": "Ankara'nın en geniş katılımcılı öğrenci etkinliği.",
-      "summary": "Öğrencileri, alanında başarılı şirketler ve yetkin konuşmacılarla buluşturan üç günlük seminer etkinliği. Zengin katılımlı fuayesiyle networking imkânı sunar.",
+      "slug": "estiem",
+      "name": "ESTIEM",
+      "short": "ESTIEM",
+      "tagline": "Avrupa'nın endüstri mühendisliği ağı, Ankara'da.",
+      "summary": "Avrupa genelinde 77 üniversitede örgütlü ESTIEM'in Ankara yerel grubunu, 1996'dan beri ilk Türk yerel grubu olarak temsil ediyoruz.",
       "body": [
-        "Yönetim ve Mühendislik Günleri, her yıl Verimlilik Topluluğu tarafından düzenlenen, öğrenciler ile alanında başarılı şirketleri ve yetkin konuşmacıları buluşturarak bilgi aktarımı sağlamayı hedefleyen bir seminer etkinliğidir. Üç gün süren etkinlikte seminerler, paneller ve söyleşiler ile katılımcıların en üst düzeyde faydalanması, lider konuşmacıların da tecrübe aktarımı yoluyla katılımcılara benzersiz bir kişisel gelişim fırsatı sunması amaçlanmaktadır.",
-        "Oturumların yanı sıra zengin katılımlı fuayesiyle de şirketlere ve katılımcılara networking imkânı sunar. Yönetim ve Mühendislik Günleri sadece ODTÜ'nün değil, aynı zamanda Ankara'nın da en geniş katılımcılı öğrenci etkinliğidir. Ağırladığı konuşmacılarla ve iş birliği yaptığı şirketlerle her sene bu unvanı hak ederek ulusal çapta katılımcı almaktadır.",
-        "Yönetim ve Mühendislik Günleri PLUS, YMG'ye ek olarak gerçekleştirilen, katılımcıların her sene belirli departmanlar bazında kafalarındaki soru işaretlerini gidermeye yönelik teknik bir etkinliktir. Öğrencilerin akademik yaşamda teorik olarak öğrendiği ancak iş dünyasında ne şekilde uygulandığını bilmediği teknik bilgiler, lider şirketler tarafından öğrencilere aktarılır."
+        "\"ESTIEM (European Students of Industrial Engineering and Management), ODTÜ Verimlilik Topluluğu’nun uluslararası faaliyetlerini yürüttüğü ve üyelerine Avrupa çapında güçlü bir etkileşim ağı sunan öğrenci organizasyonudur.",
+        "Bugün 26 ülkede 76 üniversitede faaliyet gösteren ESTIEM, binlerce Endüstri Mühendisliği ve İşletme (IEM) öğrencisini ortak bir ağda buluşturarak akademik, kariyer, kültürel ve kişisel gelişim odaklı; eğitimler, vaka analizi yarışmaları, uluslararası projeler ve değişim programları gibi birçok etkinlik düzenlemektedir.",
+        "1996 yılında ESTIEM ağına katılarak Türkiye’nin ilk ESTIEM Yerel Grubu olan ODTÜ Verimlilik Topluluğu, üyelerine uluslararası bir topluluğun parçası olma, farklı kültürlerle etkileşim kurma, profesyonel ağlarını geliştirme ve Avrupa çapında kendilerini çok yönlü olarak geliştirebilecekleri benzersiz fırsatlar sunmaktadır.",
+        "Ağın en aktif Yerel Gruplarından biri olarak her yıl Avrupa’nın farklı üniversitelerinden öğrencileri ODTÜ’de buluşturan başarılı uluslararası etkinliklere ev sahipliği yaparak unutulmaz anılar biriktirme fırsatı sunuyoruz.\""
       ],
       "facts": [
         {
-          "label": "Format",
-          "value": "3 gün seminer, panel, söyleşi"
+          "label": "Ağ",
+          "value": "Avrupa'da 77 üniversite"
         },
         {
-          "label": "Etkinlik yeri",
-          "value": "ODTÜ KKM, Çankaya / Ankara"
+          "label": "Rol",
+          "value": "Ankara yerel grubu"
         },
         {
           "label": "Katılım",
-          "value": "Ücretsiz, yüz yüze"
+          "value": "1996, ilk Türk yerel grubu"
         }
       ],
       "team": [
         {
-          "name": "Fuat Tuna Tümer",
-          "role": "YMG'den Sorumlu Yönetim Kurulu Üyesi",
-          "photo": "/img/odtuvt/fuat-tuna-tumer-840POP.jpeg"
+          "name": "İnanç Deniz Gözgözoğlu",
+          "role": "ESTIEM'den Sorumlu Yönetim Kurulu Üyesi",
+          "photo": "/img/odtuvt/inanc-deniz-gozgozoglu-UASM5F.jpeg"
         },
         {
-          "name": "Cevat Miraç Aydoğan",
-          "role": "YMG Proje Lideri",
-          "photo": "/img/odtuvt/cevat-mirac-aydogan-ZFPS8Z.jpeg"
+          "name": "Çağlan Olurluk",
+          "role": "ESTIEM Ankara METU Yerel Grup Sorumlusu",
+          "photo": "/img/odtuvt/caglan-olurluk-5IEKZM.jpeg"
         },
         {
-          "name": "Candan Tok",
-          "role": "YMG Proje Lideri",
-          "photo": "/img/odtuvt/candan-tok-0N7EAA.jpeg"
+          "name": "Elif Türk",
+          "role": "VP of Human Resources",
+          "photo": "/img/uploads/1783979480392-4a786e25.jpg",
+          "onlyProject": true
+        },
+        {
+          "name": "Kerem Beşkardeşler",
+          "role": "VP of Finance",
+          "photo": "/img/uploads/1783979522958-02a68674.jpg",
+          "onlyProject": true
+        },
+        {
+          "name": "Harun Tuna Hacıoğlu",
+          "role": "VP of Activities",
+          "photo": "/img/uploads/1783979560336-2c35abd3.jpg",
+          "onlyProject": true
+        },
+        {
+          "name": "Bensu Kesekler",
+          "role": "VP of PR",
+          "photo": "/img/uploads/1783979590931-49f16965.jpg",
+          "onlyProject": true
+        },
+        {
+          "name": "Damla Su Şafak",
+          "role": "VP of PR",
+          "photo": "/img/uploads/1783979612626-b7bfa900.jpg",
+          "onlyProject": true
         }
       ],
-      "hero": "/img/odtuvt/yonetim-ve-muhendislik-gunleri-etkinlik-resmi-4BM1B5.jpg",
+      "hero": "/img/odtuvt/estiem-etkinlik-resmi-EJ0ITM.jpg",
       "gallery": [
-        "/img/odtuvt/yonetim-ve-muhendislik-gunleri-galeri-resmi-167X5B.jpeg",
-        "/img/odtuvt/yonetim-ve-muhendislik-gunleri-galeri-resmi-2YQTW6.jpg",
-        "/img/odtuvt/yonetim-ve-muhendislik-gunleri-galeri-resmi-3MTDWL.jpg"
+        "/img/odtuvt/estiem-galeri-resmi-59BQCS.jpeg",
+        "/img/odtuvt/estiem-galeri-resmi-7ZTX42.jpeg",
+        "/img/odtuvt/estiem-galeri-resmi-LU240G.jpeg"
       ],
-      "icon": "mic",
-      "external": "https://ymg.odtuvt.org.tr/",
-      "theme": "dark",
-      "featured": false
+      "icon": "globe",
+      "external": "",
+      "theme": "light"
+    },
+    {
+      "slug": "kybele",
+      "name": "Kybele",
+      "short": "Kybele",
+      "tagline": "Kültür, sanat ve düşünce platformu.",
+      "summary": "2004'ten beri yayımlanan Kybele Dergisi ve her yıl düzenlenen Kybele Zirvesi ile üyelere yazarlık ve üretim alanı açar.",
+      "body": [
+        "\"Kybele, kariyer odaklı topluluğumuzun entelektüel derinliğini, sanatsal bakış açısını ve kültürel birikimini yansıtan bir sosyal platformdur. Üyelerimize aktif birer yazar olma fırsatı tanıyarak, tutku duydukları temalar üzerinde fikirlerini özgürce üretime dökebilecekleri ilham verici bir alan yaratır.",
+        "Bu vizyonun en somut ve köklü simgesi olan Kybele Dergisi, 2004 yılından bu yana her sene düzenli olarak okurlarıyla buluşmaktadır. Dergi, üyelerimizin kendi seçtiği konularla ilgili yazılar yazmalarını sağlarken, onları ortak bir zihinsel üretimin ve yaratıcı sürecin parçası haline getirir.",
+        "Kybele, entelektüel üretimi sadece sayfalarla sınırlı tutmaz; yıl boyunca gerçekleştirdiği etkinliklerle hem eğitici hem de keyifli bir sosyal ortam inşa eder. Bu etkinliklerin odağında ise Kybele Zirvesi yer alır. Kültür, sanat ve spor dünyasının öncü ve ufuk açıcı figürlerini tek bir çatı altında toplayan bu zirve, katılımcıların dünyayı farklı bakış açılarından görmelerini amaçlar. Zirve kapsamındaki ilham verici oturumlarımızın yanı sıra bağımsız söyleşilerimizle de izleyicilerin hem içsel yolculuklarına rehberlik ediyor hem de vizyonlarını zenginleştiriyoruz.",
+        "ODTÜ Verimlilik Topluluğu'nun Kybele projesi, kariyer dünyasının yanında öğrencilerin fikir alışverişi yapabileceği farklı bir dünya yaratır.\""
+      ],
+      "facts": [
+        {
+          "label": "Dergi",
+          "value": "2004'ten beri her yıl yayında"
+        },
+        {
+          "label": "Zirve",
+          "value": "Kültür, sanat ve spor alanlarında"
+        },
+        {
+          "label": "Kazanım",
+          "value": "Yazarlık ve organizasyon deneyimi"
+        }
+      ],
+      "team": [
+        {
+          "name": "Azra Zöngür",
+          "role": "Kybele'den Sorumlu Yönetim Kurulu Üyesi",
+          "photo": "/img/odtuvt/azra-zongur-M6QH0K.jpeg"
+        },
+        {
+          "name": "Derin Nesil Çelik",
+          "role": "Kybele Proje Lideri",
+          "photo": "/img/odtuvt/derin-nesil-celik-GIOX1E.jpeg"
+        }
+      ],
+      "hero": "/img/odtuvt/kybele-etkinlik-resmi-77FQVZ.jpg",
+      "gallery": [
+        "/img/odtuvt/kybele-galeri-resmi-97LDUB.jpeg",
+        "/img/odtuvt/kybele-galeri-resmi-FVS9NS.jpeg",
+        "/img/odtuvt/kybele-galeri-resmi-YYJRU1.jpeg"
+      ],
+      "icon": "book",
+      "external": "",
+      "theme": "light"
+    },
+    {
+      "slug": "ogp",
+      "name": "ODTÜ'lüler için Gelecek Planları",
+      "short": "OGP",
+      "tagline": "Öğrencilerle şirketleri buluşturan köprü.",
+      "summary": "Panel, söyleşi, fabrika ve ofis gezileriyle ODTÜ öğrencilerini şirketlerle tanıştırıp bilinçli kariyer planlamasına yardımcı olur.",
+      "body": [
+        "\"ODTÜlüler İçin Gelecek Planları, ODTÜ Verimlilik Topluluğu'nun öğrencilerle şirketleri buluşturduğu projesidir. Düzenlediği söyleşi, fabrika-ofis gezileri ve mülakat simülasyonlarıyla birlikte ODTÜ öğrencilerini şirketlerle tanıştırıp kariyer seçenekleri konusunda bilgilendirip daha bilinçli bir kariyer planlaması yapmalarına yardımcı olur.",
+        "Bi’de Mezuna Sor! etkinliğimiz kapsamında, sektörün önde gelen şirketlerinde aktif rol alan ODTÜ mezunlarını okulumuz öğrencileri ile tea talk formatında buluşturarak birebir tanışma imkanı sunuyoruz.",
+        "ODTÜlüler İçin Gelecek Planları projemiz kapsamında hayata geçirdiğimiz topluluğumuzun en yeni etkinliği olan Mock Your Future, katılımcılarımızı iş dünyasının en önemli basamaklarından biri olan mülakat aşamasının gerçeklerine hazırlayan ve sektörün lider şirketleriyle buluşturan kapsamlı bir mülakat simülasyonu etkinliğidir.",
+        "Katılımcılar, şirketlerin gerçekleştirdiği titiz bir CV ön elemesi sonucunda belirlenir. Seçilen katılımcılar, hayallerindeki şirketlerin profesyonelleriyle gerçeğe en yakın mülakatları deneyimleyerek geri bildirim alma şansı yakalar.",
+        "Mülakat simülasyonlarının yanı sıra, analitik düşünme yeteneğini sergileyebilecekleri vaka yarışmasıyla hem sürpriz ödüller kazanabilir hem de iş dünyasından profesyonellerle doğrudan network kurma şansı yakalayabilirler.",
+        "Şirket stantlarının yer aldığı interaktif fuaye alanımızda, gün boyu sektör temsilcileriyle birebir iletişim kurarak kariyer ağını güçlendirme fırsatı sunuyoruz.",
+        "Hem online hem de yüz yüze formatta birkaç güne yayılan bu etkinlikte, kariyerini şekillendirecek eşsiz fırsatlar nitelikli katılımcıları bekliyor.\""
+      ],
+      "facts": [
+        {
+          "label": "Etkinlikler",
+          "value": "Bi'de Mezuna Sor!, Şirket Sunumu, MY Future"
+        },
+        {
+          "label": "Format",
+          "value": "Panel, söyleşi, fabrika ve ofis gezileri"
+        },
+        {
+          "label": "Kazanım",
+          "value": "Staj ve işe alım fırsatları"
+        }
+      ],
+      "team": [
+        {
+          "name": "Yiğit Efe Özdemir",
+          "role": "OGP'den Sorumlu Yönetim Kurulu Üyesi",
+          "photo": "/img/odtuvt/yigit-efe-ozdemir-JTGEXS.jpeg"
+        },
+        {
+          "name": "Dicle Gül",
+          "role": "OGP Proje Lideri",
+          "photo": "/img/odtuvt/dicle-gul-Q2LUBD.jpeg"
+        },
+        {
+          "name": "Gökay Altıntaş",
+          "role": "OGP Proje Lideri",
+          "photo": "/img/odtuvt/gokay-altintas-DYJQWK.jpeg"
+        }
+      ],
+      "hero": "/img/odtuvt/odtululer-icin-gelecek-planlari-etkinlik-resmi-M7OC23.jpg",
+      "gallery": [
+        "/img/odtuvt/odtululer-icin-gelecek-planlari-galeri-resmi-01524F.jpeg",
+        "/img/odtuvt/odtululer-icin-gelecek-planlari-galeri-resmi-84S9WE.jpeg",
+        "/img/odtuvt/odtululer-icin-gelecek-planlari-galeri-resmi-8QJOB8.jpeg"
+      ],
+      "icon": "compass",
+      "external": "",
+      "theme": "light"
     },
     {
       "slug": "vakavt",
@@ -155,189 +284,84 @@
       "featured": false
     },
     {
-      "slug": "estiem",
-      "name": "ESTIEM",
-      "short": "ESTIEM",
-      "tagline": "Avrupa'nın endüstri mühendisliği ağı, Ankara'da.",
-      "summary": "Avrupa genelinde 77 üniversitede örgütlü ESTIEM'in Ankara yerel grubunu, 1996'dan beri ilk Türk yerel grubu olarak temsil ediyoruz.",
+      "slug": "ymg",
+      "name": "Yönetim ve Mühendislik Günleri",
+      "short": "YMG",
+      "tagline": "Ankara'nın en geniş katılımcılı öğrenci etkinliği.",
+      "summary": "Öğrencileri, alanında başarılı şirketler ve yetkin konuşmacılarla buluşturan üç günlük seminer etkinliği. Zengin katılımlı fuayesiyle networking imkânı sunar.",
       "body": [
-        "\"ESTIEM (European Students of Industrial Engineering and Management), ODTÜ Verimlilik Topluluğu’nun uluslararası faaliyetlerini yürüttüğü ve üyelerine Avrupa çapında güçlü bir etkileşim ağı sunan öğrenci organizasyonudur.",
-        "Bugün 26 ülkede 76 üniversitede faaliyet gösteren ESTIEM, binlerce Endüstri Mühendisliği ve İşletme (IEM) öğrencisini ortak bir ağda buluşturarak akademik, kariyer, kültürel ve kişisel gelişim odaklı; eğitimler, vaka analizi yarışmaları, uluslararası projeler ve değişim programları gibi birçok etkinlik düzenlemektedir.",
-        "1996 yılında ESTIEM ağına katılarak Türkiye’nin ilk ESTIEM Yerel Grubu olan ODTÜ Verimlilik Topluluğu, üyelerine uluslararası bir topluluğun parçası olma, farklı kültürlerle etkileşim kurma, profesyonel ağlarını geliştirme ve Avrupa çapında kendilerini çok yönlü olarak geliştirebilecekleri benzersiz fırsatlar sunmaktadır.",
-        "Ağın en aktif Yerel Gruplarından biri olarak her yıl Avrupa’nın farklı üniversitelerinden öğrencileri ODTÜ’de buluşturan başarılı uluslararası etkinliklere ev sahipliği yaparak unutulmaz anılar biriktirme fırsatı sunuyoruz.\""
+        "Yönetim ve Mühendislik Günleri, her yıl Verimlilik Topluluğu tarafından düzenlenen, öğrenciler ile alanında başarılı şirketleri ve yetkin konuşmacıları buluşturarak bilgi aktarımı sağlamayı hedefleyen bir seminer etkinliğidir. Üç gün süren etkinlikte seminerler, paneller ve söyleşiler ile katılımcıların en üst düzeyde faydalanması, lider konuşmacıların da tecrübe aktarımı yoluyla katılımcılara benzersiz bir kişisel gelişim fırsatı sunması amaçlanmaktadır.",
+        "Oturumların yanı sıra zengin katılımlı fuayesiyle de şirketlere ve katılımcılara networking imkânı sunar. Yönetim ve Mühendislik Günleri sadece ODTÜ'nün değil, aynı zamanda Ankara'nın da en geniş katılımcılı öğrenci etkinliğidir. Ağırladığı konuşmacılarla ve iş birliği yaptığı şirketlerle her sene bu unvanı hak ederek ulusal çapta katılımcı almaktadır.",
+        "Yönetim ve Mühendislik Günleri PLUS, YMG'ye ek olarak gerçekleştirilen, katılımcıların her sene belirli departmanlar bazında kafalarındaki soru işaretlerini gidermeye yönelik teknik bir etkinliktir. Öğrencilerin akademik yaşamda teorik olarak öğrendiği ancak iş dünyasında ne şekilde uygulandığını bilmediği teknik bilgiler, lider şirketler tarafından öğrencilere aktarılır."
       ],
       "facts": [
         {
-          "label": "Ağ",
-          "value": "Avrupa'da 77 üniversite"
+          "label": "Format",
+          "value": "3 gün seminer, panel, söyleşi"
         },
         {
-          "label": "Rol",
-          "value": "Ankara yerel grubu"
+          "label": "Etkinlik yeri",
+          "value": "ODTÜ KKM, Çankaya / Ankara"
         },
         {
           "label": "Katılım",
-          "value": "1996, ilk Türk yerel grubu"
+          "value": "Ücretsiz, yüz yüze"
         }
       ],
       "team": [
         {
-          "name": "İnanç Deniz Gözgözoğlu",
-          "role": "ESTIEM'den Sorumlu Yönetim Kurulu Üyesi",
-          "photo": "/img/odtuvt/inanc-deniz-gozgozoglu-UASM5F.jpeg"
+          "name": "Fuat Tuna Tümer",
+          "role": "YMG'den Sorumlu Yönetim Kurulu Üyesi",
+          "photo": "/img/odtuvt/fuat-tuna-tumer-840POP.jpeg"
         },
         {
-          "name": "Çağlan Olurluk",
-          "role": "ESTIEM Ankara METU Yerel Grup Sorumlusu",
-          "photo": "/img/odtuvt/caglan-olurluk-5IEKZM.jpeg"
+          "name": "Cevat Miraç Aydoğan",
+          "role": "YMG Proje Lideri",
+          "photo": "/img/odtuvt/cevat-mirac-aydogan-ZFPS8Z.jpeg"
         },
         {
-          "name": "Elif Türk",
-          "role": "VP of Human Resources",
-          "photo": "/img/uploads/1783979480392-4a786e25.jpg",
-          "onlyProject": true
-        },
-        {
-          "name": "Kerem Beşkardeşler",
-          "role": "VP of Finance",
-          "photo": "/img/uploads/1783979522958-02a68674.jpg",
-          "onlyProject": true
-        },
-        {
-          "name": "Harun Tuna Hacıoğlu",
-          "role": "VP of Activities",
-          "photo": "/img/uploads/1783979560336-2c35abd3.jpg",
-          "onlyProject": true
-        },
-        {
-          "name": "Bensu Kesekler",
-          "role": "VP of PR",
-          "photo": "/img/uploads/1783979590931-49f16965.jpg",
-          "onlyProject": true
-        },
-        {
-          "name": "Damla Su Şafak",
-          "role": "VP of PR",
-          "photo": "/img/uploads/1783979612626-b7bfa900.jpg",
-          "onlyProject": true
+          "name": "Candan Tok",
+          "role": "YMG Proje Lideri",
+          "photo": "/img/odtuvt/candan-tok-0N7EAA.jpeg"
         }
       ],
-      "hero": "/img/odtuvt/estiem-etkinlik-resmi-EJ0ITM.jpg",
+      "hero": "/img/odtuvt/yonetim-ve-muhendislik-gunleri-etkinlik-resmi-4BM1B5.jpg",
       "gallery": [
-        "/img/odtuvt/estiem-galeri-resmi-59BQCS.jpeg",
-        "/img/odtuvt/estiem-galeri-resmi-7ZTX42.jpeg",
-        "/img/odtuvt/estiem-galeri-resmi-LU240G.jpeg"
+        "/img/odtuvt/yonetim-ve-muhendislik-gunleri-galeri-resmi-167X5B.jpeg",
+        "/img/odtuvt/yonetim-ve-muhendislik-gunleri-galeri-resmi-2YQTW6.jpg",
+        "/img/odtuvt/yonetim-ve-muhendislik-gunleri-galeri-resmi-3MTDWL.jpg"
       ],
-      "icon": "globe",
-      "external": "",
-      "theme": "light"
-    },
-    {
-      "slug": "ogp",
-      "name": "ODTÜ'lüler için Gelecek Planları",
-      "short": "OGP",
-      "tagline": "Öğrencilerle şirketleri buluşturan köprü.",
-      "summary": "Panel, söyleşi, fabrika ve ofis gezileriyle ODTÜ öğrencilerini şirketlerle tanıştırıp bilinçli kariyer planlamasına yardımcı olur.",
-      "body": [
-        "\"ODTÜlüler İçin Gelecek Planları, ODTÜ Verimlilik Topluluğu'nun öğrencilerle şirketleri buluşturduğu projesidir. Düzenlediği söyleşi, fabrika-ofis gezileri ve mülakat simülasyonlarıyla birlikte ODTÜ öğrencilerini şirketlerle tanıştırıp kariyer seçenekleri konusunda bilgilendirip daha bilinçli bir kariyer planlaması yapmalarına yardımcı olur.",
-        "Bi’de Mezuna Sor! etkinliğimiz kapsamında, sektörün önde gelen şirketlerinde aktif rol alan ODTÜ mezunlarını okulumuz öğrencileri ile tea talk formatında buluşturarak birebir tanışma imkanı sunuyoruz.",
-        "ODTÜlüler İçin Gelecek Planları projemiz kapsamında hayata geçirdiğimiz topluluğumuzun en yeni etkinliği olan Mock Your Future, katılımcılarımızı iş dünyasının en önemli basamaklarından biri olan mülakat aşamasının gerçeklerine hazırlayan ve sektörün lider şirketleriyle buluşturan kapsamlı bir mülakat simülasyonu etkinliğidir.",
-        "Katılımcılar, şirketlerin gerçekleştirdiği titiz bir CV ön elemesi sonucunda belirlenir. Seçilen katılımcılar, hayallerindeki şirketlerin profesyonelleriyle gerçeğe en yakın mülakatları deneyimleyerek geri bildirim alma şansı yakalar.",
-        "Mülakat simülasyonlarının yanı sıra, analitik düşünme yeteneğini sergileyebilecekleri vaka yarışmasıyla hem sürpriz ödüller kazanabilir hem de iş dünyasından profesyonellerle doğrudan network kurma şansı yakalayabilirler.",
-        "Şirket stantlarının yer aldığı interaktif fuaye alanımızda, gün boyu sektör temsilcileriyle birebir iletişim kurarak kariyer ağını güçlendirme fırsatı sunuyoruz.",
-        "Hem online hem de yüz yüze formatta birkaç güne yayılan bu etkinlikte, kariyerini şekillendirecek eşsiz fırsatlar nitelikli katılımcıları bekliyor.\""
-      ],
-      "facts": [
-        {
-          "label": "Etkinlikler",
-          "value": "Bi'de Mezuna Sor!, Şirket Sunumu, MY Future"
-        },
-        {
-          "label": "Format",
-          "value": "Panel, söyleşi, fabrika ve ofis gezileri"
-        },
-        {
-          "label": "Kazanım",
-          "value": "Staj ve işe alım fırsatları"
-        }
-      ],
-      "team": [
-        {
-          "name": "Yiğit Efe Özdemir",
-          "role": "OGP'den Sorumlu Yönetim Kurulu Üyesi",
-          "photo": "/img/odtuvt/yigit-efe-ozdemir-JTGEXS.jpeg"
-        },
-        {
-          "name": "Dicle Gül",
-          "role": "OGP Proje Lideri",
-          "photo": "/img/odtuvt/dicle-gul-Q2LUBD.jpeg"
-        },
-        {
-          "name": "Gökay Altıntaş",
-          "role": "OGP Proje Lideri",
-          "photo": "/img/odtuvt/gokay-altintas-DYJQWK.jpeg"
-        }
-      ],
-      "hero": "/img/odtuvt/odtululer-icin-gelecek-planlari-etkinlik-resmi-M7OC23.jpg",
-      "gallery": [
-        "/img/odtuvt/odtululer-icin-gelecek-planlari-galeri-resmi-01524F.jpeg",
-        "/img/odtuvt/odtululer-icin-gelecek-planlari-galeri-resmi-84S9WE.jpeg",
-        "/img/odtuvt/odtululer-icin-gelecek-planlari-galeri-resmi-8QJOB8.jpeg"
-      ],
-      "icon": "compass",
-      "external": "",
-      "theme": "light"
-    },
-    {
-      "slug": "kybele",
-      "name": "Kybele",
-      "short": "Kybele",
-      "tagline": "Kültür, sanat ve düşünce platformu.",
-      "summary": "2004'ten beri yayımlanan Kybele Dergisi ve her yıl düzenlenen Kybele Zirvesi ile üyelere yazarlık ve üretim alanı açar.",
-      "body": [
-        "\"Kybele, kariyer odaklı topluluğumuzun entelektüel derinliğini, sanatsal bakış açısını ve kültürel birikimini yansıtan bir sosyal platformdur. Üyelerimize aktif birer yazar olma fırsatı tanıyarak, tutku duydukları temalar üzerinde fikirlerini özgürce üretime dökebilecekleri ilham verici bir alan yaratır.",
-        "Bu vizyonun en somut ve köklü simgesi olan Kybele Dergisi, 2004 yılından bu yana her sene düzenli olarak okurlarıyla buluşmaktadır. Dergi, üyelerimizin kendi seçtiği konularla ilgili yazılar yazmalarını sağlarken, onları ortak bir zihinsel üretimin ve yaratıcı sürecin parçası haline getirir.",
-        "Kybele, entelektüel üretimi sadece sayfalarla sınırlı tutmaz; yıl boyunca gerçekleştirdiği etkinliklerle hem eğitici hem de keyifli bir sosyal ortam inşa eder. Bu etkinliklerin odağında ise Kybele Zirvesi yer alır. Kültür, sanat ve spor dünyasının öncü ve ufuk açıcı figürlerini tek bir çatı altında toplayan bu zirve, katılımcıların dünyayı farklı bakış açılarından görmelerini amaçlar. Zirve kapsamındaki ilham verici oturumlarımızın yanı sıra bağımsız söyleşilerimizle de izleyicilerin hem içsel yolculuklarına rehberlik ediyor hem de vizyonlarını zenginleştiriyoruz.",
-        "ODTÜ Verimlilik Topluluğu'nun Kybele projesi, kariyer dünyasının yanında öğrencilerin fikir alışverişi yapabileceği farklı bir dünya yaratır.\""
-      ],
-      "facts": [
-        {
-          "label": "Dergi",
-          "value": "2004'ten beri her yıl yayında"
-        },
-        {
-          "label": "Zirve",
-          "value": "Kültür, sanat ve spor alanlarında"
-        },
-        {
-          "label": "Kazanım",
-          "value": "Yazarlık ve organizasyon deneyimi"
-        }
-      ],
-      "team": [
-        {
-          "name": "Azra Zöngür",
-          "role": "Kybele'den Sorumlu Yönetim Kurulu Üyesi",
-          "photo": "/img/odtuvt/azra-zongur-M6QH0K.jpeg"
-        },
-        {
-          "name": "Derin Nesil Çelik",
-          "role": "Kybele Proje Lideri",
-          "photo": "/img/odtuvt/derin-nesil-celik-GIOX1E.jpeg"
-        }
-      ],
-      "hero": "/img/odtuvt/kybele-etkinlik-resmi-77FQVZ.jpg",
-      "gallery": [
-        "/img/odtuvt/kybele-galeri-resmi-97LDUB.jpeg",
-        "/img/odtuvt/kybele-galeri-resmi-FVS9NS.jpeg",
-        "/img/odtuvt/kybele-galeri-resmi-YYJRU1.jpeg"
-      ],
-      "icon": "book",
-      "external": "",
-      "theme": "light"
+      "icon": "mic",
+      "external": "https://ymg.odtuvt.org.tr/",
+      "theme": "dark",
+      "featured": false
     }
   ],
   "committees": [
+    {
+      "slug": "inovasyon",
+      "name": "İnovasyon Komitesi",
+      "summary": "30 yılı aşkın tecrübenin kümülatif bilgi kaynaklarını toplayıp analiz eder; web sitelerini ve 30.000 kişilik e-posta ağını yönetir.",
+      "body": [
+        "\"\nİnovasyon Komitesi, ODTÜ Verimlilik Topluluğu’nun 30 yılı aşkın tecrübesinden elde edilen kümülatif bilgi birikimini toplayan, değerlendiren ve geleceğe taşıyan komitedir. Etkinlik sonrası online formlardan gelen katılımcı geri dönüşlerini analiz eder ve bu verileri anlamlı infografiklere dönüştürerek hem Topluluğumuza hem de paydaşlarımıza sunar.",
+        "Topluluğumuzun 30.000 kişilik mailing altyapısını yöneten İnovasyon Komitesi, bu sayede ODTÜ’nün her bölümüne ulaşabilme gücüne sahiptir. Bunun yanında Topluluğumuzun dijital alandaki tüm aktivite ve gelişiminden sorumludur; web sitemizin tasarımı, geliştirilmesi ve güncel tutulmasını üstlenir. Ayrıca, Topluluğumuzun bugüne kadar biriktirdiği kolektif hafızayı gelecek nesillere aktarmak amacıyla database çalışmalarını sürdürür."
+      ],
+      "icon": "spark",
+      "hero": "",
+      "gallery": [],
+      "team": [
+        {
+          "name": "Yiğit Efe Özdemir",
+          "role": "İnovasyon Komitesinden Sorumlu YK Üyesi",
+          "photo": "/img/odtuvt/yigit-efe-ozdemir-JTGEXS.jpeg"
+        },
+        {
+          "name": "Atahan Akharman",
+          "role": "İnovasyon Komitesi Koordinatörü",
+          "photo": "/img/odtuvt/atahan-akharman-J9RQ58.jpeg"
+        }
+      ]
+    },
     {
       "slug": "dizayn",
       "name": "Dizayn Komitesi",
@@ -408,30 +432,6 @@
           "name": "Mert Kaş",
           "role": "İletişim ve Pazarlama Komitesi Koordinatörü",
           "photo": "/img/odtuvt/mert-kas-003EG8.jpeg"
-        }
-      ]
-    },
-    {
-      "slug": "inovasyon",
-      "name": "İnovasyon Komitesi",
-      "summary": "30 yılı aşkın tecrübenin kümülatif bilgi kaynaklarını toplayıp analiz eder; web sitelerini ve 30.000 kişilik e-posta ağını yönetir.",
-      "body": [
-        "\"\nİnovasyon Komitesi, ODTÜ Verimlilik Topluluğu’nun 30 yılı aşkın tecrübesinden elde edilen kümülatif bilgi birikimini toplayan, değerlendiren ve geleceğe taşıyan komitedir. Etkinlik sonrası online formlardan gelen katılımcı geri dönüşlerini analiz eder ve bu verileri anlamlı infografiklere dönüştürerek hem Topluluğumuza hem de paydaşlarımıza sunar.",
-        "Topluluğumuzun 30.000 kişilik mailing altyapısını yöneten İnovasyon Komitesi, bu sayede ODTÜ’nün her bölümüne ulaşabilme gücüne sahiptir. Bunun yanında Topluluğumuzun dijital alandaki tüm aktivite ve gelişiminden sorumludur; web sitemizin tasarımı, geliştirilmesi ve güncel tutulmasını üstlenir. Ayrıca, Topluluğumuzun bugüne kadar biriktirdiği kolektif hafızayı gelecek nesillere aktarmak amacıyla database çalışmalarını sürdürür."
-      ],
-      "icon": "spark",
-      "hero": "",
-      "gallery": [],
-      "team": [
-        {
-          "name": "Yiğit Efe Özdemir",
-          "role": "İnovasyon Komitesinden Sorumlu YK Üyesi",
-          "photo": "/img/odtuvt/yigit-efe-ozdemir-JTGEXS.jpeg"
-        },
-        {
-          "name": "Atahan Akharman",
-          "role": "İnovasyon Komitesi Koordinatörü",
-          "photo": "/img/odtuvt/atahan-akharman-J9RQ58.jpeg"
         }
       ]
     },

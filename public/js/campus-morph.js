@@ -310,11 +310,19 @@ class MorphParticles {
         (entries) => {
           const visible = entries[0].isIntersecting;
           this.isPaused = !visible;
-          // Dokunmatik cihazlarda: bölüm görününce kendiliğinden şekillen
-          if (!canHover) this.morphGoal = visible ? 1 : 0;
+          // Dokunmatik cihazlarda: bölümün büyük kısmı görünene kadar bekle,
+          // sonra kısa bir gecikmeyle şekillen — dağınık hal önce algılansın
+          if (!canHover) {
+            clearTimeout(this.touchMorphTimer);
+            if (visible) {
+              this.touchMorphTimer = setTimeout(() => (this.morphGoal = 1), 900);
+            } else {
+              this.morphGoal = 0;
+            }
+          }
           if (visible) this.clock.getDelta();
         },
-        { threshold: 0.35 }
+        { threshold: canHover ? 0.35 : 0.55 }
       ).observe(this.container);
     }
   }

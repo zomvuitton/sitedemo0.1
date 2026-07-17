@@ -19,6 +19,23 @@ if (toggle && links) {
   });
 }
 
+// Tema anahtarı — tercih localStorage'da tutulur, ilk uygulama head'deki inline script'te
+const themeBtn = document.getElementById("themeToggle");
+if (themeBtn) {
+  const applyTheme = (dark) => {
+    document.documentElement.dataset.theme = dark ? "dark" : "light";
+    themeBtn.setAttribute("aria-label", dark ? "Açık temaya geç" : "Koyu temaya geç");
+  };
+  applyTheme(document.documentElement.dataset.theme === "dark");
+  themeBtn.addEventListener("click", () => {
+    const dark = document.documentElement.dataset.theme !== "dark";
+    applyTheme(dark);
+    try {
+      localStorage.setItem("vt-theme", dark ? "dark" : "light");
+    } catch {}
+  });
+}
+
 // Kaydırmada görünme — hafif, tek seferlik
 const revealables = document.querySelectorAll(".reveal");
 if ("IntersectionObserver" in window) {
@@ -70,6 +87,34 @@ if (statEls.length && !reducedMotion && "IntersectionObserver" in window) {
     { threshold: 0.6 }
   );
   statEls.forEach((el) => statIo.observe(el));
+}
+
+// Ekibimiz: kayan ızgara — yalnızca imlecin altı aydınlanır
+const gridHero = document.querySelector(".grid-reveal-hero");
+if (gridHero) {
+  const layer = gridHero.querySelector(".grid-reveal");
+  const setSpot = (x, y) => {
+    layer.style.setProperty("--mx", x + "px");
+    layer.style.setProperty("--my", y + "px");
+  };
+  if (window.matchMedia("(hover: hover)").matches) {
+    gridHero.addEventListener("pointermove", (e) => {
+      const r = layer.getBoundingClientRect();
+      setSpot(e.clientX - r.left, e.clientY - r.top);
+    });
+    gridHero.addEventListener("pointerleave", () => setSpot(-9999, -9999));
+  } else if (!reducedMotion) {
+    // Dokunmatik cihazlarda imleç yok: ışık kendi kendine yavaşça gezinir
+    const roam = (t) => {
+      const r = layer.getBoundingClientRect();
+      setSpot(
+        r.width * (0.5 + 0.4 * Math.sin(t / 2600)),
+        r.height * (0.5 + 0.35 * Math.cos(t / 3400))
+      );
+      requestAnimationFrame(roam);
+    };
+    requestAnimationFrame(roam);
+  }
 }
 
 // Form gönderimi — data-api özniteliği olan tüm formlar

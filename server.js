@@ -134,6 +134,9 @@ function cleanMembers(value) {
       if (m.onlyProject) member.onlyProject = true;
       // quote: bir cümlelik kişisel alıntı — yalnızca proje/komite sayfasında gösterilir
       if (m.quote) member.quote = clean(m.quote, 240);
+      // iletişim baloncukları: fotoğrafın köşesinde mail / LinkedIn
+      if (m.email && emailRe.test(clean(m.email, 200))) member.email = clean(m.email, 200);
+      if (m.linkedin) member.linkedin = clean(m.linkedin, 400);
       return member;
     })
     .filter((m) => m.name)
@@ -186,9 +189,8 @@ const AY_KISA = ["Oca", "Şub", "Mar", "Nis", "May", "Haz", "Tem", "Ağu", "Eyl"
 
 app.get("/", (req, res) => {
   // Ana sayfada tüm projeler alfabetik sırayla 3+3 ızgarada gösterilir
-  const homeProjects = [...store.content.projects].sort((a, b) =>
-    a.short.localeCompare(b.short, "tr")
-  );
+  // Sıra: içerik dizisindeki kanonik sıra (ESTIEM, Kybele, OGP, VakaVT, W'EQUAL, YMG)
+  const homeProjects = store.content.projects;
   // Yaklaşan etkinlikler: bugünden itibaren, tarihe göre, en fazla 4
   const today = new Date().toISOString().slice(0, 10);
   const upcoming = (store.content.events || [])
@@ -705,12 +707,15 @@ app.put("/admin/api/idari-kurul", requireAdminApi, (req, res) => {
   const coords = cleanAssigned(req.body.coords, store.content.committees.map((c) => c.slug));
 
   // YK üyeleri ve "yalnızca proje sayfasında" işaretli kişiler korunur.
-  // Quote, kurullar sayfasından düzenlenmediği için mevcut kayıttan (isimle eşleşerek) taşınır.
+  // Quote/e-posta/LinkedIn kurullar sayfasından düzenlenmediği için
+  // mevcut kayıttan (isimle eşleşerek) taşınır.
   function carryQuote(team, m) {
-    const existing = (team || []).find((t) => t.name === m.name);
+    const existing = (team || []).find((t) => t.name === m.name) || {};
     const member = { name: m.name, role: m.role, photo: m.photo };
-    const quote = m.quote || (existing && existing.quote);
-    if (quote) member.quote = quote;
+    for (const key of ["quote", "email", "linkedin"]) {
+      const val = m[key] || existing[key];
+      if (val) member[key] = val;
+    }
     return member;
   }
   store.content.projects.forEach((p) => {

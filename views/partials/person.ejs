@@ -1,9 +1,21 @@
 <div class="person reveal">
-  <% if (m.photo) { %>
-  <img class="person-photo" src="<%= m.photo %>" alt="<%= m.name %>" loading="lazy">
-  <% } else { %>
-  <div class="person-photo person-initials" aria-hidden="true"><%= m.name.trim().split(/\s+/).map(w => w[0]).join("").slice(0, 2).toUpperCase() %></div>
-  <% } %>
+  <div class="person-photo-wrap">
+    <% if (m.photo) { %>
+    <img class="person-photo" src="<%= m.photo %>" alt="<%= m.name %>" loading="lazy">
+    <% } else { %>
+    <div class="person-photo person-initials" aria-hidden="true"><%= m.name.trim().split(/\s+/).map(w => w[0]).join("").slice(0, 2).toUpperCase() %></div>
+    <% } %>
+    <% if (m.email || m.linkedin) { %>
+    <span class="person-links">
+      <% if (m.email) { %>
+      <a href="mailto:<%= m.email %>" aria-label="<%= m.name %> — e-posta" title="E-posta"><%- include('icon', { name: 'mail' }) %></a>
+      <% } %>
+      <% if (m.linkedin) { %>
+      <a href="<%= m.linkedin %>" target="_blank" rel="noopener" aria-label="<%= m.name %> — LinkedIn" title="LinkedIn"><%- include('icon', { name: 'linkedin' }) %></a>
+      <% } %>
+    </span>
+    <% } %>
+  </div>
   <h3><%= m.name %></h3>
   <p class="person-role"><%= m.role %></p>
   <% if (typeof showQuote !== "undefined" && showQuote && m.quote) { %>
