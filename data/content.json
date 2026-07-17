@@ -350,7 +350,9 @@
       ],
       "icon": "pen",
       "hero": "",
-      "gallery": [],
+      "gallery": [
+        "/img/uploads/1784206991434-9bde1402.jpg"
+      ],
       "team": [
         {
           "name": "İnanç Deniz Gözgözoğlu",
