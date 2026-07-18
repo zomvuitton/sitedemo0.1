@@ -63,6 +63,8 @@
           <input type="text" data-field="role" value="<%= m.role %>" placeholder="Görev">
           <input type="text" data-field="photo" value="<%= m.photo %>" placeholder="Fotoğraf yolu">
           <input type="text" data-field="quote" value="<%= m.quote || '' %>" placeholder="Alıntı (bir cümle, isteğe bağlı)">
+          <input type="email" data-field="email" value="<%= m.email || '' %>" placeholder="E-posta (isteğe bağlı)">
+          <input type="url" data-field="linkedin" value="<%= m.linkedin || '' %>" placeholder="LinkedIn bağlantısı (isteğe bağlı)">
           <label class="abtn abtn-ghost aupload">Foto<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="photo" hidden></label>
           <button type="button" class="abtn abtn-danger arow-del" aria-label="Kişiyi kaldır">Kaldır</button>
         </div>
@@ -93,6 +95,8 @@
     <input type="text" data-field="role" placeholder="Görev">
     <input type="text" data-field="photo" placeholder="Fotoğraf yolu">
     <input type="text" data-field="quote" placeholder="Alıntı (bir cümle, isteğe bağlı)">
+    <input type="email" data-field="email" placeholder="E-posta (isteğe bağlı)">
+    <input type="url" data-field="linkedin" placeholder="LinkedIn bağlantısı (isteğe bağlı)">
     <label class="abtn abtn-ghost aupload">Foto<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="photo" hidden></label>
     <button type="button" class="abtn abtn-danger arow-del" aria-label="Kişiyi kaldır">Kaldır</button>
   </div>
