@@ -30,42 +30,49 @@
         {
           "name": "İnanç Deniz Gözgözoğlu",
           "role": "ESTIEM'den Sorumlu Yönetim Kurulu Üyesi",
-          "photo": "/img/odtuvt/inanc-deniz-gozgozoglu-UASM5F.jpeg"
+          "photo": "/img/odtuvt/inanc-deniz-gozgozoglu-UASM5F.jpeg",
+          "quote": "\"Don't tell me what I can't do\" - John Locke"
         },
         {
           "name": "Çağlan Olurluk",
           "role": "ESTIEM Ankara METU Yerel Grup Sorumlusu",
-          "photo": "/img/odtuvt/caglan-olurluk-5IEKZM.jpeg"
+          "photo": "/img/odtuvt/caglan-olurluk-5IEKZM.jpeg",
+          "quote": "Every journey Leads Right where you need to be."
         },
         {
           "name": "Elif Türk",
           "role": "VP of Human Resources",
           "photo": "/img/uploads/1783979480392-4a786e25.jpg",
-          "onlyProject": true
+          "onlyProject": true,
+          "quote": "\"We are the creators of the world that we are looking for.\" -Hagisho Molema"
         },
         {
           "name": "Kerem Beşkardeşler",
           "role": "VP of Finance",
           "photo": "/img/uploads/1783979522958-02a68674.jpg",
-          "onlyProject": true
+          "onlyProject": true,
+          "quote": "Bear market or bull market, our local group's value is always hitting an all-time high."
         },
         {
           "name": "Harun Tuna Hacıoğlu",
           "role": "VP of Activities",
           "photo": "/img/uploads/1783979560336-2c35abd3.jpg",
-          "onlyProject": true
+          "onlyProject": true,
+          "quote": "\"I remember you was conflicted.\" -Kendrick Lamar"
         },
         {
           "name": "Bensu Kesekler",
           "role": "VP of PR",
           "photo": "/img/uploads/1783979590931-49f16965.jpg",
-          "onlyProject": true
+          "onlyProject": true,
+          "quote": "Keep calm and trust the PRocess"
         },
         {
           "name": "Damla Su Şafak",
           "role": "VP of PR",
           "photo": "/img/uploads/1783979612626-b7bfa900.jpg",
-          "onlyProject": true
+          "onlyProject": true,
+          "quote": "\"There are three responses to a piece of design: yes, no, and WOW! Wow is the one to aim for.\" -Milton Glaser"
         }
       ],
       "hero": "/img/odtuvt/estiem-etkinlik-resmi-EJ0ITM.jpg",
@@ -108,12 +115,14 @@
         {
           "name": "Azra Zöngür",
           "role": "Kybele'den Sorumlu Yönetim Kurulu Üyesi",
-          "photo": "/img/odtuvt/azra-zongur-M6QH0K.jpeg"
+          "photo": "/img/odtuvt/azra-zongur-M6QH0K.jpeg",
+          "quote": "\"Gerek yok parlamam için senin o ışığına.\""
         },
         {
           "name": "Derin Nesil Çelik",
           "role": "Kybele Proje Lideri",
-          "photo": "/img/odtuvt/derin-nesil-celik-GIOX1E.jpeg"
+          "photo": "/img/odtuvt/derin-nesil-celik-GIOX1E.jpeg",
+          "quote": "\"But it's hard to stay mad, when there is so much beauty in the world.\" American Beauty (1999)"
         }
       ],
       "hero": "/img/odtuvt/kybele-etkinlik-resmi-77FQVZ.jpg",
@@ -159,17 +168,20 @@
         {
           "name": "Yiğit Efe Özdemir",
           "role": "OGP'den Sorumlu Yönetim Kurulu Üyesi",
-          "photo": "/img/odtuvt/yigit-efe-ozdemir-JTGEXS.jpeg"
+          "photo": "/img/odtuvt/yigit-efe-ozdemir-JTGEXS.jpeg",
+          "quote": "Atmadığın her şutu kaçırırsın."
         },
         {
           "name": "Dicle Gül",
           "role": "OGP Proje Lideri",
-          "photo": "/img/odtuvt/dicle-gul-Q2LUBD.jpeg"
+          "photo": "/img/odtuvt/dicle-gul-Q2LUBD.jpeg",
+          "quote": "When life gives you lemons, make lemonade."
         },
         {
           "name": "Gökay Altıntaş",
           "role": "OGP Proje Lideri",
-          "photo": "/img/odtuvt/gokay-altintas-DYJQWK.jpeg"
+          "photo": "/img/odtuvt/gokay-altintas-DYJQWK.jpeg",
+          "quote": "My turn."
         }
       ],
       "hero": "/img/odtuvt/odtululer-icin-gelecek-planlari-etkinlik-resmi-M7OC23.jpg",
@@ -211,7 +223,8 @@
         {
           "name": "Bengisu Çonoğlu",
           "role": "VakaVT'den Sorumlu Yönetim Kurulu Üyesi",
-          "photo": "/img/odtuvt/bengisu-conoglu-IRLU2U.jpeg"
+          "photo": "/img/odtuvt/bengisu-conoglu-IRLU2U.jpeg",
+          "quote": "Atmadığın hiçbir şutu kaçırmazsın."
         },
         {
           "name": "Aybike Balcı",
@@ -227,8 +240,7 @@
       ],
       "icon": "target",
       "external": "",
-      "theme": "light",
-      "featured": false
+      "theme": "light"
     },
     {
       "slug": "wequal",
@@ -269,7 +281,8 @@
         {
           "name": "Esila Bulut",
           "role": "W'EQUAL Proje Lideri",
-          "photo": "/img/odtuvt/esila-bulut-NSLI5S.jpeg"
+          "photo": "/img/odtuvt/esila-bulut-NSLI5S.jpeg",
+          "quote": "\"Life is about more than just surviving.\""
         }
       ],
       "hero": "/img/odtuvt/wequal-etkinlik-resmi-GH30FK.jpg",
@@ -280,8 +293,7 @@
       ],
       "icon": "scale",
       "external": "",
-      "theme": "light",
-      "featured": false
+      "theme": "light"
     },
     {
       "slug": "ymg",
@@ -317,12 +329,14 @@
         {
           "name": "Cevat Miraç Aydoğan",
           "role": "YMG Proje Lideri",
-          "photo": "/img/odtuvt/cevat-mirac-aydogan-ZFPS8Z.jpeg"
+          "photo": "/img/odtuvt/cevat-mirac-aydogan-ZFPS8Z.jpeg",
+          "quote": "Gnothi seauton. Meden agan. Engya para d'ate.  ~Delphic Maxims, Temple of Apollo"
         },
         {
           "name": "Candan Tok",
           "role": "YMG Proje Lideri",
-          "photo": "/img/odtuvt/candan-tok-0N7EAA.jpeg"
+          "photo": "/img/odtuvt/candan-tok-0N7EAA.jpeg",
+          "quote": "Nodum secare. -Alexander the Great"
         }
       ],
       "hero": "/img/odtuvt/yonetim-ve-muhendislik-gunleri-etkinlik-resmi-4BM1B5.jpg",
@@ -333,8 +347,7 @@
       ],
       "icon": "mic",
       "external": "https://ymg.odtuvt.org.tr/",
-      "theme": "dark",
-      "featured": false
+      "theme": "dark"
     }
   ],
   "committees": [
@@ -353,12 +366,14 @@
         {
           "name": "Yiğit Efe Özdemir",
           "role": "İnovasyon Komitesinden Sorumlu YK Üyesi",
-          "photo": "/img/odtuvt/yigit-efe-ozdemir-JTGEXS.jpeg"
+          "photo": "/img/odtuvt/yigit-efe-ozdemir-JTGEXS.jpeg",
+          "quote": "Atmadığın her şutu kaçırırsın."
         },
         {
           "name": "Atahan Akharman",
           "role": "İnovasyon Komitesi Koordinatörü",
-          "photo": "/img/odtuvt/atahan-akharman-J9RQ58.jpeg"
+          "photo": "/img/odtuvt/atahan-akharman-J9RQ58.jpeg",
+          "quote": "6'yı ters çevirdim, o artık 9."
         }
       ]
     },
@@ -418,22 +433,26 @@
         {
           "name": "Azra Zöngür",
           "role": "İletişim ve Pazarlamadan Sorumlu YK Üyesi",
-          "photo": "/img/odtuvt/azra-zongur-M6QH0K.jpeg"
+          "photo": "/img/odtuvt/azra-zongur-M6QH0K.jpeg",
+          "quote": "\"Gerek yok parlamam için senin o ışığına.\""
         },
         {
           "name": "Alper Bozkaya",
           "role": "İletişim ve Pazarlama Komitesi Koordinatörü",
-          "photo": "/img/odtuvt/alper-bozkaya-2Q308X.jpeg"
+          "photo": "/img/odtuvt/alper-bozkaya-2Q308X.jpeg",
+          "quote": "\"Sanma kanarım bunlara, copycat on numara...\""
         },
         {
           "name": "Yağmur Çakırca",
           "role": "İletişim ve Pazarlama Komitesi Koordinatörü",
-          "photo": "/img/odtuvt/yagmur-cakirca-YWUKK1.jpeg"
+          "photo": "/img/odtuvt/yagmur-cakirca-YWUKK1.jpeg",
+          "quote": "\"Boş bakışların dolu kıskançlık, ele veriyor.\""
         },
         {
           "name": "Mert Kaş",
           "role": "İletişim ve Pazarlama Komitesi Koordinatörü",
-          "photo": "/img/odtuvt/mert-kas-003EG8.jpeg"
+          "photo": "/img/odtuvt/mert-kas-003EG8.jpeg",
+          "quote": "\"Yüksek hızda gidiyoruz, birikiyo' kumbara.\""
         }
       ]
     },
@@ -453,7 +472,8 @@
         {
           "name": "Demir Uluocak",
           "role": "Organizasyon Komitesinden Sorumlu YK Üyesi",
-          "photo": "/img/odtuvt/demir-uluocak-VZ2KRC.jpeg"
+          "photo": "/img/odtuvt/demir-uluocak-VZ2KRC.jpeg",
+          "quote": "\"Life moves pretty fast. If you don't stop and look around once in a while, you could miss it.\" Ferris Bueller's Day Off (1986)"
         },
         {
           "name": "Metin Efe Şahin",
@@ -463,7 +483,8 @@
         {
           "name": "Can Özbayramoğlu",
           "role": "Organizasyon Komitesi Koordinatörü",
-          "photo": "/img/odtuvt/can-ozbayramoglu-RRZUHQ.jpeg"
+          "photo": "/img/odtuvt/can-ozbayramoglu-RRZUHQ.jpeg",
+          "quote": "1 değil 3"
         }
       ]
     }
