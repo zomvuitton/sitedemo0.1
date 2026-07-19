@@ -144,6 +144,53 @@ if (tiltEl && !reducedMotion) {
   window.addEventListener("resize", onScroll);
 }
 
+// Hero alt yazısı: daktilo efekti — "/" ile ayrılan kelimeler dönüşümlü yazılır.
+// Metin panelden gelir; ilk parçanın son kelimesinden öncesi sabit kalır.
+const heroLede = document.getElementById("heroLede");
+if (heroLede && heroLede.textContent.includes("/")) {
+  const parcalar = heroLede.textContent.split("/").map((s) => s.trim()).filter(Boolean);
+  const bosluk = parcalar[0].lastIndexOf(" ");
+  const sabit = bosluk === -1 ? "" : parcalar[0].slice(0, bosluk + 1);
+  const kelimeler = [parcalar[0].slice(bosluk + 1), ...parcalar.slice(1)];
+
+  if (reducedMotion) {
+    heroLede.textContent = sabit + kelimeler.join(" ");
+  } else {
+    heroLede.textContent = "";
+
+    // Ekran okuyucular animasyonu değil tam metni duyar
+    const srMetin = document.createElement("span");
+    srMetin.className = "sr-only";
+    srMetin.textContent = sabit + kelimeler.join(" ");
+    const gorsel = document.createElement("span");
+    gorsel.setAttribute("aria-hidden", "true");
+    const kelimeEl = document.createElement("span");
+    const imlec = document.createElement("span");
+    imlec.className = "type-cursor";
+    imlec.textContent = "|";
+    gorsel.append(sabit, kelimeEl, imlec);
+    heroLede.append(srMetin, gorsel);
+
+    const YAZMA = 50, SILME = 30, BEKLEME = 2000;
+    let kelimeNo = 0, harf = 0, siliniyor = false;
+    const adim = () => {
+      const kelime = kelimeler[kelimeNo];
+      harf += siliniyor ? -1 : 1;
+      kelimeEl.textContent = kelime.slice(0, harf);
+      let sure = siliniyor ? SILME : YAZMA;
+      if (!siliniyor && harf === kelime.length) {
+        siliniyor = true;
+        sure = BEKLEME;
+      } else if (siliniyor && harf === 0) {
+        siliniyor = false;
+        kelimeNo = (kelimeNo + 1) % kelimeler.length;
+      }
+      setTimeout(adim, sure);
+    };
+    setTimeout(adim, YAZMA);
+  }
+}
+
 // Form gönderimi — data-api özniteliği olan tüm formlar
 document.querySelectorAll("form[data-api]").forEach((form) => {
   const feedback = form.querySelector(".form-feedback");

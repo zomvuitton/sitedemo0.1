@@ -338,7 +338,7 @@ const TEXT_SCHEMA = [
     group: "Ana sayfa",
     items: [
       ["texts.homeHeroTitle", "Hero başlığı (satır bölmek için Enter)", "textarea"],
-      ["site.heroLede", "Hero alt yazısı", "textarea"],
+      ["site.heroLede", "Hero alt yazısı (\"/\" ile ayrılan kelimeler daktilo efektiyle yazılır)", "textarea"],
       ["texts.homeHeroButton", "Hero butonu"],
       ["texts.homeHeroLink", "Hero bağlantısı"],
       ["texts.homeProjectsTitle", "Projeler bölümü başlığı"],
