@@ -1193,3 +1193,31 @@ html[data-theme="dark"] .grid-reveal {
 @media (prefers-reduced-motion: reduce) {
   .grid-reveal { animation: none; }
 }
+
+/* ============================================================
+   Scroll tilt — proje kapak görseli
+   Görsel 3B perspektifte geriye yatık gelir; kaydırma ilerledikçe
+   JS rotateX/scale değerini günceller ve görsel yerine oturur.
+   ============================================================ */
+
+.scroll-tilt-wrap {
+  width: 100%;
+  perspective: 1100px;
+}
+.scroll-tilt {
+  max-width: 880px;
+  margin-inline: auto;
+  transform-origin: center top;
+  will-change: transform;
+}
+/* Eğim sırasında derinlik hissi veren katmanlı gölge görselin kendisinde */
+.scroll-tilt .feature-img {
+  box-shadow:
+    0 9px 20px rgba(0, 0, 0, 0.18),
+    0 37px 37px rgba(0, 0, 0, 0.14),
+    0 84px 50px rgba(0, 0, 0, 0.08);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-tilt { transform: none !important; }
+}

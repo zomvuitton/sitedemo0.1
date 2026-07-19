@@ -117,6 +117,33 @@ if (gridHero) {
   }
 }
 
+// Proje kapak görseli: geriye yatık başlar, kaydırdıkça düzleşip yerine oturur
+const tiltEl = document.querySelector(".scroll-tilt");
+if (tiltEl && !reducedMotion) {
+  const isMobile = window.matchMedia("(max-width: 768px)").matches;
+  const maxRot = isMobile ? 14 : 20;
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const r = tiltEl.getBoundingClientRect();
+    const vh = window.innerHeight;
+    // 0: görselin üstü ekranın altında — 1: görsel ekranın üst yarısına vardı
+    const p = Math.min(1, Math.max(0, (vh - r.top) / (vh * 0.85)));
+    const eased = 1 - Math.pow(1 - p, 2);
+    tiltEl.style.transform =
+      "rotateX(" + maxRot * (1 - eased) + "deg) scale(" + (1.05 - 0.05 * eased) + ")";
+  };
+  const onScroll = () => {
+    if (!ticking) {
+      ticking = true;
+      requestAnimationFrame(update);
+    }
+  };
+  update();
+  window.addEventListener("scroll", onScroll, { passive: true });
+  window.addEventListener("resize", onScroll);
+}
+
 // Form gönderimi — data-api özniteliği olan tüm formlar
 document.querySelectorAll("form[data-api]").forEach((form) => {
   const feedback = form.querySelector(".form-feedback");
