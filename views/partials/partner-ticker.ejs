@@ -1,0 +1,19 @@
+<%
+// Partner logoları: kaydırma hızına tepki veren iki yönlü sonsuz şerit.
+// Az partner varsa tek şeride düşer; kopyalar döngünün dikişsiz olması için.
+const yarim = Math.ceil(partners.length / 2);
+const satirlar = partners.length > 6 ? [partners.slice(0, yarim), partners.slice(yarim)] : [partners];
+%>
+<div class="partner-ticker reveal" data-partner-ticker>
+  <% satirlar.forEach(function (grup, i) { %>
+  <div class="ticker-row" data-dir="<%= i % 2 === 0 ? 1 : -1 %>">
+    <div class="ticker-track">
+      <% for (let kopya = 0; kopya < 2; kopya++) { grup.forEach(function (pt) { %>
+      <div class="partner-cell" title="<%= pt.name %>" <%- kopya > 0 ? 'aria-hidden="true"' : '' %>>
+        <img src="<%= pt.logo %>" alt="<%= kopya > 0 ? '' : pt.name + ' logosu' %>" loading="lazy">
+      </div>
+      <% }) } %>
+    </div>
+  </div>
+  <% }) %>
+</div>

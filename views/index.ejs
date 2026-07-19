@@ -107,13 +107,7 @@
       <h2><%= texts.homePartnersTitle %></h2>
       <p class="section-sub"><%= texts.homePartnersSub %></p>
     </div>
-    <div class="partner-grid reveal">
-      <% partners.forEach(function (pt) { %>
-      <div class="partner-cell" title="<%= pt.name %>">
-        <img src="<%= pt.logo %>" alt="<%= pt.name %> logosu" loading="lazy">
-      </div>
-      <% }) %>
-    </div>
+    <%- include('partials/partner-ticker') %>
   </div>
 </section>
 

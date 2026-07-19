@@ -191,6 +191,70 @@ if (heroLede && heroLede.textContent.includes("/")) {
   }
 }
 
+// Partner şeritleri: kaydırma hızına tepki veren sonsuz logo akışı.
+// Satırlar zıt yönlerde sabit hızla akar; sayfayı kaydırınca hızlanır,
+// yukarı kaydırınca yön tersine döner (Motion'ın scroll-text-lines örneği gibi).
+const partnerTicker = document.querySelector("[data-partner-ticker]");
+if (partnerTicker && !reducedMotion) {
+  const rows = [...partnerTicker.querySelectorAll(".ticker-row")].map((row) => {
+    const track = row.querySelector(".ticker-track");
+    const state = { track, dir: Number(row.dataset.dir) || 1, x: 0, setW: 0 };
+    const olc = () => {
+      // Şerit iki kopya içerir; döngü tek kopyanın genişliğinde sarılır
+      state.setW = track.scrollWidth / 2;
+    };
+    olc();
+    if ("ResizeObserver" in window) new ResizeObserver(olc).observe(track);
+    return state;
+  });
+
+  let gorunur = false;
+  let sonZaman = 0;
+  let sonY = window.scrollY;
+  let hiz = 0; // yumuşatılmış kaydırma hızı (px/sn)
+  let yonKatsayisi = 1;
+  const TABAN = 36; // px/sn — boştaki akış hızı
+
+  const dongu = (now) => {
+    if (!gorunur) return;
+    const dt = sonZaman ? Math.min(0.05, (now - sonZaman) / 1000) : 0.016;
+    sonZaman = now;
+
+    const y = window.scrollY;
+    const anlik = dt > 0 ? (y - sonY) / dt : 0;
+    sonY = y;
+    hiz += (anlik - hiz) * 0.12;
+
+    // Belirgin bir kaydırma varsa akış yönü ona uyar
+    if (hiz < -60) yonKatsayisi = -1;
+    else if (hiz > 60) yonKatsayisi = 1;
+
+    const carpan = 1 + Math.min(5, Math.abs(hiz) / 250);
+    rows.forEach((r) => {
+      if (!r.setW) return;
+      r.x = (((r.x + r.dir * yonKatsayisi * TABAN * carpan * dt) % r.setW) + r.setW) % r.setW;
+      r.track.style.transform = "translateX(" + -r.x + "px)";
+    });
+    requestAnimationFrame(dongu);
+  };
+
+  // Ekranda değilken hiç çalışmasın
+  new IntersectionObserver(
+    (entries) => {
+      const v = entries[0].isIntersecting;
+      if (v && !gorunur) {
+        gorunur = true;
+        sonZaman = 0;
+        sonY = window.scrollY;
+        requestAnimationFrame(dongu);
+      } else if (!v) {
+        gorunur = false;
+      }
+    },
+    { threshold: 0.05 }
+  ).observe(partnerTicker);
+}
+
 // Form gönderimi — data-api özniteliği olan tüm formlar
 document.querySelectorAll("form[data-api]").forEach((form) => {
   const feedback = form.querySelector(".form-feedback");

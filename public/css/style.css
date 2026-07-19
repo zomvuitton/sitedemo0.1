@@ -1245,3 +1245,44 @@ html[data-theme="dark"] .grid-reveal {
 @media (prefers-reduced-motion: reduce) {
   .scroll-tilt { transform: none !important; }
 }
+
+/* ============================================================
+   Partner şeritleri — kaydırmaya tepkili sonsuz logo akışı
+   İki satır zıt yönlerde akar; sayfa kaydırma hızı akışı hızlandırır,
+   yön değişince şeritler de yön değiştirir. JS: main.js
+   ============================================================ */
+
+.partner-ticker {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  overflow: hidden;
+  /* Kenarlarda yumuşak kaybolma */
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+  mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+}
+
+.ticker-row { overflow: hidden; }
+
+.ticker-track {
+  display: flex;
+  gap: var(--s-2);
+  width: max-content;
+  will-change: transform;
+}
+
+.partner-ticker .partner-cell {
+  flex: 0 0 auto;
+  width: 176px;
+}
+
+@media (max-width: 599px) {
+  .partner-ticker .partner-cell { width: 140px; min-height: 60px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Hareket istemeyenler için şerit değil sarmalanan sabit dizilim */
+  .partner-ticker { -webkit-mask-image: none; mask-image: none; }
+  .ticker-track { flex-wrap: wrap; width: auto; justify-content: center; }
+  .ticker-track [aria-hidden="true"] { display: none; }
+}
