@@ -90,12 +90,13 @@ async function sampleImageTargets(url, maxSamples) {
 }
 
 class MorphParticles {
-  constructor({ container, hoverTarget, morphAnchor, image, colors, count = 5000 }) {
+  constructor({ container, hoverTarget, morphAnchor, image, colors, count = 5000, spin = 0 }) {
     this.container = container;
     this.hoverTarget = hoverTarget;
     this.morphAnchor = morphAnchor;
     this.count = count;
     this.colors = colors;
+    this.spin = spin; // radyan: logo şekillenirken bu açıdan dönerek gelir
     this.morph = 0;
     this.morphGoal = 0;
     this.isPaused = false;
@@ -153,6 +154,7 @@ class MorphParticles {
         uRez: { value: new THREE.Vector2(1, 1) },
         uLogoCenter: { value: new THREE.Vector2(0, 0) },
         uLogoScale: { value: 200 },
+        uSpin: { value: this.spin },
         uPixelRatio: { value: this.pixelRatio },
         uColor1: { value: new THREE.Color(this.colors.color1) },
         uColor2: { value: new THREE.Color(this.colors.color2) },
@@ -169,6 +171,7 @@ class MorphParticles {
         uniform vec2 uRez;
         uniform vec2 uLogoCenter;
         uniform float uLogoScale;
+        uniform float uSpin;
         uniform float uPixelRatio;
 
         varying vec4 vSeeds;
@@ -194,12 +197,22 @@ class MorphParticles {
             snoise(vec3(aTarget * 8.0 + vec2(5.2, 1.3), t * 1.6)),
             snoise(vec3(aTarget * 8.0 + vec2(9.1, 3.7), t * 1.6))
           ) * 2.5;
-          vec2 target = uLogoCenter + aTarget * uLogoScale + jitter;
-
           // Kademeli morph: her partikül kendi gecikmesiyle katılır
           float m = clamp((uMorph - seeds.x * 0.35) / 0.65, 0.0, 1.0);
           m = m * m * (3.0 - 2.0 * m);
           vMix = m;
+
+          // Dönerek oluşum: logo hedefi merkez etrafında döner, morph
+          // tamamlandıkça açı sıfırlanır — dağılırken de tersine döner.
+          // Küçük ölçek farkı girdap hissi verir.
+          vec2 off = aTarget * uLogoScale;
+          if (uSpin != 0.0) {
+            float ang = uSpin * (1.0 - m);
+            float ca = cos(ang);
+            float sa = sin(ang);
+            off = mat2(ca, sa, -sa, ca) * off * mix(1.35, 1.0, m);
+          }
+          vec2 target = uLogoCenter + off + jitter;
 
           vec2 pos = mix(home, target, m);
 
@@ -339,21 +352,31 @@ class MorphParticles {
 
 // ---------- Başlat ----------
 
-const container = document.getElementById("campusParticles");
-const section = document.getElementById("campusSection");
-const anchor = document.getElementById("campusMorphZone");
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-if (container && section && !reduceMotion) {
-  try {
-    new MorphParticles({
-      container,
-      hoverTarget: section,
-      morphAnchor: anchor,
-      image: "/img/odtuvt/logo-mark-white.png",
-      colors: { color1: "#ff5063", color2: "#a6192e", color3: "#000000" }
-    });
-  } catch (err) {
-    console.warn("Kampüs morph animasyonu başlatılamadı:", err);
-  }
+// Aynı motor iki yerde: ana sayfa kampüs bölümü (düz morph) ve
+// Ekibimiz girişi (dönerek oluşan morph)
+const kurulumlar = [
+  { containerId: "campusParticles", sectionId: "campusSection", anchorId: "campusMorphZone", spin: 0 },
+  { containerId: "teamParticles", sectionId: "teamSection", anchorId: "teamMorphZone", spin: Math.PI * 2 }
+];
+
+if (!reduceMotion) {
+  kurulumlar.forEach((k) => {
+    const container = document.getElementById(k.containerId);
+    const section = document.getElementById(k.sectionId);
+    if (!container || !section) return;
+    try {
+      new MorphParticles({
+        container,
+        hoverTarget: section,
+        morphAnchor: document.getElementById(k.anchorId),
+        image: "/img/odtuvt/logo-mark-white.png",
+        colors: { color1: "#ff5063", color2: "#a6192e", color3: "#000000" },
+        spin: k.spin
+      });
+    } catch (err) {
+      console.warn("Morph animasyonu başlatılamadı:", err);
+    }
+  });
 }

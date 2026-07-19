@@ -1286,3 +1286,22 @@ html[data-theme="dark"] .grid-reveal {
   .ticker-track { flex-wrap: wrap; width: auto; justify-content: center; }
   .ticker-track [aria-hidden="true"] { display: none; }
 }
+
+/* ============================================================
+   Ekibimiz girişi — dönerek oluşan partikül morph
+   Kampüs bölümüyle aynı motor; logo sağdaki boş alanda şekillenir.
+   ============================================================ */
+
+.team-hero {
+  position: relative;
+  overflow: hidden;
+}
+.team-hero-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  gap: var(--s-6);
+}
+@media (min-width: 768px) {
+  .team-hero-grid { grid-template-columns: 1.1fr 1fr; align-items: center; }
+}

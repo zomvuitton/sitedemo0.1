@@ -1,17 +1,27 @@
 <%- include('partials/head') %>
 <%- include('partials/nav') %>
 
-<section class="tile tile-white page-hero grid-reveal-hero">
-  <!-- Kayan ızgara: sağ alta doğru sürekli akar, yalnız imlecin altı aydınlanır -->
-  <div class="grid-reveal" aria-hidden="true"></div>
-  <div class="container">
+<!-- Partikül morph: dağınık partiküller dönerek VT logosuna toplanır -->
+<section class="tile tile-white page-hero team-hero" id="teamSection">
+  <div class="hero-particles" id="teamParticles" aria-hidden="true"></div>
+  <div class="container team-hero-grid">
     <div class="page-hero-inner reveal">
       <p class="eyebrow eyebrow-red">Ekibimiz</p>
       <h1><%- br(texts.teamTitle) %></h1>
       <p class="lede lede-dark"><%= texts.teamLede %></p>
     </div>
+    <div class="campus-morph-zone" id="teamMorphZone" aria-hidden="true"></div>
   </div>
 </section>
+
+<script>
+  // Morph modülü (Three.js dahil) sayfa çizildikten sonra boşta yüklenir
+  window.addEventListener("load", function () {
+    var go = function () { import("/js/campus-morph.js"); };
+    if ("requestIdleCallback" in window) requestIdleCallback(go, { timeout: 2500 });
+    else setTimeout(go, 400);
+  });
+</script>
 
 <% boards.filter(b => b.members.length).forEach(function (b, i) { %>
 <section class="tile <%= i % 2 === 0 ? 'tile-gray' : 'tile-white' %>">
