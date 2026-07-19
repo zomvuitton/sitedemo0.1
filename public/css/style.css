@@ -340,6 +340,29 @@ html[data-theme="dark"] .theme-toggle:hover { background: rgba(255, 255, 255, 0.
 
 .hero-inner .lede { margin-top: var(--s-3); }
 
+/* Hero alt yazısındaki daktilo imleci */
+.type-cursor {
+  display: inline-block;
+  margin-left: 2px;
+  color: var(--vt-red);
+  animation: type-blink 0.85s linear infinite;
+}
+@keyframes type-blink {
+  0%, 49% { opacity: 1; }
+  50%, 100% { opacity: 0; }
+}
+
+/* Yalnızca ekran okuyucular için metin */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
 .display-light { color: var(--dark-text); }
 
 .br-desktop { display: none; }
@@ -997,6 +1020,7 @@ html[data-theme="dark"] .theme-toggle:hover { background: rgba(255, 255, 255, 0.
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; transition: none; }
   .card, .duo-cell, .project-row, .btn { transition: none; }
+  .type-cursor { animation: none; }
 }
 
 /* ============================================================
