@@ -277,6 +277,119 @@ if (partnerTicker && !reducedMotion) {
   ).observe(partnerTicker);
 }
 
+// Projeler girişi: iki uçta akan dalga çizgileri.
+// Sayfa açılırken enerji tam — çizgiler hızlı ve geniş dalgalanır; enerji
+// sönümlendikçe sakin bir akışa iner. İmleç bölüme girince hem genel tempo
+// biraz artar hem de imlecin hizasındaki dalga yerel olarak kabarır.
+const waveHero = document.querySelector(".wave-hero");
+if (waveHero) {
+  const bands = [...waveHero.querySelectorAll(".wave-band")].map((cv) => ({
+    cv,
+    ctx: cv.getContext("2d"),
+    // Alt şeritte çizgiler alt kenara yaslanır ve dalga ters yöne bakar
+    alt: cv.classList.contains("wave-band-bottom"),
+    w: 0,
+    h: 0
+  }));
+  const CIZGI = 4;
+
+  let heroRect = waveHero.getBoundingClientRect();
+  const olc = () => {
+    heroRect = waveHero.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    for (const b of bands) {
+      b.w = b.cv.clientWidth;
+      b.h = b.cv.clientHeight;
+      b.cv.width = Math.round(b.w * dpr);
+      b.cv.height = Math.round(b.h * dpr);
+      b.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+  };
+  olc();
+  window.addEventListener("resize", olc);
+  window.addEventListener("scroll", () => { heroRect = waveHero.getBoundingClientRect(); }, { passive: true });
+
+  let enerji = 1;      // 1 = açılış coşkusu, 0 = sakin akış
+  let imlec = 0;       // yumuşatılmış imleç etkisi
+  let imlecHedef = 0;
+  let mx = -9999;      // imlecin bölüm içindeki x'i
+  let faz = 0;         // birikimli — hız değişince dalga geri sıçramaz
+  let sonZaman = 0;
+  let gorunur = false;
+
+  waveHero.addEventListener("pointermove", (e) => {
+    mx = e.clientX - heroRect.left;
+    imlecHedef = 1;
+  });
+  waveHero.addEventListener("pointerleave", () => { imlecHedef = 0; });
+
+  const ciz = () => {
+    const koyu = document.documentElement.dataset.theme === "dark";
+    const rgb = koyu ? "255, 80, 99" : "166, 25, 46";
+    const yerel = imlec > 0.01;
+
+    for (const b of bands) {
+      b.ctx.clearRect(0, 0, b.w, b.h);
+      for (let i = 0; i < CIZGI; i++) {
+        const f = i / (CIZGI - 1);                     // 0 = dış kenar, 1 = içeri
+        const ic = 8 + f * (b.h - 20);                 // kenardan uzaklık
+        const taban = b.alt ? b.h - ic : ic;
+        const genlik = b.h * 0.17 * (1 - f * 0.45) * (0.4 + 0.6 * enerji);
+
+        b.ctx.beginPath();
+        for (let x = 0; x <= b.w; x += 6) {
+          // İmlecin hizasında gauss kabarma
+          const d = x - mx;
+          const kabar = yerel ? 1 + imlec * 1.4 * Math.exp(-(d * d) / 34000) : 1;
+          const s =
+            Math.sin(x * 0.011 + faz * 1.6 + i * 0.7) * 0.65 +
+            Math.sin(x * 0.021 - faz * 1.1 + i * 1.3) * 0.35;
+          const y = taban + (b.alt ? -1 : 1) * genlik * kabar * s;
+          if (x) b.ctx.lineTo(x, y);
+          else b.ctx.moveTo(x, y);
+        }
+        b.ctx.strokeStyle = "rgba(" + rgb + ", " + (0.36 - f * 0.22).toFixed(3) + ")";
+        b.ctx.lineWidth = 1.25;
+        b.ctx.stroke();
+      }
+    }
+  };
+
+  if (reducedMotion) {
+    enerji = 0;
+    ciz();
+  } else {
+    const dongu = (now) => {
+      if (!gorunur) return;
+      const dt = sonZaman ? Math.min(0.05, (now - sonZaman) / 1000) : 0.016;
+      sonZaman = now;
+
+      // Üstel sönümleme: ~2 sn içinde açılış temposundan sakin akışa iner
+      enerji += (0 - enerji) * (1 - Math.exp(-dt * 1.7));
+      imlec += (imlecHedef - imlec) * (1 - Math.exp(-dt * 5));
+      faz += dt * (0.55 + enerji * 3.2 + imlec * 0.8);
+
+      ciz();
+      requestAnimationFrame(dongu);
+    };
+
+    // Ekranda değilken hiç çalışmasın
+    new IntersectionObserver(
+      (entries) => {
+        const v = entries[0].isIntersecting;
+        if (v && !gorunur) {
+          gorunur = true;
+          sonZaman = 0;
+          requestAnimationFrame(dongu);
+        } else if (!v) {
+          gorunur = false;
+        }
+      },
+      { threshold: 0.02 }
+    ).observe(waveHero);
+  }
+}
+
 // Form gönderimi — data-api özniteliği olan tüm formlar
 document.querySelectorAll("form[data-api]").forEach((form) => {
   const feedback = form.querySelector(".form-feedback");
