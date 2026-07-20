@@ -93,23 +93,45 @@ if (statEls.length && !reducedMotion && "IntersectionObserver" in window) {
 const gridHero = document.querySelector(".grid-reveal-hero");
 if (gridHero) {
   const layer = gridHero.querySelector(".grid-reveal");
-  const setSpot = (x, y) => {
-    layer.style.setProperty("--mx", x + "px");
-    layer.style.setProperty("--my", y + "px");
+
+  // Ölçümü olayın içinde değil, önden alıyoruz: pointermove başına
+  // getBoundingClientRect layout'u zorlar ve takılmaya yol açar.
+  let rect = layer.getBoundingClientRect();
+  const remeasure = () => { rect = layer.getBoundingClientRect(); };
+  window.addEventListener("resize", remeasure);
+  window.addEventListener("scroll", remeasure, { passive: true });
+
+  // Hedef (tx/ty) ile çizilen konum (cx/cy) ayrı. Yazma yalnızca rAF içinde
+  // olur; yoksa 120 Hz'lik pointermove maskeyi kare başına defalarca çizdirir.
+  let tx = -9999, ty = -9999, cx = -9999, cy = -9999, running = false;
+
+  const draw = () => {
+    const dx = tx - cx, dy = ty - cy;
+    // Çok uzaktan geliyorsa (ilk giriş / çıkış) yumuşatma yok, doğrudan otursun
+    if (Math.abs(dx) > 1500 || Math.abs(dy) > 1500) { cx = tx; cy = ty; }
+    else { cx += dx * 0.18; cy += dy * 0.18; }
+    layer.style.setProperty("--mx", cx.toFixed(1) + "px");
+    layer.style.setProperty("--my", cy.toFixed(1) + "px");
+    if (Math.abs(tx - cx) > 0.3 || Math.abs(ty - cy) > 0.3) requestAnimationFrame(draw);
+    else running = false;
   };
+
+  const setSpot = (x, y) => {
+    tx = x; ty = y;
+    if (!running) { running = true; requestAnimationFrame(draw); }
+  };
+
   if (window.matchMedia("(hover: hover)").matches) {
     gridHero.addEventListener("pointermove", (e) => {
-      const r = layer.getBoundingClientRect();
-      setSpot(e.clientX - r.left, e.clientY - r.top);
+      setSpot(e.clientX - rect.left, e.clientY - rect.top);
     });
     gridHero.addEventListener("pointerleave", () => setSpot(-9999, -9999));
   } else if (!reducedMotion) {
     // Dokunmatik cihazlarda imleç yok: ışık kendi kendine yavaşça gezinir
     const roam = (t) => {
-      const r = layer.getBoundingClientRect();
       setSpot(
-        r.width * (0.5 + 0.4 * Math.sin(t / 2600)),
-        r.height * (0.5 + 0.35 * Math.cos(t / 3400))
+        rect.width * (0.5 + 0.4 * Math.sin(t / 2600)),
+        rect.height * (0.5 + 0.35 * Math.cos(t / 3400))
       );
       requestAnimationFrame(roam);
     };
@@ -251,6 +273,185 @@ if (partnerTicker && !reducedMotion) {
     },
     { threshold: 0.05 }
   ).observe(partnerTicker);
+}
+
+// Projeler girişi: bölümün ortasından geçen dalga çizgileri.
+// Sayfa açılırken enerji tam — çizgiler hızlı ve geniş dalgalanır; enerji
+// sönümlendikçe sakin bir akışa iner. İmleç bölüme girince hem genel tempo
+// biraz artar hem de imlecin hizasındaki dalga yerel olarak kabarır.
+const waveHero = document.querySelector(".wave-hero");
+if (waveHero) {
+  const band = waveHero.querySelector(".wave-band");
+  const ctx = band.getContext("2d");
+  const CIZGI = 5;
+  let bw = 0;
+  let bh = 0;
+
+  let heroRect = waveHero.getBoundingClientRect();
+  const olc = () => {
+    heroRect = waveHero.getBoundingClientRect();
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    bw = band.clientWidth;
+    bh = band.clientHeight;
+    band.width = Math.round(bw * dpr);
+    band.height = Math.round(bh * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  };
+  olc();
+  window.addEventListener("resize", olc);
+  window.addEventListener("scroll", () => { heroRect = waveHero.getBoundingClientRect(); }, { passive: true });
+
+  let enerji = 1;      // 1 = açılış coşkusu, 0 = sakin akış
+  let imlec = 0;       // yumuşatılmış imleç etkisi
+  let imlecHedef = 0;
+  let mx = -9999;      // imlecin bölüm içindeki x'i
+  let faz = 0;         // birikimli — hız değişince dalga geri sıçramaz
+  let sonZaman = 0;
+  let gorunur = false;
+
+  waveHero.addEventListener("pointermove", (e) => {
+    mx = e.clientX - heroRect.left;
+    imlecHedef = 1;
+  });
+  waveHero.addEventListener("pointerleave", () => { imlecHedef = 0; });
+
+  const ciz = () => {
+    const koyu = document.documentElement.dataset.theme === "dark";
+    const rgb = koyu ? "255, 80, 99" : "166, 25, 46";
+    const yerel = imlec > 0.01;
+    const orta = bh / 2;
+
+    ctx.clearRect(0, 0, bw, bh);
+    for (let i = 0; i < CIZGI; i++) {
+      const f = i / (CIZGI - 1);            // 0 = en üst çizgi, 1 = en alt
+      const kacik = Math.abs(f - 0.5) * 2;  // 0 = orta çizgi, 1 = dıştaki
+      const taban = orta + (f - 0.5) * bh * 0.34;
+      const genlik = bh * 0.21 * (1 - kacik * 0.2) * (0.4 + 0.6 * enerji);
+
+      ctx.beginPath();
+      for (let x = 0; x <= bw; x += 5) {
+        // İmlecin hizasında gauss kabarma
+        const d = x - mx;
+        const kabar = yerel ? 1 + imlec * 1.4 * Math.exp(-(d * d) / 34000) : 1;
+        // Üç harmonik: uzun taşıyıcı + iki kısa dalga — kıvrımı zenginleştirir
+        const s =
+          Math.sin(x * 0.013 + faz * 1.7 + i * 0.55) * 0.55 +
+          Math.sin(x * 0.026 - faz * 1.15 + i * 1.1) * 0.3 +
+          Math.sin(x * 0.045 + faz * 2.3 + i * 1.9) * 0.15;
+        const y = taban + genlik * kabar * s;
+        if (x) ctx.lineTo(x, y);
+        else ctx.moveTo(x, y);
+      }
+      ctx.strokeStyle = "rgba(" + rgb + ", " + (0.32 - kacik * 0.14).toFixed(3) + ")";
+      ctx.lineWidth = 1.25;
+      ctx.stroke();
+    }
+  };
+
+  if (reducedMotion) {
+    enerji = 0;
+    ciz();
+  } else {
+    const dongu = (now) => {
+      if (!gorunur) return;
+      const dt = sonZaman ? Math.min(0.05, (now - sonZaman) / 1000) : 0.016;
+      sonZaman = now;
+
+      // Üstel sönümleme: ~2 sn içinde açılış temposundan sakin akışa iner
+      enerji += (0 - enerji) * (1 - Math.exp(-dt * 1.7));
+      imlec += (imlecHedef - imlec) * (1 - Math.exp(-dt * 5));
+      faz += dt * (0.55 + enerji * 3.2 + imlec * 0.8);
+
+      ciz();
+      requestAnimationFrame(dongu);
+    };
+
+    // Ekranda değilken hiç çalışmasın
+    new IntersectionObserver(
+      (entries) => {
+        const v = entries[0].isIntersecting;
+        if (v && !gorunur) {
+          gorunur = true;
+          sonZaman = 0;
+          requestAnimationFrame(dongu);
+        } else if (!v) {
+          gorunur = false;
+        }
+      },
+      { threshold: 0.02 }
+    ).observe(waveHero);
+  }
+}
+
+// Hakkımızda: zaman çizelgesi rayındaki ışık kaydırmayı izler.
+// Framer'ın useScroll({ offset: ["start 10%", "end 50%"] }) karşılığı elle
+// hesaplanır: ilerleme, bölümün üstü ekranın %10'una indiğinde başlar,
+// altı ekranın ortasına geldiğinde dolar.
+const timeline = document.querySelector("[data-timeline]");
+if (timeline) {
+  const kapsayici = timeline.querySelector(".timeline-items");
+  const isik = timeline.querySelector(".timeline-beam");
+  const bloklar = [...timeline.querySelectorAll(".timeline-item")].map((el) => ({
+    el,
+    nokta: el.querySelector(".timeline-dot"),
+    aktif: false
+  }));
+
+  const uygula = () => {
+    const r = kapsayici.getBoundingClientRect();
+    const vh = window.innerHeight;
+    const yol = r.height - vh * 0.4;
+    // Bölüm ekrandan kısaysa payda negatife düşer; o durumda eşiği geçince dolu say
+    const p =
+      yol > 0
+        ? Math.min(1, Math.max(0, (vh * 0.1 - r.top) / yol))
+        : r.top <= vh * 0.1
+        ? 1
+        : 0;
+
+    isik.style.transform = "scaleY(" + p.toFixed(4) + ")";
+    isik.style.opacity = Math.min(1, p / 0.1).toFixed(3);
+
+    // Okunmakta olan blok: başlığın asılı durduğu hizayı geçmiş olan
+    const esik = vh * 0.25;
+    for (const b of bloklar) {
+      const ir = b.el.getBoundingClientRect();
+      const aktif = ir.top <= esik && ir.bottom > esik;
+      if (aktif !== b.aktif) {
+        b.aktif = aktif;
+        b.nokta.classList.toggle("is-active", aktif);
+      }
+    }
+  };
+
+  if (reducedMotion) {
+    isik.style.transform = "scaleY(1)";
+    isik.style.opacity = "1";
+    bloklar.forEach((b) => b.nokta.classList.add("is-active"));
+  } else {
+    let gorunur = false;
+    let bekliyor = false;
+    // Ölçüm ve yazma tek bir kareye toplanır; scroll olayı yalnız bayrak diker
+    const iste = () => {
+      if (bekliyor || !gorunur) return;
+      bekliyor = true;
+      requestAnimationFrame(() => {
+        bekliyor = false;
+        uygula();
+      });
+    };
+    window.addEventListener("scroll", iste, { passive: true });
+    window.addEventListener("resize", iste);
+
+    // Ekranda değilken hiç hesaplamasın
+    new IntersectionObserver(
+      (entries) => {
+        gorunur = entries[0].isIntersecting;
+        if (gorunur) iste();
+      },
+      { threshold: 0 }
+    ).observe(timeline);
+  }
 }
 
 // Form gönderimi — data-api özniteliği olan tüm formlar

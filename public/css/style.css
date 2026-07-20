@@ -1194,28 +1194,190 @@ html[data-theme="dark"] .skip-link { color: #1d1d1f; }
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background-image:
-    linear-gradient(to right, rgba(166, 25, 46, 0.4) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(166, 25, 46, 0.4) 1px, transparent 1px);
-  background-size: 44px 44px;
-  animation: grid-drift 5s linear infinite;
+  /* Maske burada durur; ızgara içeride kayar. Böylece kayma repaint değil,
+     compositor işi olur — maske de yalnız imleç kımıldayınca yeniden çizilir. */
   -webkit-mask-image: radial-gradient(230px circle at var(--mx) var(--my), rgba(0, 0, 0, 0.95), transparent 72%);
   mask-image: radial-gradient(230px circle at var(--mx) var(--my), rgba(0, 0, 0, 0.95), transparent 72%);
 }
 
-@keyframes grid-drift {
-  from { background-position: 0 0; }
-  to { background-position: 44px 44px; }
+/* Bir kare taşan katman: bir hücre boyu kaydırılıp başa dönünce dikiş görünmez */
+.grid-reveal::before {
+  content: "";
+  position: absolute;
+  inset: -44px;
+  background-image:
+    linear-gradient(to right, rgba(166, 25, 46, 0.4) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(166, 25, 46, 0.4) 1px, transparent 1px);
+  background-size: 44px 44px;
+  will-change: transform;
+  animation: grid-drift 5s linear infinite;
 }
 
-html[data-theme="dark"] .grid-reveal {
+@keyframes grid-drift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(44px, 44px, 0); }
+}
+
+html[data-theme="dark"] .grid-reveal::before {
   background-image:
     linear-gradient(to right, rgba(255, 80, 99, 0.35) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 80, 99, 0.35) 1px, transparent 1px);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .grid-reveal { animation: none; }
+  .grid-reveal::before { animation: none; will-change: auto; }
+}
+
+/* ============================================================
+   Hakkımızda — kaydırmalı zaman çizelgesi
+   Solda sabit bir ray; kaydırdıkça içindeki ışık (--beam) uzar.
+   Başlıklar kendi metinleri geçip gidene dek yapışık kalır.
+   ============================================================ */
+
+.timeline-items {
+  position: relative;
+  --tl-ray: 12px;   /* rayın sol kenardan uzaklığı (merkez) */
+  --tl-bosluk: 56px; /* metnin raydan uzaklığı */
+}
+
+.timeline-track {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: calc(var(--tl-ray) - 1px);
+  width: 2px;
+  overflow: hidden;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(166, 25, 46, 0.18) 12%,
+    rgba(166, 25, 46, 0.18) 88%,
+    transparent 100%
+  );
+  /* İki uç yumuşasın — ray sayfaya çizilmiş gibi değil, süzülmüş görünür */
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%);
+  mask-image: linear-gradient(to bottom, transparent 0%, #000 10%, #000 90%, transparent 100%);
+}
+
+/* Uzayan ışık: yükseklik yerine scaleY — repaint değil, compositor işi */
+.timeline-beam {
+  position: absolute;
+  inset: 0;
+  transform: scaleY(0);
+  transform-origin: top;
+  opacity: 0;
+  background: linear-gradient(
+    to top,
+    var(--vt-red-bright) 0%,
+    var(--vt-red) 10%,
+    transparent 100%
+  );
+}
+
+.timeline-item {
+  position: relative;
+  display: grid;
+  gap: var(--s-3);
+  padding-block: var(--s-8) 0;
+}
+.timeline-item:first-child { padding-top: var(--s-4); }
+
+.timeline-marker {
+  position: relative;
+  padding-left: var(--tl-bosluk);
+}
+.timeline-marker h2 {
+  font-size: clamp(24px, 3vw, 32px);
+  line-height: 1.2;
+}
+
+.timeline-dot {
+  position: absolute;
+  left: calc(var(--tl-ray) - 12px);
+  top: 0.15em;
+  display: grid;
+  place-items: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--paper);
+}
+.timeline-dot::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(166, 25, 46, 0.25);
+  transition: background 0.35s ease, box-shadow 0.35s ease, transform 0.35s ease;
+}
+.timeline-dot.is-active::after {
+  background: var(--vt-red);
+  box-shadow: 0 0 0 4px rgba(166, 25, 46, 0.12);
+  transform: scale(1.1);
+}
+
+.timeline-content { padding-left: var(--tl-bosluk); }
+.timeline-content p + p { margin-top: var(--s-3); }
+.timeline-content .lede-dark { font-size: clamp(19px, 2.2vw, 24px); line-height: 1.35; color: var(--ink); }
+.timeline-content p { color: var(--ink-2); }
+.timeline-content .aside-img { margin-top: var(--s-4); max-width: 420px; }
+
+@media (min-width: 768px) {
+  .timeline-item {
+    grid-template-columns: minmax(0, 300px) 1fr;
+    gap: var(--s-6);
+    padding-block: var(--s-16) 0;
+  }
+  .timeline-item:first-child { padding-top: var(--s-8); }
+  /* Başlık, kendi metni ekrandan geçene dek nav'ın altında asılı kalır */
+  .timeline-marker {
+    position: sticky;
+    top: calc(var(--nav-h) + var(--s-4));
+    align-self: start;
+  }
+  .timeline-content { padding-left: 0; }
+}
+
+html[data-theme="dark"] .timeline-track {
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(255, 80, 99, 0.22) 12%,
+    rgba(255, 80, 99, 0.22) 88%,
+    transparent 100%
+  );
+}
+html[data-theme="dark"] .timeline-dot::after { background: rgba(255, 80, 99, 0.28); }
+html[data-theme="dark"] .timeline-dot.is-active::after {
+  box-shadow: 0 0 0 4px rgba(255, 80, 99, 0.16);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .timeline-dot::after { transition: none; }
+}
+
+/* ============================================================
+   Projeler girişi — dalga şeridi
+   Bölümün tam ortasından geçen canvas; çizgiler sayfa açılınca hızlı
+   dalgalanır, sönümlenerek yavaşlar, imleç yaklaşınca kabarır.
+   ============================================================ */
+
+.wave-hero { position: relative; overflow: hidden; }
+.wave-hero .container { position: relative; z-index: 1; }
+
+.wave-band {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  height: 220px;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@media (max-width: 768px) {
+  .wave-band { height: 150px; }
 }
 
 /* ============================================================
