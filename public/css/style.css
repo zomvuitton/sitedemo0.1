@@ -1229,9 +1229,9 @@ html[data-theme="dark"] .grid-reveal::before {
 }
 
 /* ============================================================
-   Projeler girişi — dalga şeritleri
-   Bölümün üst ve alt ucunda birer canvas; çizgiler sayfa açılınca
-   hızlı dalgalanır, sönümlenerek yavaşlar, imleç yaklaşınca kabarır.
+   Projeler girişi — dalga şeridi
+   Bölümün tam ortasından geçen canvas; çizgiler sayfa açılınca hızlı
+   dalgalanır, sönümlenerek yavaşlar, imleç yaklaşınca kabarır.
    ============================================================ */
 
 .wave-hero { position: relative; overflow: hidden; }
@@ -1240,16 +1240,16 @@ html[data-theme="dark"] .grid-reveal::before {
 .wave-band {
   position: absolute;
   left: 0;
+  top: 50%;
+  transform: translateY(-50%);
   width: 100%;
-  height: 88px;
+  height: 220px;
   pointer-events: none;
   z-index: 0;
 }
-.wave-band-top { top: 0; }
-.wave-band-bottom { bottom: 0; }
 
 @media (max-width: 768px) {
-  .wave-band { height: 56px; }
+  .wave-band { height: 150px; }
 }
 
 /* ============================================================

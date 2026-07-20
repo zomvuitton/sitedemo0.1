@@ -277,33 +277,27 @@ if (partnerTicker && !reducedMotion) {
   ).observe(partnerTicker);
 }
 
-// Projeler girişi: iki uçta akan dalga çizgileri.
+// Projeler girişi: bölümün ortasından geçen dalga çizgileri.
 // Sayfa açılırken enerji tam — çizgiler hızlı ve geniş dalgalanır; enerji
 // sönümlendikçe sakin bir akışa iner. İmleç bölüme girince hem genel tempo
 // biraz artar hem de imlecin hizasındaki dalga yerel olarak kabarır.
 const waveHero = document.querySelector(".wave-hero");
 if (waveHero) {
-  const bands = [...waveHero.querySelectorAll(".wave-band")].map((cv) => ({
-    cv,
-    ctx: cv.getContext("2d"),
-    // Alt şeritte çizgiler alt kenara yaslanır ve dalga ters yöne bakar
-    alt: cv.classList.contains("wave-band-bottom"),
-    w: 0,
-    h: 0
-  }));
-  const CIZGI = 4;
+  const band = waveHero.querySelector(".wave-band");
+  const ctx = band.getContext("2d");
+  const CIZGI = 5;
+  let bw = 0;
+  let bh = 0;
 
   let heroRect = waveHero.getBoundingClientRect();
   const olc = () => {
     heroRect = waveHero.getBoundingClientRect();
     const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    for (const b of bands) {
-      b.w = b.cv.clientWidth;
-      b.h = b.cv.clientHeight;
-      b.cv.width = Math.round(b.w * dpr);
-      b.cv.height = Math.round(b.h * dpr);
-      b.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    }
+    bw = band.clientWidth;
+    bh = band.clientHeight;
+    band.width = Math.round(bw * dpr);
+    band.height = Math.round(bh * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   };
   olc();
   window.addEventListener("resize", olc);
@@ -327,31 +321,32 @@ if (waveHero) {
     const koyu = document.documentElement.dataset.theme === "dark";
     const rgb = koyu ? "255, 80, 99" : "166, 25, 46";
     const yerel = imlec > 0.01;
+    const orta = bh / 2;
 
-    for (const b of bands) {
-      b.ctx.clearRect(0, 0, b.w, b.h);
-      for (let i = 0; i < CIZGI; i++) {
-        const f = i / (CIZGI - 1);                     // 0 = dış kenar, 1 = içeri
-        const ic = 8 + f * (b.h - 20);                 // kenardan uzaklık
-        const taban = b.alt ? b.h - ic : ic;
-        const genlik = b.h * 0.17 * (1 - f * 0.45) * (0.4 + 0.6 * enerji);
+    ctx.clearRect(0, 0, bw, bh);
+    for (let i = 0; i < CIZGI; i++) {
+      const f = i / (CIZGI - 1);            // 0 = en üst çizgi, 1 = en alt
+      const kacik = Math.abs(f - 0.5) * 2;  // 0 = orta çizgi, 1 = dıştaki
+      const taban = orta + (f - 0.5) * bh * 0.34;
+      const genlik = bh * 0.21 * (1 - kacik * 0.2) * (0.4 + 0.6 * enerji);
 
-        b.ctx.beginPath();
-        for (let x = 0; x <= b.w; x += 6) {
-          // İmlecin hizasında gauss kabarma
-          const d = x - mx;
-          const kabar = yerel ? 1 + imlec * 1.4 * Math.exp(-(d * d) / 34000) : 1;
-          const s =
-            Math.sin(x * 0.011 + faz * 1.6 + i * 0.7) * 0.65 +
-            Math.sin(x * 0.021 - faz * 1.1 + i * 1.3) * 0.35;
-          const y = taban + (b.alt ? -1 : 1) * genlik * kabar * s;
-          if (x) b.ctx.lineTo(x, y);
-          else b.ctx.moveTo(x, y);
-        }
-        b.ctx.strokeStyle = "rgba(" + rgb + ", " + (0.36 - f * 0.22).toFixed(3) + ")";
-        b.ctx.lineWidth = 1.25;
-        b.ctx.stroke();
+      ctx.beginPath();
+      for (let x = 0; x <= bw; x += 5) {
+        // İmlecin hizasında gauss kabarma
+        const d = x - mx;
+        const kabar = yerel ? 1 + imlec * 1.4 * Math.exp(-(d * d) / 34000) : 1;
+        // Üç harmonik: uzun taşıyıcı + iki kısa dalga — kıvrımı zenginleştirir
+        const s =
+          Math.sin(x * 0.013 + faz * 1.7 + i * 0.55) * 0.55 +
+          Math.sin(x * 0.026 - faz * 1.15 + i * 1.1) * 0.3 +
+          Math.sin(x * 0.045 + faz * 2.3 + i * 1.9) * 0.15;
+        const y = taban + genlik * kabar * s;
+        if (x) ctx.lineTo(x, y);
+        else ctx.moveTo(x, y);
       }
+      ctx.strokeStyle = "rgba(" + rgb + ", " + (0.32 - kacik * 0.14).toFixed(3) + ")";
+      ctx.lineWidth = 1.25;
+      ctx.stroke();
     }
   };
 
