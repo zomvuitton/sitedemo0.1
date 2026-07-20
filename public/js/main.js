@@ -139,7 +139,6 @@ if (gridHero) {
   }
 }
 
-// Proje kapak görseli: geriye yatık başlar, kaydırdıkça düzleşip yerine oturur
 // Proje kapak görseli: net başlar, kaydırıp geçtikçe (yukarı çıktıkça) bulanıklaşır
 const blurEl = document.querySelector(".scroll-blur");
 if (blurEl && !reducedMotion) {
