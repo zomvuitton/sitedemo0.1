@@ -385,6 +385,77 @@ if (waveHero) {
   }
 }
 
+// Hakkımızda: zaman çizelgesi rayındaki ışık kaydırmayı izler.
+// Framer'ın useScroll({ offset: ["start 10%", "end 50%"] }) karşılığı elle
+// hesaplanır: ilerleme, bölümün üstü ekranın %10'una indiğinde başlar,
+// altı ekranın ortasına geldiğinde dolar.
+const timeline = document.querySelector("[data-timeline]");
+if (timeline) {
+  const kapsayici = timeline.querySelector(".timeline-items");
+  const isik = timeline.querySelector(".timeline-beam");
+  const bloklar = [...timeline.querySelectorAll(".timeline-item")].map((el) => ({
+    el,
+    nokta: el.querySelector(".timeline-dot"),
+    aktif: false
+  }));
+
+  const uygula = () => {
+    const r = kapsayici.getBoundingClientRect();
+    const vh = window.innerHeight;
+    const yol = r.height - vh * 0.4;
+    // Bölüm ekrandan kısaysa payda negatife düşer; o durumda eşiği geçince dolu say
+    const p =
+      yol > 0
+        ? Math.min(1, Math.max(0, (vh * 0.1 - r.top) / yol))
+        : r.top <= vh * 0.1
+        ? 1
+        : 0;
+
+    isik.style.transform = "scaleY(" + p.toFixed(4) + ")";
+    isik.style.opacity = Math.min(1, p / 0.1).toFixed(3);
+
+    // Okunmakta olan blok: başlığın asılı durduğu hizayı geçmiş olan
+    const esik = vh * 0.25;
+    for (const b of bloklar) {
+      const ir = b.el.getBoundingClientRect();
+      const aktif = ir.top <= esik && ir.bottom > esik;
+      if (aktif !== b.aktif) {
+        b.aktif = aktif;
+        b.nokta.classList.toggle("is-active", aktif);
+      }
+    }
+  };
+
+  if (reducedMotion) {
+    isik.style.transform = "scaleY(1)";
+    isik.style.opacity = "1";
+    bloklar.forEach((b) => b.nokta.classList.add("is-active"));
+  } else {
+    let gorunur = false;
+    let bekliyor = false;
+    // Ölçüm ve yazma tek bir kareye toplanır; scroll olayı yalnız bayrak diker
+    const iste = () => {
+      if (bekliyor || !gorunur) return;
+      bekliyor = true;
+      requestAnimationFrame(() => {
+        bekliyor = false;
+        uygula();
+      });
+    };
+    window.addEventListener("scroll", iste, { passive: true });
+    window.addEventListener("resize", iste);
+
+    // Ekranda değilken hiç hesaplamasın
+    new IntersectionObserver(
+      (entries) => {
+        gorunur = entries[0].isIntersecting;
+        if (gorunur) iste();
+      },
+      { threshold: 0 }
+    ).observe(timeline);
+  }
+}
+
 // Form gönderimi — data-api özniteliği olan tüm formlar
 document.querySelectorAll("form[data-api]").forEach((form) => {
   const feedback = form.querySelector(".form-feedback");

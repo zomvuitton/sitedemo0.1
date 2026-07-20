@@ -11,37 +11,47 @@
   </div>
 </section>
 
-<section class="tile tile-white editorial">
-  <div class="container editorial-grid">
-    <div class="editorial-aside reveal">
-      <h2>Biz kimiz?</h2>
-      <img class="aside-img" src="<%= site.aboutImage %>" alt="ODTÜ Verimlilik Topluluğu üyeleri bir arada" loading="lazy">
-    </div>
-    <div class="editorial-body reveal">
-      <p class="lede-dark"><%= site.about[0] %></p>
-      <p><%= site.about[1] %></p>
-    </div>
-  </div>
-</section>
+<!-- Zaman çizelgesi: sol rayda kaydırmayla uzayan ışık; başlıklar kendi
+     metinleri geçerken yapışık kalır. Bu üç blokta .reveal yok — giriş
+     animasyonunu ray devralıyor. -->
+<section class="tile tile-white timeline" data-timeline>
+  <div class="container">
+    <div class="timeline-items">
+      <div class="timeline-track" aria-hidden="true">
+        <div class="timeline-beam"></div>
+      </div>
 
-<section class="tile tile-gray editorial">
-  <div class="container editorial-grid">
-    <div class="editorial-aside reveal">
-      <h2>Vizyonumuz</h2>
-    </div>
-    <div class="editorial-body reveal">
-      <p class="lede-dark"><%= site.vision %></p>
-    </div>
-  </div>
-</section>
+      <div class="timeline-item">
+        <div class="timeline-marker">
+          <span class="timeline-dot" aria-hidden="true"></span>
+          <h2>Biz kimiz?</h2>
+        </div>
+        <div class="timeline-content">
+          <p class="lede-dark"><%= site.about[0] %></p>
+          <p><%= site.about[1] %></p>
+          <img class="aside-img" src="<%= site.aboutImage %>" alt="ODTÜ Verimlilik Topluluğu üyeleri bir arada" loading="lazy">
+        </div>
+      </div>
 
-<section class="tile tile-white editorial">
-  <div class="container editorial-grid">
-    <div class="editorial-aside reveal">
-      <h2>Misyonumuz</h2>
-    </div>
-    <div class="editorial-body reveal">
-      <p class="lede-dark"><%= site.mission %></p>
+      <div class="timeline-item">
+        <div class="timeline-marker">
+          <span class="timeline-dot" aria-hidden="true"></span>
+          <h2>Vizyonumuz</h2>
+        </div>
+        <div class="timeline-content">
+          <p class="lede-dark"><%= site.vision %></p>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-marker">
+          <span class="timeline-dot" aria-hidden="true"></span>
+          <h2>Misyonumuz</h2>
+        </div>
+        <div class="timeline-content">
+          <p class="lede-dark"><%= site.mission %></p>
+        </div>
+      </div>
     </div>
   </div>
 </section>
