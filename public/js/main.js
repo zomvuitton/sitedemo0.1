@@ -93,23 +93,45 @@ if (statEls.length && !reducedMotion && "IntersectionObserver" in window) {
 const gridHero = document.querySelector(".grid-reveal-hero");
 if (gridHero) {
   const layer = gridHero.querySelector(".grid-reveal");
-  const setSpot = (x, y) => {
-    layer.style.setProperty("--mx", x + "px");
-    layer.style.setProperty("--my", y + "px");
+
+  // Ölçümü olayın içinde değil, önden alıyoruz: pointermove başına
+  // getBoundingClientRect layout'u zorlar ve takılmaya yol açar.
+  let rect = layer.getBoundingClientRect();
+  const remeasure = () => { rect = layer.getBoundingClientRect(); };
+  window.addEventListener("resize", remeasure);
+  window.addEventListener("scroll", remeasure, { passive: true });
+
+  // Hedef (tx/ty) ile çizilen konum (cx/cy) ayrı. Yazma yalnızca rAF içinde
+  // olur; yoksa 120 Hz'lik pointermove maskeyi kare başına defalarca çizdirir.
+  let tx = -9999, ty = -9999, cx = -9999, cy = -9999, running = false;
+
+  const draw = () => {
+    const dx = tx - cx, dy = ty - cy;
+    // Çok uzaktan geliyorsa (ilk giriş / çıkış) yumuşatma yok, doğrudan otursun
+    if (Math.abs(dx) > 1500 || Math.abs(dy) > 1500) { cx = tx; cy = ty; }
+    else { cx += dx * 0.18; cy += dy * 0.18; }
+    layer.style.setProperty("--mx", cx.toFixed(1) + "px");
+    layer.style.setProperty("--my", cy.toFixed(1) + "px");
+    if (Math.abs(tx - cx) > 0.3 || Math.abs(ty - cy) > 0.3) requestAnimationFrame(draw);
+    else running = false;
   };
+
+  const setSpot = (x, y) => {
+    tx = x; ty = y;
+    if (!running) { running = true; requestAnimationFrame(draw); }
+  };
+
   if (window.matchMedia("(hover: hover)").matches) {
     gridHero.addEventListener("pointermove", (e) => {
-      const r = layer.getBoundingClientRect();
-      setSpot(e.clientX - r.left, e.clientY - r.top);
+      setSpot(e.clientX - rect.left, e.clientY - rect.top);
     });
     gridHero.addEventListener("pointerleave", () => setSpot(-9999, -9999));
   } else if (!reducedMotion) {
     // Dokunmatik cihazlarda imleç yok: ışık kendi kendine yavaşça gezinir
     const roam = (t) => {
-      const r = layer.getBoundingClientRect();
       setSpot(
-        r.width * (0.5 + 0.4 * Math.sin(t / 2600)),
-        r.height * (0.5 + 0.35 * Math.cos(t / 3400))
+        rect.width * (0.5 + 0.4 * Math.sin(t / 2600)),
+        rect.height * (0.5 + 0.35 * Math.cos(t / 3400))
       );
       requestAnimationFrame(roam);
     };

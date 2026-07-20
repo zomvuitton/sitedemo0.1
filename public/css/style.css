@@ -1194,28 +1194,38 @@ html[data-theme="dark"] .skip-link { color: #1d1d1f; }
   position: absolute;
   inset: 0;
   pointer-events: none;
-  background-image:
-    linear-gradient(to right, rgba(166, 25, 46, 0.4) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(166, 25, 46, 0.4) 1px, transparent 1px);
-  background-size: 44px 44px;
-  animation: grid-drift 5s linear infinite;
+  /* Maske burada durur; ızgara içeride kayar. Böylece kayma repaint değil,
+     compositor işi olur — maske de yalnız imleç kımıldayınca yeniden çizilir. */
   -webkit-mask-image: radial-gradient(230px circle at var(--mx) var(--my), rgba(0, 0, 0, 0.95), transparent 72%);
   mask-image: radial-gradient(230px circle at var(--mx) var(--my), rgba(0, 0, 0, 0.95), transparent 72%);
 }
 
-@keyframes grid-drift {
-  from { background-position: 0 0; }
-  to { background-position: 44px 44px; }
+/* Bir kare taşan katman: bir hücre boyu kaydırılıp başa dönünce dikiş görünmez */
+.grid-reveal::before {
+  content: "";
+  position: absolute;
+  inset: -44px;
+  background-image:
+    linear-gradient(to right, rgba(166, 25, 46, 0.4) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(166, 25, 46, 0.4) 1px, transparent 1px);
+  background-size: 44px 44px;
+  will-change: transform;
+  animation: grid-drift 5s linear infinite;
 }
 
-html[data-theme="dark"] .grid-reveal {
+@keyframes grid-drift {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(44px, 44px, 0); }
+}
+
+html[data-theme="dark"] .grid-reveal::before {
   background-image:
     linear-gradient(to right, rgba(255, 80, 99, 0.35) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 80, 99, 0.35) 1px, transparent 1px);
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .grid-reveal { animation: none; }
+  .grid-reveal::before { animation: none; will-change: auto; }
 }
 
 /* ============================================================
