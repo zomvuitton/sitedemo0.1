@@ -1386,21 +1386,58 @@ html[data-theme="dark"] .timeline-dot.is-active::after {
    JS rotateX/scale değerini günceller ve görsel yerine oturur.
    ============================================================ */
 
-.scroll-blur {
-  max-width: 880px;
-  margin-inline: auto;
-  will-change: filter;
-}
-/* Derinlik hissi veren katmanlı gölge görselin kendisinde */
-.scroll-blur .feature-img {
-  box-shadow:
-    0 9px 20px rgba(0, 0, 0, 0.18),
-    0 37px 37px rgba(0, 0, 0, 0.14),
-    0 84px 50px rgba(0, 0, 0, 0.08);
-}
+/* Kaydırmada bulanıklaşan eleman (JS: main.js) */
+.scroll-blur { will-change: filter; }
 
 @media (prefers-reduced-motion: reduce) {
   .scroll-blur { filter: none !important; }
+}
+
+/* ---------- Tam ekran medya hero (proje sayfaları) ---------- */
+
+.project-hero--media {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  /* Üstte nav'ın altından başla, altta fact kartlarına pay bırak */
+  padding-block: calc(var(--nav-h) + var(--s-6)) var(--s-8);
+}
+
+/* Arka plan görseli: bölümü tam kaplar; blur bu katmana uygulanır */
+.project-hero__media {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+.project-hero__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Belirgin karartma perdesi: gömülü görsel yazıları bastırılır, başlık öne çıkar */
+.project-hero--media::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.45) 45%, rgba(0, 0, 0, 0.8));
+}
+
+.project-hero--media .hero-inner { position: relative; z-index: 2; }
+
+/* Cam fact kartları: tam ekran görselin altında, net (blur uygulanmaz) */
+.project-hero--media .facts-glass {
+  position: relative;
+  z-index: 2;
+  margin-top: var(--s-8);
+  max-width: 1024px;
+  margin-inline: auto;
+  padding-inline: var(--s-3);
 }
 
 /* ============================================================

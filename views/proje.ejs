@@ -1,6 +1,37 @@
 <%- include('partials/head') %>
 <%- include('partials/nav') %>
 
+<% if (project.hero) { %>
+<!-- Tam ekran hero: kapak görseli arka planda, kaydırınca bulanıklaşır.
+     Görsele belirgin karartma; başlık ve butonlar üstünde durur. -->
+<section class="tile tile-dark project-hero project-hero--media">
+  <div class="project-hero__media scroll-blur" aria-hidden="true">
+    <img src="<%= project.hero %>" alt="">
+  </div>
+  <div class="hero-inner reveal">
+    <p class="eyebrow"><%= project.name %></p>
+    <h1 class="display-light"><%= project.tagline %></h1>
+    <p class="lede"><%= project.summary %></p>
+    <div class="cta-row">
+      <% if (project.external) { %>
+      <a class="btn btn-primary" href="<%= project.external %>" target="_blank" rel="noopener">Proje sitesine git</a>
+      <% } %>
+      <a class="link-more" href="/projeler">Tüm projeler <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
+    </div>
+  </div>
+  <% if (project.facts.length) { %>
+  <!-- Liquid glass bilgi kutuları: tam ekran görselin altında -->
+  <dl class="facts-glass reveal">
+    <% project.facts.forEach(function (f) { %>
+    <div class="fact">
+      <dt><%= f.label %></dt>
+      <dd><%= f.value %></dd>
+    </div>
+    <% }) %>
+  </dl>
+  <% } %>
+</section>
+<% } else { %>
 <section class="tile <%= project.theme === 'dark' ? 'tile-dark' : 'tile-white' %> project-hero">
   <div class="hero-inner reveal">
     <p class="eyebrow <%= project.theme === 'dark' ? '' : 'eyebrow-red' %>"><%= project.name %></p>
@@ -12,25 +43,9 @@
       <% } %>
       <a class="link-more" href="/projeler">Tüm projeler <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
     </div>
-    <% if (project.hero) { %>
-    <!-- Scroll blur: kapak görseli net başlar, kaydırıp geçtikçe bulanıklaşır -->
-    <div class="scroll-blur">
-      <img class="feature-img" src="<%= project.hero %>" alt="<%= project.name %> etkinliğinden bir kare">
-      <% if (project.facts.length) { %>
-      <!-- Liquid glass bilgi kutuları: kapak görselinin üstüne bindirilmiş -->
-      <dl class="facts-glass reveal">
-        <% project.facts.forEach(function (f) { %>
-        <div class="fact">
-          <dt><%= f.label %></dt>
-          <dd><%= f.value %></dd>
-        </div>
-        <% }) %>
-      </dl>
-      <% } %>
-    </div>
-    <% } %>
   </div>
 </section>
+<% } %>
 
 <% if (!project.hero && project.facts.length) { %>
 <section class="tile tile-gray project-facts">
