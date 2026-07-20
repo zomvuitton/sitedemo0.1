@@ -1224,18 +1224,13 @@ html[data-theme="dark"] .grid-reveal {
    JS rotateX/scale değerini günceller ve görsel yerine oturur.
    ============================================================ */
 
-.scroll-tilt-wrap {
-  width: 100%;
-  perspective: 1100px;
-}
-.scroll-tilt {
+.scroll-blur {
   max-width: 880px;
   margin-inline: auto;
-  transform-origin: center top;
-  will-change: transform;
+  will-change: filter;
 }
-/* Eğim sırasında derinlik hissi veren katmanlı gölge görselin kendisinde */
-.scroll-tilt .feature-img {
+/* Derinlik hissi veren katmanlı gölge görselin kendisinde */
+.scroll-blur .feature-img {
   box-shadow:
     0 9px 20px rgba(0, 0, 0, 0.18),
     0 37px 37px rgba(0, 0, 0, 0.14),
@@ -1243,7 +1238,7 @@ html[data-theme="dark"] .grid-reveal {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .scroll-tilt { transform: none !important; }
+  .scroll-blur { filter: none !important; }
 }
 
 /* ============================================================

@@ -118,20 +118,18 @@ if (gridHero) {
 }
 
 // Proje kapak görseli: geriye yatık başlar, kaydırdıkça düzleşip yerine oturur
-const tiltEl = document.querySelector(".scroll-tilt");
-if (tiltEl && !reducedMotion) {
-  const isMobile = window.matchMedia("(max-width: 768px)").matches;
-  const maxRot = isMobile ? 14 : 20;
+// Proje kapak görseli: net başlar, kaydırıp geçtikçe (yukarı çıktıkça) bulanıklaşır
+const blurEl = document.querySelector(".scroll-blur");
+if (blurEl && !reducedMotion) {
+  const maxBlur = window.matchMedia("(max-width: 768px)").matches ? 7 : 10;
   let ticking = false;
   const update = () => {
     ticking = false;
-    const r = tiltEl.getBoundingClientRect();
-    const vh = window.innerHeight;
-    // 0: görselin üstü ekranın altında — 1: görsel ekranın üst yarısına vardı
-    const p = Math.min(1, Math.max(0, (vh - r.top) / (vh * 0.85)));
-    const eased = 1 - Math.pow(1 - p, 2);
-    tiltEl.style.transform =
-      "rotateX(" + maxRot * (1 - eased) + "deg) scale(" + (1.05 - 0.05 * eased) + ")";
+    const r = blurEl.getBoundingClientRect();
+    // Görsel görünürken p=0 (net); yukarı çıkıp r.top negatifleştikçe p artar.
+    // Kendi yüksekliğinin ~%60'ı kadar yukarı kayınca tam bulanık.
+    const p = Math.min(1, Math.max(0, -r.top / (r.height * 0.6)));
+    blurEl.style.filter = p > 0 ? "blur(" + (maxBlur * p).toFixed(2) + "px)" : "none";
   };
   const onScroll = () => {
     if (!ticking) {

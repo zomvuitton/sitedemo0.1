@@ -13,22 +13,20 @@
       <a class="link-more" href="/projeler">Tüm projeler <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
     </div>
     <% if (project.hero) { %>
-    <!-- Scroll tilt: kapak görseli geriye yatık başlar, kaydırdıkça düzleşir -->
-    <div class="scroll-tilt-wrap">
-      <div class="scroll-tilt">
-        <img class="feature-img" src="<%= project.hero %>" alt="<%= project.name %> etkinliğinden bir kare">
-        <% if (project.facts.length) { %>
-        <!-- Liquid glass bilgi kutuları: kapak görselinin üstüne bindirilmiş -->
-        <dl class="facts-glass reveal">
-          <% project.facts.forEach(function (f) { %>
-          <div class="fact">
-            <dt><%= f.label %></dt>
-            <dd><%= f.value %></dd>
-          </div>
-          <% }) %>
-        </dl>
-        <% } %>
-      </div>
+    <!-- Scroll blur: kapak görseli net başlar, kaydırıp geçtikçe bulanıklaşır -->
+    <div class="scroll-blur">
+      <img class="feature-img" src="<%= project.hero %>" alt="<%= project.name %> etkinliğinden bir kare">
+      <% if (project.facts.length) { %>
+      <!-- Liquid glass bilgi kutuları: kapak görselinin üstüne bindirilmiş -->
+      <dl class="facts-glass reveal">
+        <% project.facts.forEach(function (f) { %>
+        <div class="fact">
+          <dt><%= f.label %></dt>
+          <dd><%= f.value %></dd>
+        </div>
+        <% }) %>
+      </dl>
+      <% } %>
     </div>
     <% } %>
   </div>
