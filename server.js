@@ -575,7 +575,7 @@ app.post("/admin/api/logout", (req, res) => {
 app.post(
   "/admin/api/upload",
   requireAdminApi,
-  express.raw({ type: ["image/png", "image/jpeg", "image/webp"], limit: "6mb" }),
+  express.raw({ type: ["image/png", "image/jpeg", "image/webp"], limit: "15mb" }),
   (req, res) => {
     if (!Buffer.isBuffer(req.body) || req.body.length === 0) {
       return res.status(400).json({ ok: false, error: "Görsel gövdesi boş. Content-Type image/png, image/jpeg veya image/webp olmalı." });
@@ -751,7 +751,14 @@ app.use((req, res) => {
 // eslint-disable-next-line no-unused-vars
 app.use((err, req, res, next) => {
   console.error(err);
-  if (req.path.startsWith("/api/") || req.path.startsWith("/admin/api/")) {
+  const apiYolu = req.path.startsWith("/api/") || req.path.startsWith("/admin/api/");
+  // Boyut aşımı: dostça mesaj (istemci küçültmesine rağmen çok büyük dosya)
+  if (err.type === "entity.too.large" || err.status === 413) {
+    if (apiYolu) {
+      return res.status(413).json({ ok: false, error: "Görsel çok büyük. Lütfen daha küçük bir dosya deneyin." });
+    }
+  }
+  if (apiYolu) {
     return res.status(500).json({ ok: false, error: "Sunucu hatası." });
   }
   res.status(500).render("404", { title: `Bir şeyler ters gitti — ${site.short}` });
