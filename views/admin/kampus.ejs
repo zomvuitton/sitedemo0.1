@@ -1,0 +1,37 @@
+<%- include('partials/top') %>
+
+<div class="apage">
+  <div class="apage-head">
+    <h1>Kampüs yazıları</h1>
+    <form id="createForm" class="ainline-form" data-create="/admin/api/kampus">
+      <input type="text" name="name" placeholder="Yeni yazı başlığı" required>
+      <button class="abtn abtn-primary" type="submit">Ekle</button>
+    </form>
+  </div>
+  <p class="asub">Yazılar <a href="/kampus" target="_blank" rel="noopener">Kampüs sayfasında</a> yeniden eskiye doğru listelenir. "Taslak" işaretli yazılar sitede görünmez.</p>
+  <p class="form-feedback" role="status" aria-live="polite"></p>
+
+  <table class="atable">
+    <thead>
+      <tr><th>Yazı</th><th>Tarih</th><th>Durum</th><th></th></tr>
+    </thead>
+    <tbody>
+      <% posts.forEach(function (p) { %>
+      <tr>
+        <td>
+          <a class="atable-title" href="/admin/kampus/<%= p.slug %>"><%= p.title %></a>
+          <span class="amuted"><%= p.excerpt %></span>
+        </td>
+        <td><%= trTarih(p.date) %></td>
+        <td><%= p.draft ? "Taslak" : "Yayında" %></td>
+        <td class="atable-actions">
+          <a class="abtn abtn-ghost" href="/admin/kampus/<%= p.slug %>">Düzenle</a>
+          <button class="abtn abtn-danger" type="button" data-delete="/admin/api/kampus/<%= p.slug %>" data-name="<%= p.title %>">Sil</button>
+        </td>
+      </tr>
+      <% }) %>
+    </tbody>
+  </table>
+</div>
+
+<%- include('partials/bottom') %>

@@ -1499,3 +1499,147 @@ html[data-theme="dark"] .timeline-dot.is-active::after {
 @media (min-width: 768px) {
   .team-hero-grid { grid-template-columns: 1.1fr 1fr; align-items: center; }
 }
+
+/* ============================================================
+   Ana sayfa — komite dizini
+   Kart değil: numaralı satırlardan oluşan editoryal bir dizin.
+   Satırın üzerine gelince kırmızı dolgu soldan sağa süpürür.
+   ============================================================ */
+
+.committee-index .section-head { margin-bottom: var(--s-4); }
+
+.cindex { list-style: none; }
+
+.cindex-item { border-top: 1px solid rgba(255, 255, 255, 0.14); }
+.cindex-item:last-child { border-bottom: 1px solid rgba(255, 255, 255, 0.14); }
+
+.cindex-row {
+  position: relative;
+  /* Dolgu ::before ile geliyor; kendi yığın bağlamında kalsın */
+  isolation: isolate;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  /* Numara, komite adının taban çizgisine oturur */
+  align-items: baseline;
+  gap: var(--s-3);
+  padding-block: var(--s-3);
+  color: var(--dark-text);
+}
+.cindex-go { align-self: center; }
+.cindex-row:hover { text-decoration: none; }
+/* Kırmızı dolguda kırmızı odak halkası kaybolur — beyaza çevrilir */
+.cindex-row:focus-visible { outline-color: #fff; outline-offset: 0; }
+
+/* Süpüren dolgu: yanlardan biraz taşar ki metin dolgunun kenarına yapışmasın */
+.cindex-row::before {
+  content: "";
+  position: absolute;
+  inset: 0 calc(-1 * var(--s-2));
+  z-index: -1;
+  /* Karo her temada siyah kaldığı için dolgu da sabit koyu kırmızı:
+     --vt-red koyu temada parlaklaşıyor ve üstündeki beyaz metni okunmaz kılıyor */
+  background: #a6192e;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.cindex-no {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--vt-red-bright);
+  transition: color 0.3s ease;
+}
+
+.cindex-name {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(28px, 5vw, 56px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.015em;
+}
+
+.cindex-sum {
+  /* İki satırda kırpılır ki satır yükseklikleri birbirini tutsun */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-top: var(--s-1);
+  max-width: 52ch;
+  font-size: 15px;
+  color: var(--dark-text-2);
+  transition: color 0.3s ease;
+}
+
+.cindex-go {
+  color: var(--vt-red-bright);
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+/* Dar ekran: numara ve ok metne yaklaşsın, ada daha çok yer kalsın */
+@media (max-width: 599px) {
+  .cindex-row { gap: var(--s-2); }
+  .cindex-sum { -webkit-line-clamp: 3; }
+}
+
+/* Klavyeyle gezinenler de aynı geri bildirimi görür */
+.cindex-row:focus-visible::before { transform: scaleX(1); }
+.cindex-row:focus-visible .cindex-no,
+.cindex-row:focus-visible .cindex-sum,
+.cindex-row:focus-visible .cindex-go { color: #fff; }
+
+/* Süpürme yalnız imleçli cihazlarda; dokunmatikte satır sade kalır */
+@media (hover: hover) {
+  .cindex-row:hover::before { transform: scaleX(1); }
+  .cindex-row:hover .cindex-no,
+  .cindex-row:hover .cindex-sum,
+  .cindex-row:hover .cindex-go { color: #fff; }
+  .cindex-row:hover .cindex-go { transform: translateX(6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cindex-row::before, .cindex-go, .cindex-no, .cindex-sum { transition: none; }
+}
+
+/* ============================================================
+   Kampüs — bilgi şeridi + yazı akışı + yazı sayfası
+   ============================================================ */
+
+/* Bilgi şeridi: proje bilgi kutularıyla (.facts-row) aynı dil */
+.campus-info .facts-row { margin-top: var(--s-8); gap: var(--s-4) var(--s-3); }
+.campus-info .fact dd { color: var(--ink-2); font-size: 15px; line-height: 1.5; }
+.campus-info .cta-row { margin-top: var(--s-6); }
+
+/* Yazı kartı: kapak + tarih/etiket satırı + başlık */
+.card-post .card-img { aspect-ratio: 16 / 9; }
+.card-post h3 { font-size: 21px; }
+
+.post-meta {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--vt-red);
+}
+
+.posts-empty { color: var(--ink-2); }
+
+/* Yazı sayfası: okunur ölçüde tek sütun */
+/* Başlıkla aynı hizada başlar (site geneli sola yaslı editoryal düzen) */
+.article-body { max-width: 720px; }
+.article-body p { color: var(--ink-2); }
+.article-body p.lede-dark { color: var(--ink); }
+.article-body p + p { margin-top: var(--s-3); }
+
+/* Başlıkla gövde arasında ikinci bir üst boşluk oluşmasın */
+.article-tile { padding-block: var(--s-6) var(--s-12); }
+
+.post-hero { padding-block: var(--s-12) var(--s-6); }
+.post-hero-inner { max-width: 760px; }
+.post-hero-inner .post-meta { margin-bottom: var(--s-2); }
+.post-hero-inner .lede { margin-top: var(--s-3); }
+.post-byline { margin-top: var(--s-3); font-size: 15px; color: var(--ink-2); }

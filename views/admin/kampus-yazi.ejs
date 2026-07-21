@@ -1,0 +1,78 @@
+<%- include('partials/top') %>
+
+<div class="apage">
+  <div class="apage-head">
+    <h1><%= post.title %></h1>
+    <a class="abtn abtn-ghost" href="/kampus/<%= post.slug %>" target="_blank" rel="noopener">Yazıyı gör ↗</a>
+  </div>
+
+  <form id="editForm" data-save="/admin/api/kampus/<%= post.slug %>">
+    <section class="asection">
+      <h2>Temel bilgiler</h2>
+      <label>Başlık
+        <input type="text" name="title" value="<%= post.title %>" required>
+      </label>
+      <label>Tarih
+        <input type="date" name="date" value="<%= post.date %>">
+      </label>
+      <label>Yazar <span class="amuted">(isteğe bağlı)</span>
+        <input type="text" name="author" value="<%= post.author || '' %>" placeholder="Ad Soyad veya ODTÜ VT">
+      </label>
+      <label>Etiket <span class="amuted">(isteğe bağlı — örn. Kampüs rehberi)</span>
+        <input type="text" name="tag" value="<%= post.tag || '' %>">
+      </label>
+      <label>Özet <span class="amuted">(kart ve arama sonuçlarında görünür)</span>
+        <textarea name="excerpt" rows="2"><%= post.excerpt || '' %></textarea>
+      </label>
+      <label>Yazı metni <span class="amuted">(paragraflar arasında boş satır bırak)</span>
+        <textarea name="body" rows="16"><%= (post.body || []).join("\n\n") %></textarea>
+      </label>
+      <label class="acheck">
+        <input type="checkbox" name="draft" <%= post.draft ? "checked" : "" %>>
+        Taslak — bu yazı sitede görünmesin
+      </label>
+    </section>
+
+    <section class="asection">
+      <h2>Kapak görseli <span class="amuted">(isteğe bağlı)</span></h2>
+      <div class="aimg-field">
+        <img class="aimg-preview" data-preview="cover" src="<%= post.cover || '' %>" alt="">
+        <div class="aimg-controls">
+          <input type="text" name="cover" value="<%= post.cover || '' %>" placeholder="/img/... veya https://...">
+          <label class="abtn abtn-ghost aupload">Görsel yükle<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="cover" hidden></label>
+        </div>
+      </div>
+    </section>
+
+    <section class="asection">
+      <h2>Galeri <span class="amuted">(isteğe bağlı)</span></h2>
+      <div class="alist" data-list="gallery">
+        <% (post.gallery || []).forEach(function (g) { %>
+        <div class="arow arow-person">
+          <img class="aavatar" data-preview="url" src="<%= g %>" alt="">
+          <input type="text" data-field="url" value="<%= g %>" placeholder="Görsel yolu">
+          <label class="abtn abtn-ghost aupload">Görsel<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="url" hidden></label>
+          <button type="button" class="abtn abtn-danger arow-del" aria-label="Görseli kaldır">Kaldır</button>
+        </div>
+        <% }) %>
+      </div>
+      <button type="button" class="abtn abtn-ghost" data-add="gallery">+ Galeri görseli ekle</button>
+    </section>
+
+    <div class="asave-bar">
+      <button type="submit" class="abtn abtn-primary">Kaydet</button>
+      <p class="form-feedback" role="status" aria-live="polite"></p>
+    </div>
+  </form>
+</div>
+
+<template data-template="gallery">
+  <div class="arow arow-person">
+    <img class="aavatar" data-preview="url" src="" alt="">
+    <input type="text" data-field="url" placeholder="Görsel yolu">
+    <label class="abtn abtn-ghost aupload">Görsel<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="url" hidden></label>
+    <button type="button" class="abtn abtn-danger arow-del" aria-label="Görseli kaldır">Kaldır</button>
+  </div>
+</template>
+
+<%- include('partials/bottom') %>

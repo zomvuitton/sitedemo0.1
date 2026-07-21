@@ -50,14 +50,24 @@ function br(s) {
   return String(s ?? "").split("\n").map(escapeHtml).join("<br>");
 }
 
+// "2026-03-10" → "10 Mart 2026"
+const AY_TAM = ["Ocak", "Şubat", "Mart", "Nisan", "Mayıs", "Haziran", "Temmuz", "Ağustos", "Eylül", "Ekim", "Kasım", "Aralık"];
+function trTarih(iso) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(String(iso || ""))) return "";
+  const [y, m, d] = iso.split("-").map(Number);
+  return `${d} ${AY_TAM[m - 1]} ${y}`;
+}
+
 // Her şablona ortak veri — depo üzerinden, düzenlemeler anında yansır
 app.use((req, res, next) => {
   res.locals.site = store.content.site;
   res.locals.texts = store.content.texts;
   res.locals.br = br;
+  res.locals.trTarih = trTarih;
   res.locals.partners = partners;
   res.locals.projects = store.content.projects;
   res.locals.committees = store.content.committees;
+  res.locals.campusPosts = store.content.campusPosts;
   res.locals.boards = store.content.boards;
   res.locals.events = store.content.events;
   res.locals.path = req.path;
@@ -160,6 +170,9 @@ function slugify(text) {
   const map = { ç: "c", ğ: "g", ı: "i", ö: "o", ş: "s", ü: "u" };
   return clean(text, 80)
     .toLowerCase()
+    // Aksanları ayrıştırıp at: "İ" küçülünce i + birleşen nokta olur, nokta kalırsa slug "i-lk" gibi bölünür
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
     .replace(/[çğıöşü]/g, (ch) => map[ch])
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-+|-+$/g, "")
@@ -228,6 +241,24 @@ app.get("/komiteler/:slug", (req, res, next) => {
   res.render("komite", { title: `${committee.name} — ${site.short}`, committee, desc: committee.summary });
 });
 
+// Kampüs: bilgi + yazı akışı. Taslaklar yayında görünmez.
+function yayindakiYazilar() {
+  return (store.content.campusPosts || [])
+    .filter((p) => !p.draft)
+    .sort((a, b) => String(b.date).localeCompare(String(a.date)));
+}
+
+app.get("/kampus", (req, res) => {
+  res.render("kampus", { title: `Kampüs — ${site.short}`, posts: yayindakiYazilar(), desc: store.content.texts.kampusLede });
+});
+
+app.get("/kampus/:slug", (req, res, next) => {
+  const post = (store.content.campusPosts || []).find((p) => p.slug === req.params.slug);
+  if (!post || post.draft) return next();
+  const digerleri = yayindakiYazilar().filter((p) => p.slug !== post.slug).slice(0, 2);
+  res.render("kampus-yazi", { title: `${post.title} — ${site.short}`, post, digerleri, desc: post.excerpt });
+});
+
 app.get("/ekibimiz", (req, res) => {
   res.render("ekibimiz", { title: `Ekibimiz — ${site.short}` });
 });
@@ -272,9 +303,10 @@ const SITE_URL = (process.env.SITE_URL || "http://localhost:3000").replace(/\/$/
 
 app.get("/sitemap.xml", (req, res) => {
   const urls = [
-    "/", "/hakkimizda", "/projeler", "/komiteler", "/ekibimiz", "/iletisim",
+    "/", "/hakkimizda", "/projeler", "/komiteler", "/kampus", "/ekibimiz", "/iletisim",
     ...store.content.projects.map((p) => `/projeler/${p.slug}`),
-    ...store.content.committees.map((c) => `/komiteler/${c.slug}`)
+    ...store.content.committees.map((c) => `/komiteler/${c.slug}`),
+    ...(store.content.campusPosts || []).filter((p) => !p.draft).map((p) => `/kampus/${p.slug}`)
   ];
   res.type("application/xml").send(
     `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n` +
@@ -318,6 +350,17 @@ app.get("/admin/komiteler/:slug", requireAdminPage, (req, res, next) => {
   res.render("admin/komite", { title: `${committee.name} — Yönetim paneli`, committee, icons: ICONS });
 });
 
+app.get("/admin/kampus", requireAdminPage, (req, res) => {
+  const posts = [...(store.content.campusPosts || [])].sort((a, b) => String(b.date).localeCompare(String(a.date)));
+  res.render("admin/kampus", { title: `Kampüs — Yönetim paneli`, posts });
+});
+
+app.get("/admin/kampus/:slug", requireAdminPage, (req, res, next) => {
+  const post = (store.content.campusPosts || []).find((p) => p.slug === req.params.slug);
+  if (!post) return next();
+  res.render("admin/kampus-yazi", { title: `${post.title} — Yönetim paneli`, post });
+});
+
 const YK_ROLE_RE = /Yönetim Kurulu Üyesi|YK Üyesi/;
 
 // Metinler sayfası şeması: yalnızca burada listelenen yollar düzenlenebilir
@@ -342,6 +385,7 @@ const TEXT_SCHEMA = [
       ["texts.homeHeroButton", "Hero butonu"],
       ["texts.homeHeroLink", "Hero bağlantısı"],
       ["texts.homeProjectsTitle", "Projeler bölümü başlığı"],
+      ["texts.homeCommitteesTitle", "Komiteler bölümü başlığı"],
       ["texts.homeEventsTitle", "Yaklaşan etkinlikler başlığı"],
       ["texts.homeStatsTitle", "Rakamlar başlığı", "textarea"],
       ["texts.homeStatsLede", "Rakamlar açıklaması", "textarea"],
@@ -394,6 +438,17 @@ const TEXT_SCHEMA = [
       ["texts.committeesLede", "Sayfa alt yazısı", "textarea"],
       ["texts.committeesCtaTitle", "Alt koyu bölüm başlığı"],
       ["texts.committeesCtaLede", "Alt koyu bölüm metni"]
+    ]
+  },
+  {
+    group: "Kampüs sayfası",
+    items: [
+      ["texts.kampusTitle", "Sayfa başlığı", "textarea"],
+      ["texts.kampusLede", "Sayfa alt yazısı", "textarea"],
+      ["texts.kampusHours", "Bilgi şeridi — \"Ne zaman\"", "textarea"],
+      ["texts.kampusHow", "Bilgi şeridi — \"Nasıl tanışılır\"", "textarea"],
+      ["texts.kampusIntro", "Giriş paragrafı", "textarea"],
+      ["texts.kampusPostsTitle", "Yazılar bölümü başlığı"]
     ]
   },
   {
@@ -682,6 +737,58 @@ app.delete("/admin/api/komiteler/:slug", requireAdminApi, (req, res) => {
   const i = store.content.committees.findIndex((c) => c.slug === req.params.slug);
   if (i === -1) return res.status(404).json({ ok: false, error: "Komite bulunamadı." });
   store.content.committees.splice(i, 1);
+  store.save();
+  res.json({ ok: true });
+});
+
+// Kampüs yazıları: proje/komite API'leriyle aynı desen (oluştur / kaydet / sil)
+function sanitizePost(input, existing) {
+  const title = clean(input.title, 160) || (existing && existing.title);
+  if (!title) return { error: "Yazı başlığı gerekli." };
+  const date = /^\d{4}-\d{2}-\d{2}$/.test(input.date) ? input.date : new Date().toISOString().slice(0, 10);
+  return {
+    value: {
+      slug: existing ? existing.slug : "",
+      title,
+      date,
+      author: clean(input.author, 120),
+      tag: clean(input.tag, 60),
+      excerpt: clean(input.excerpt, 500),
+      body: cleanParagraphs(input.body, 40),
+      cover: clean(input.cover, 400),
+      gallery: cleanGallery(input.gallery),
+      draft: Boolean(input.draft)
+    }
+  };
+}
+
+app.post("/admin/api/kampus", requireAdminApi, (req, res) => {
+  // Oluşturma formu tek alan gönderir (name); onu başlık olarak alıyoruz
+  const { value, error } = sanitizePost({ ...req.body, title: req.body.title || req.body.name }, null);
+  if (error) return res.status(400).json({ ok: false, error });
+  let slug = slugify(value.title);
+  if (!slug) return res.status(400).json({ ok: false, error: "Geçerli bir başlık girin." });
+  while (store.content.campusPosts.some((p) => p.slug === slug)) slug += "-2";
+  value.slug = slug;
+  store.content.campusPosts.push(value);
+  store.save();
+  res.json({ ok: true, slug });
+});
+
+app.put("/admin/api/kampus/:slug", requireAdminApi, (req, res) => {
+  const i = store.content.campusPosts.findIndex((p) => p.slug === req.params.slug);
+  if (i === -1) return res.status(404).json({ ok: false, error: "Yazı bulunamadı." });
+  const { value, error } = sanitizePost(req.body, store.content.campusPosts[i]);
+  if (error) return res.status(400).json({ ok: false, error });
+  store.content.campusPosts[i] = value;
+  store.save();
+  res.json({ ok: true });
+});
+
+app.delete("/admin/api/kampus/:slug", requireAdminApi, (req, res) => {
+  const i = store.content.campusPosts.findIndex((p) => p.slug === req.params.slug);
+  if (i === -1) return res.status(404).json({ ok: false, error: "Yazı bulunamadı." });
+  store.content.campusPosts.splice(i, 1);
   store.save();
   res.json({ ok: true });
 });

@@ -65,6 +65,31 @@
   </div>
 </section>
 
+<!-- Komiteler: numaralı dizin — kart değil, editoryal satır listesi.
+     Satır üzerine gelince kırmızı bir dolgu soldan sağa süpürür. -->
+<section class="tile tile-dark committee-index">
+  <div class="container">
+    <div class="section-head reveal">
+      <h2><%= texts.homeCommitteesTitle %></h2>
+      <a class="link-more" href="/komiteler">Tümünü gör <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
+    </div>
+    <ol class="cindex">
+      <% committees.forEach(function (c, i) { %>
+      <li class="cindex-item reveal">
+        <a class="cindex-row" href="/komiteler/<%= c.slug %>">
+          <span class="cindex-no" aria-hidden="true"><%= String(i + 1).padStart(2, "0") %></span>
+          <span class="cindex-body">
+            <span class="cindex-name"><%= c.name.replace(" Komitesi", "") %></span>
+            <span class="cindex-sum"><%= c.summary %></span>
+          </span>
+          <span class="cindex-go" aria-hidden="true"><%- include('partials/icon', { name: 'chevron' }) %></span>
+        </a>
+      </li>
+      <% }) %>
+    </ol>
+  </div>
+</section>
+
 <!-- Rakamlar: kırık simetri — değerler sitenin kendi sayaçlarından -->
 <section class="tile tile-white stats">
   <div class="container stats-grid">

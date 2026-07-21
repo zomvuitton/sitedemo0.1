@@ -1,0 +1,75 @@
+<%- include('partials/head') %>
+<%- include('partials/nav') %>
+
+<section class="tile tile-white page-hero">
+  <div class="container">
+    <div class="page-hero-inner reveal">
+      <p class="eyebrow eyebrow-red">Kampüs</p>
+      <h1><%- br(texts.kampusTitle) %></h1>
+      <p class="lede lede-dark"><%= texts.kampusLede %></p>
+    </div>
+  </div>
+</section>
+
+<!-- Bilgi bölümü: topluluk odası nerede, ne zaman, nasıl tanışılır -->
+<section class="tile tile-gray campus-info">
+  <div class="container">
+    <div class="editorial-grid">
+      <div class="editorial-aside reveal">
+        <span class="card-icon"><%- include('partials/icon', { name: 'pin' }) %></span>
+        <h2>Topluluk odası</h2>
+      </div>
+      <div class="editorial-body reveal">
+        <p class="lede-dark"><%= texts.kampusIntro %></p>
+      </div>
+    </div>
+
+    <dl class="facts-row reveal">
+      <div class="fact">
+        <dt>Nerede</dt>
+        <dd><%= site.address %></dd>
+      </div>
+      <div class="fact">
+        <dt>Ne zaman</dt>
+        <dd><%= texts.kampusHours %></dd>
+      </div>
+      <div class="fact">
+        <dt>Nasıl tanışılır</dt>
+        <dd><%= texts.kampusHow %></dd>
+      </div>
+    </dl>
+
+    <div class="cta-row reveal">
+      <a class="link-more" href="https://www.google.com/maps/search/?api=1&amp;query=<%= encodeURIComponent(site.address) %>" target="_blank" rel="noopener">Haritada aç <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
+      <a class="link-more" href="/iletisim">Bize yaz <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
+    </div>
+  </div>
+</section>
+
+<!-- Yazı akışı: panelden yönetilir, taslaklar burada görünmez -->
+<section class="tile tile-white">
+  <div class="container">
+    <div class="section-head reveal">
+      <h2><%= texts.kampusPostsTitle %></h2>
+    </div>
+    <% if (posts.length) { %>
+    <div class="card-row card-row-2">
+      <% posts.forEach(function (p) { %>
+      <a class="card card-post reveal" href="/kampus/<%= p.slug %>">
+        <% if (p.cover) { %>
+        <img class="card-img" src="<%= p.cover %>" alt="<%= p.title %> yazısının kapak görseli" loading="lazy">
+        <% } %>
+        <span class="post-meta"><%= trTarih(p.date) %><%= p.tag ? " · " + p.tag : "" %></span>
+        <h3><%= p.title %></h3>
+        <p><%= p.excerpt %></p>
+        <span class="card-more">Okumaya devam <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></span>
+      </a>
+      <% }) %>
+    </div>
+    <% } else { %>
+    <p class="posts-empty reveal">Henüz yazı yayımlanmadı. Yakında burada olacak.</p>
+    <% } %>
+  </div>
+</section>
+
+<%- include('partials/footer') %>

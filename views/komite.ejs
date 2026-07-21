@@ -7,7 +7,6 @@
     <h1><%= committee.name %></h1>
     <p class="lede lede-dark"><%= committee.summary %></p>
     <div class="cta-row">
-      <a class="btn btn-primary" href="/iletisim">İletişime geç</a>
       <a class="link-more" href="/komiteler">Tüm komiteler <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
     </div>
     <% if (committee.hero) { %>

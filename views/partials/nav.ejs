@@ -14,10 +14,11 @@
       <span></span><span></span>
     </button>
     <ul class="nav-links" id="navLinks">
-      <li><a href="/projeler" <%= path.startsWith('/projeler') ? 'aria-current="page"' : '' %>>Projeler</a></li>
-      <li><a href="/komiteler" <%= path === '/komiteler' ? 'aria-current="page"' : '' %>>Komiteler</a></li>
-      <li><a href="/hakkimizda" <%= path === '/hakkimizda' ? 'aria-current="page"' : '' %>>Hakkımızda</a></li>
-      <li><a href="/ekibimiz" <%= path === '/ekibimiz' ? 'aria-current="page"' : '' %>>Ekibimiz</a></li>
+      <li><a href="/projeler" <%- path.startsWith('/projeler') ? 'aria-current="page"' : '' %>>Projeler</a></li>
+      <li><a href="/komiteler" <%- path === '/komiteler' ? 'aria-current="page"' : '' %>>Komiteler</a></li>
+      <li><a href="/hakkimizda" <%- path === '/hakkimizda' ? 'aria-current="page"' : '' %>>Hakkımızda</a></li>
+      <li><a href="/ekibimiz" <%- path === '/ekibimiz' ? 'aria-current="page"' : '' %>>Ekibimiz</a></li>
+      <li><a href="/kampus" <%- path.startsWith('/kampus') ? 'aria-current="page"' : '' %>>Kampüs</a></li>
       <li><a class="nav-cta" href="/iletisim">İletişim</a></li>
     </ul>
   </nav>
