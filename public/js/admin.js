@@ -50,7 +50,8 @@ document.addEventListener("click", (e) => {
 document.addEventListener("input", (e) => {
   const input = e.target;
   if (!input.matches("[data-field], input[name='hero']")) return;
-  const row = input.closest(".arow") || input.closest(".aimg-field") || input.closest("form");
+  const row =
+    input.closest(".arow") || input.closest(".ablock") || input.closest(".aimg-field") || input.closest("form");
   if (!row) return;
   const key = input.dataset.field || input.name;
   const img = row.querySelector(`[data-preview="${key}"]`);
@@ -97,7 +98,8 @@ document.addEventListener("change", async (e) => {
   const fileInput = e.target.closest("input[type=file][data-upload-to]");
   if (!fileInput || !fileInput.files.length) return;
   const file = fileInput.files[0];
-  const scope = fileInput.closest(".arow") || fileInput.closest(".aimg-field") || fileInput.closest("form");
+  const scope =
+    fileInput.closest(".arow") || fileInput.closest(".ablock") || fileInput.closest(".aimg-field") || fileInput.closest("form");
   const key = fileInput.dataset.uploadTo;
   const target =
     scope.querySelector(`[data-field="${key}"]`) || scope.querySelector(`input[name="${key}"]`);
@@ -120,6 +122,93 @@ document.addEventListener("change", async (e) => {
     fileInput.value = "";
   }
 });
+
+// ---------- Kampüs blok editörü ----------
+// Yazı gövdesi tipli bloklardan oluşur (p / h2 / quote / list / img).
+// Sunucudan gelen veri sayfaya JSON olarak gömülür; şablonlar klonlanıp doldurulur.
+
+function textareaBuyut(el) {
+  el.style.height = "auto";
+  el.style.height = el.scrollHeight + 2 + "px";
+}
+
+function blokEkle(wrap, blok) {
+  const tpl = document.querySelector(`template[data-blocktpl="${blok.type}"]`);
+  if (!tpl) return null;
+  const node = tpl.content.firstElementChild.cloneNode(true);
+  node.querySelectorAll("[data-field]").forEach((el) => {
+    const key = el.dataset.field;
+    let value = blok[key];
+    if (key === "items" && Array.isArray(value)) value = value.join("\n");
+    if (el.type === "checkbox") el.checked = Boolean(value);
+    else el.value = value || "";
+  });
+  const onizleme = node.querySelector('[data-preview="src"]');
+  if (onizleme) onizleme.src = blok.src || "";
+  wrap.appendChild(node);
+  node.querySelectorAll("textarea").forEach(textareaBuyut);
+  return node;
+}
+
+document.querySelectorAll("[data-blocks]").forEach((wrap) => {
+  const dataEl = document.querySelector(`script[data-blocks-data="${wrap.dataset.blocks}"]`);
+  let bloklar = [];
+  try { bloklar = JSON.parse(dataEl.textContent) || []; } catch { /* bozuk veri: boş başla */ }
+  bloklar
+    .map((b) => (typeof b === "string" ? { type: "p", text: b } : b))
+    .forEach((b) => blokEkle(wrap, b));
+  if (!wrap.children.length) blokEkle(wrap, { type: "p" }); // boş yazıya başlangıç paragrafı
+});
+
+// Blok ekle / taşı / sil (tek delegasyon)
+document.addEventListener("click", (e) => {
+  const addBtn = e.target.closest("[data-add-block]");
+  if (addBtn) {
+    const wrap = (addBtn.closest("form") || document).querySelector("[data-blocks]");
+    if (!wrap) return;
+    const node = blokEkle(wrap, { type: addBtn.dataset.addBlock });
+    if (node) {
+      node.scrollIntoView({ behavior: "smooth", block: "center" });
+      const ilkAlan = node.querySelector("textarea, input[type=text]");
+      if (ilkAlan) ilkAlan.focus({ preventScroll: true });
+    }
+    return;
+  }
+  const moveBtn = e.target.closest("[data-bmove]");
+  if (moveBtn) {
+    const blok = moveBtn.closest(".ablock");
+    if (moveBtn.dataset.bmove === "up" && blok.previousElementSibling)
+      blok.parentElement.insertBefore(blok, blok.previousElementSibling);
+    else if (moveBtn.dataset.bmove === "down" && blok.nextElementSibling)
+      blok.parentElement.insertBefore(blok.nextElementSibling, blok);
+    return;
+  }
+  const delBtn = e.target.closest(".ablock-del");
+  if (delBtn) {
+    const blok = delBtn.closest(".ablock");
+    // İçinde metin varsa yanlışlıkla silinmesin
+    const dolu = [...blok.querySelectorAll("[data-field]")].some(
+      (el) => el.type !== "checkbox" && el.value.trim()
+    );
+    if (!dolu || confirm("Bu blok silinecek. Emin misin?")) blok.remove();
+  }
+});
+
+// Blok metin alanları yazdıkça uzar
+document.addEventListener("input", (e) => {
+  if (e.target.matches(".ablock textarea")) textareaBuyut(e.target);
+});
+
+// Blokları kayıt yüküne çevir (boşları sunucu ayıklar)
+function readBlocks(wrap) {
+  return [...wrap.querySelectorAll(".ablock")].map((node) => {
+    const blok = { type: node.dataset.btype };
+    node.querySelectorAll("[data-field]").forEach((el) => {
+      blok[el.dataset.field] = el.type === "checkbox" ? el.checked : el.value;
+    });
+    return blok;
+  });
+}
 
 // Liste satırlarını nesnelere çevir
 function readList(scope, key) {
@@ -149,6 +238,9 @@ document.querySelectorAll("form[data-save]").forEach((form) => {
         key === "gallery"
           ? readList(form, key).map((r) => r.url).filter(Boolean)
           : readList(form, key);
+    });
+    form.querySelectorAll("[data-blocks]").forEach((wrap) => {
+      payload[wrap.dataset.blocks] = readBlocks(wrap);
     });
     const button = form.querySelector('button[type="submit"]');
     button.disabled = true;

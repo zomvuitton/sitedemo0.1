@@ -1,7 +1,12 @@
 <%- include('partials/head') %>
 <%- include('partials/nav') %>
 
-<section class="tile tile-white page-hero">
+<!-- Hero'nun arka planı stilize kampüs haritasıdır; imleç EM binasına
+     yaklaştıkça hale parlar ve etiket belirir (main.js, --em-glow) -->
+<section class="tile tile-white page-hero campus-map-hero" id="campusMapHero" style="--em-glow:0">
+  <div class="campus-map-bg" aria-hidden="true">
+    <%- include('partials/campus-map') %>
+  </div>
   <div class="container">
     <div class="page-hero-inner reveal">
       <p class="eyebrow eyebrow-red">Kampüs</p>

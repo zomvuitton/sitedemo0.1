@@ -25,8 +25,28 @@
 <section class="tile tile-white article-tile">
   <div class="container">
     <div class="article-body reveal">
-      <% post.body.forEach(function (para, i) { %>
-      <p class="<%= i === 0 ? 'lede-dark' : '' %>"><%= para %></p>
+      <%# Gövde blok listesidir: string = paragraf, nesneler tipli blok (bkz. server.js cleanBlocks) %>
+      <% post.body.forEach(function (blok, i) {
+           if (typeof blok === "string") blok = { type: "p", text: blok };
+           if (blok.type === "p") { %>
+      <p class="<%= i === 0 ? 'lede-dark' : '' %>"><%- br(blok.text) %></p>
+      <%   } else if (blok.type === "h2") { %>
+      <h2><%= blok.text %></h2>
+      <%   } else if (blok.type === "quote") { %>
+      <blockquote>
+        <p><%- br(blok.text) %></p>
+        <% if (blok.cite) { %><cite><%= blok.cite %></cite><% } %>
+      </blockquote>
+      <%   } else if (blok.type === "list" && blok.ordered) { %>
+      <ol><% blok.items.forEach(function (madde) { %><li><%= madde %></li><% }) %></ol>
+      <%   } else if (blok.type === "list") { %>
+      <ul><% blok.items.forEach(function (madde) { %><li><%= madde %></li><% }) %></ul>
+      <%   } else if (blok.type === "img") { %>
+      <figure>
+        <img src="<%= blok.src %>" alt="<%= blok.caption || (post.title + ' yazısından görsel') %>" loading="lazy">
+        <% if (blok.caption) { %><figcaption><%= blok.caption %></figcaption><% } %>
+      </figure>
+      <%   } %>
       <% }) %>
     </div>
   </div>

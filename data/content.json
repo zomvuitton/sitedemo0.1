@@ -635,12 +635,12 @@
     "teamCtaLede": "Bizi kampüste bul: Endüstri Mühendisliği Binası, Verimlilik Topluluğu Odası.",
     "contactTitle": "Sorun, önerin,\niş birliği fikrin mi var?",
     "contactLede": "Formu doldur; ilgili ekip arkadaşımız sana dönsün.",
-    "kampusTitle": "Kampüste bir topluluk.",
-    "kampusLede": "Verimlilik Topluluğu'nu ekranda değil, ODTÜ'de tanırsın: topluluk odamız, etkinliklerimiz ve kampüsten yazılar burada.",
-    "kampusHours": "Ders saatleri dışında, hafta içi her gün odamız açık olur; en kalabalık saatler öğleden sonralarıdır.",
-    "kampusHow": "Kapıyı çal, içeri gir. Etkinliklerimizin tamamı ücretsiz ve herkese açık; tanışmak için etkinliklerimize de bekleriz.",
-    "kampusIntro": "Topluluk odası, altı projenin ve dört komitenin bir araya geldiği yerdir: bir etkinliğin afişi burada tartışılır, bir sonraki zirvenin konuşmacı listesi burada çıkar. Kampüste bize dair merak ettiğin her şeyi buradan öğrenebilirsin.",
-    "kampusPostsTitle": "Kampüsten yazılar",
+    "kampusTitle": "ODTÜ'de yapabileceklerinin bir sınırı yok.",
+    "kampusLede": "Tıpkı topluluğumuzun ilgilenmediği bir alan olmadığı gibi.",
+    "kampusHours": "",
+    "kampusHow": "",
+    "kampusIntro": "Topluluk odası, altı projenin ve dört komitenin bir araya geldiği yerdir. Kampüste bize dair merak ettiğin her şeyi buradan öğrenebilirsin.",
+    "kampusPostsTitle": "Topluluğumuzdan yazılar",
     "footerNote": "Bu etkinliklerin tamamı katılımcılara ücretsizdir; masraflar sponsorluklarla karşılanır.",
     "newsletterLabel": "Etkinlik duyuruları",
     "homeEventsTitle": "Yaklaşan etkinlikler"
@@ -649,7 +649,7 @@
   "campusPosts": [
     {
       "slug": "toplulugu-kampuste-nerede-bulursun",
-      "title": "Topluluğu kampüste nerede bulursun?",
+      "title": "Aktif üyelik nedir? Size ne sağlar?",
       "date": "2026-03-10",
       "author": "ODTÜ VT",
       "tag": "Kampüs rehberi",

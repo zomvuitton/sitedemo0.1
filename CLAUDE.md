@@ -30,8 +30,18 @@ Kullanıcının kısayolları (kendisi teknik değil, bunlarla çalışıyor):
 - `data/*.jsonl` (mesaj/abone kayıtları) kişisel veridir, gitignore'lu.
 - `views/` — EJS şablonları; `views/partials/person.ejs` üye kartı,
   `views/admin/` panel sayfaları.
+- Kampüs yazı gövdesi (`campusPosts[].body`) blok listesidir: düz string
+  paragraf demektir, nesneler tipli bloktur (`h2`/`quote`/`list`/`img`).
+  Temizlik `server.js cleanBlocks`; admin'deki blok editörü
+  `views/admin/kampus-yazi.ejs` şablonları + `public/js/admin.js` ile çalışır.
 - `public/js/main.js` — tema anahtarı, reveal, sayaçlar, grid reveal,
   scroll tilt, partner şeritleri, daktilo efekti, form gönderimi.
+- Kampüs hero'su: yazının ARKASINDA tam yüzey stilize kampüs haritası
+  (`views/partials/campus-map.ejs`, geometri gerçek haritadan çıkarıldı;
+  dekoratif katman, ayrı panel DEĞİL). İmleç EM binasına yaklaşınca hale
+  parlar ve etiket belirir (`main.js` `--em-glow`, stiller
+  `style.css .campus-map-hero`). Dokunmatikte nabız, reduced-motion'da
+  sabit parlaklık; sol tarafta okunurluk için kâğıt rengine geçiş var.
 - `public/js/hero-particles.js` + `campus-morph.js` — Three.js
   (vendored: `public/vendor/three.module.min.js`) partikül animasyonları;
   sayfa yüklendikten sonra boşta (idle) import edilir.

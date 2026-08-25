@@ -281,6 +281,102 @@ body.admin {
   .arow input { flex-basis: 100%; }
 }
 
+/* ---------- Kampüs blok editörü ---------- */
+
+.ablocks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-2);
+  margin-bottom: var(--s-3);
+}
+
+.ablock {
+  background: var(--paper-gray);
+  border-radius: 14px;
+  padding: var(--s-1) var(--s-2) var(--s-2);
+  transition: box-shadow 0.15s ease;
+}
+.ablock:focus-within { box-shadow: inset 0 0 0 1px rgba(166, 25, 46, 0.3); }
+
+.ablock-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--s-1);
+  margin-bottom: 6px;
+}
+
+.ablock-tag {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--ink-2);
+}
+
+.ablock-tools { display: flex; gap: 4px; }
+
+.ablock-btn {
+  width: 26px;
+  height: 26px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font: inherit;
+  font-size: 14px;
+  line-height: 1;
+  border: none;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink-2);
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+.ablock-btn:hover { background: rgba(29, 29, 31, 0.08); color: var(--ink); }
+.ablock-del:hover { background: rgba(166, 25, 46, 0.1); color: var(--vt-red); }
+
+.ablock input[type="text"],
+.ablock textarea {
+  margin-top: 0;
+  background: var(--paper);
+}
+.ablock textarea { resize: none; overflow: hidden; min-height: 44px; }
+.ablock textarea + input { margin-top: var(--s-1); }
+.ablock .acheck-sm { margin-top: var(--s-1); }
+
+/* Ara başlık girişi makaledeki gibi kalın görünsün */
+.ablock[data-btype="h2"] input {
+  font-weight: 700;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+}
+
+/* Görsel bloğu: küçük önizleme + alanlar */
+.ablock-img { display: flex; gap: var(--s-2); align-items: flex-start; }
+.ablock-thumb {
+  width: 132px;
+  aspect-ratio: 16 / 10;
+  object-fit: cover;
+  border-radius: 10px;
+  background: rgba(29, 29, 31, 0.08);
+  flex-shrink: 0;
+}
+.ablock-img-fields { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: var(--s-1); }
+.ablock-src { display: flex; gap: var(--s-1); align-items: center; }
+.ablock-src input { flex: 1; min-width: 0; font-size: 12px !important; }
+@media (max-width: 640px) {
+  .ablock-img { flex-wrap: wrap; }
+  .ablock-thumb { width: 100%; }
+}
+
+.ablock-add {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-1);
+}
+.ablock-add .amuted { display: inline; font-size: 13px; }
+
 /* ---------- Kapak görseli alanı ---------- */
 
 .aimg-field { display: flex; gap: var(--s-3); align-items: flex-start; flex-wrap: wrap; }

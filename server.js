@@ -742,6 +742,53 @@ app.delete("/admin/api/komiteler/:slug", requireAdminApi, (req, res) => {
 });
 
 // Kampüs yazıları: proje/komite API'leriyle aynı desen (oluştur / kaydet / sil)
+// Yazı gövdesi blok listesidir: düz string paragraf demektir (eski içerikle aynı
+// biçim), nesneler tipli bloklardır — h2 (ara başlık), quote (alıntı),
+// list (madde listesi), img (yazı içi görsel).
+function cleanBlocks(value, maxItems) {
+  if (!Array.isArray(value)) return cleanParagraphs(value, maxItems); // eski tek-textarea biçimi
+  const out = [];
+  for (const raw of value) {
+    if (out.length >= (maxItems || 60)) break;
+    // Paragraf depoda düz string olarak tutulur
+    if (typeof raw === "string" || (raw && raw.type === "p")) {
+      const text = clean(typeof raw === "string" ? raw : raw.text, 4000);
+      if (text) out.push(text);
+      continue;
+    }
+    if (!raw || typeof raw !== "object") continue;
+    if (raw.type === "h2") {
+      const text = clean(raw.text, 200);
+      if (text) out.push({ type: "h2", text });
+    } else if (raw.type === "quote") {
+      const text = clean(raw.text, 1000);
+      if (!text) continue;
+      const block = { type: "quote", text };
+      const cite = clean(raw.cite, 160);
+      if (cite) block.cite = cite;
+      out.push(block);
+    } else if (raw.type === "list") {
+      // İstemci maddeleri tek metin (satır başına bir madde) da gönderebilir
+      const items = (Array.isArray(raw.items) ? raw.items : String(raw.items ?? "").split("\n"))
+        .map((item) => clean(item, 300))
+        .filter(Boolean)
+        .slice(0, 20);
+      if (!items.length) continue;
+      const block = { type: "list", items };
+      if (raw.ordered) block.ordered = true;
+      out.push(block);
+    } else if (raw.type === "img") {
+      const src = clean(raw.src, 400);
+      if (!src) continue;
+      const block = { type: "img", src };
+      const caption = clean(raw.caption, 300);
+      if (caption) block.caption = caption;
+      out.push(block);
+    }
+  }
+  return out;
+}
+
 function sanitizePost(input, existing) {
   const title = clean(input.title, 160) || (existing && existing.title);
   if (!title) return { error: "Yazı başlığı gerekli." };
@@ -754,7 +801,7 @@ function sanitizePost(input, existing) {
       author: clean(input.author, 120),
       tag: clean(input.tag, 60),
       excerpt: clean(input.excerpt, 500),
-      body: cleanParagraphs(input.body, 40),
+      body: cleanBlocks(input.body, 60),
       cover: clean(input.cover, 400),
       gallery: cleanGallery(input.gallery),
       draft: Boolean(input.draft)

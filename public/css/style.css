@@ -1606,8 +1606,87 @@ html[data-theme="dark"] .timeline-dot.is-active::after {
 }
 
 /* ============================================================
-   Kampüs — bilgi şeridi + yazı akışı + yazı sayfası
+   Kampüs — harita banner'ı + bilgi şeridi + yazı akışı + yazı sayfası
    ============================================================ */
+
+/* Hero'nun arkasında tam yüzey stilize kampüs haritası. Açık temada kâğıt
+   üstünde ince mürekkep hatları, koyuda siyah üstünde soluk çizgiler; tek
+   renk vurgusu EM binası. --em-glow (0→1) main.js'ten gelir: imleç binaya
+   yaklaştıkça hale parlar, etiket parlama ile birlikte belirir. */
+.campus-map-hero {
+  position: relative;
+  overflow: hidden;
+  min-height: clamp(420px, 52vh, 600px);
+  display: flex;
+  align-items: center;
+}
+.campus-map-hero .container { position: relative; z-index: 1; }
+
+.campus-map-bg { position: absolute; inset: 0; pointer-events: none; }
+.campus-map-svg { width: 100%; height: 100%; display: block; }
+
+/* Yazının oturduğu sol taraf okunur kalsın: kâğıt renginden yumuşak geçiş */
+.campus-map-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--paper) 6%, rgba(255, 255, 255, 0) 62%);
+}
+
+.cm-ground { fill: none; }
+.cm-forest ellipse { fill: rgba(29, 29, 31, 0.028); }
+.cm-roads path {
+  fill: none;
+  stroke: rgba(29, 29, 31, 0.055);
+  stroke-width: 4.5;
+  stroke-linecap: round;
+}
+.cm-roads .cm-road-main { stroke-width: 7; }
+.cm-blds rect { fill: rgba(29, 29, 31, 0.075); }
+.cm-stadium ellipse { fill: none; stroke: rgba(29, 29, 31, 0.075); stroke-width: 3; }
+
+/* EM vurgusu: hale + bina + pin; etiket parlama ile görünür olur */
+.cm-em-halo { fill: var(--vt-red); opacity: calc(0.1 + var(--em-glow, 0) * 0.8); }
+.cm-em, .cm-pin path { fill: var(--vt-red); }
+.cm-pin circle { fill: var(--paper); }
+.cm-tag { opacity: var(--em-glow, 0); }
+.cm-tag rect { fill: var(--paper); stroke: rgba(166, 25, 46, 0.18); stroke-width: 1; }
+.cm-tag text {
+  font-family: var(--font-text);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  fill: var(--ink);
+  text-anchor: middle;
+}
+.cm-tag-short { display: none; }
+@media (max-width: 640px) {
+  .cm-tag-long { display: none; }
+  .cm-tag-short { display: block; }
+  .campus-map-hero { min-height: 380px; }
+}
+
+/* Dokunmatik cihaz: imleç yok, hale yumuşak nabızla kendini gösterir */
+.campus-map-hero.map-pulse .cm-em-halo { animation: emPulse 3.4s ease-in-out infinite; }
+@keyframes emPulse {
+  0%, 100% { opacity: 0.12; }
+  50% { opacity: 0.55; }
+}
+
+/* Koyu tema: tokenlar kendiliğinden döner; sabit rgba'lar tek tek düzeltilir */
+html[data-theme="dark"] .campus-map-bg::after {
+  background: linear-gradient(90deg, var(--paper) 6%, rgba(0, 0, 0, 0) 62%);
+}
+html[data-theme="dark"] .cm-forest ellipse { fill: rgba(255, 255, 255, 0.03); }
+html[data-theme="dark"] .cm-roads path { stroke: rgba(255, 255, 255, 0.055); }
+html[data-theme="dark"] .cm-blds rect { fill: rgba(255, 255, 255, 0.08); }
+html[data-theme="dark"] .cm-stadium ellipse { stroke: rgba(255, 255, 255, 0.08); }
+html[data-theme="dark"] .cm-tag rect { fill: #1d1d1f; stroke: rgba(255, 80, 99, 0.28); }
+
+@media (prefers-reduced-motion: reduce) {
+  .campus-map-hero.map-pulse .cm-em-halo { animation: none; }
+  .campus-map-hero .cm-em-halo { opacity: 0.4; }
+}
 
 /* Bilgi şeridi: proje bilgi kutularıyla (.facts-row) aynı dil */
 .campus-info .facts-row { margin-top: var(--s-8); gap: var(--s-4) var(--s-3); }
@@ -1633,7 +1712,48 @@ html[data-theme="dark"] .timeline-dot.is-active::after {
 .article-body { max-width: 720px; }
 .article-body p { color: var(--ink-2); }
 .article-body p.lede-dark { color: var(--ink); }
-.article-body p + p { margin-top: var(--s-3); }
+.article-body > * + * { margin-top: var(--s-3); }
+
+/* Ara başlık: makale ölçeğine küçültülmüş h2, üstünde ekstra nefes payı */
+.article-body h2 {
+  font-size: clamp(22px, 3vw, 28px);
+  line-height: 1.2;
+  margin-top: var(--s-6);
+}
+.article-body h2:first-child { margin-top: 0; }
+
+/* Alıntı: marka renginde ince sol çizgi, display fontuyla büyük metin */
+.article-body blockquote {
+  margin-block: var(--s-4);
+  padding-left: var(--s-3);
+  border-left: 3px solid var(--vt-red);
+}
+.article-body blockquote p {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(19px, 2.2vw, 23px);
+  line-height: 1.35;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+}
+.article-body blockquote cite {
+  display: block;
+  margin-top: var(--s-1);
+  font-style: normal;
+  font-size: 14px;
+  color: var(--ink-2);
+}
+
+/* Madde listeleri */
+.article-body ul,
+.article-body ol { padding-left: 1.3em; color: var(--ink-2); }
+.article-body li + li { margin-top: var(--s-1); }
+.article-body li::marker { color: var(--vt-red); font-weight: 600; }
+
+/* Yazı içi görsel */
+.article-body figure { margin-block: var(--s-4); }
+.article-body figure img { width: 100%; border-radius: var(--radius-card); }
+.article-body figcaption { margin-top: var(--s-1); font-size: 14px; color: var(--ink-2); }
 
 /* Başlıkla gövde arasında ikinci bir üst boşluk oluşmasın */
 .article-tile { padding-block: var(--s-6) var(--s-12); }

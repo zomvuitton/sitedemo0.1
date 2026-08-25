@@ -139,6 +139,53 @@ if (gridHero) {
   }
 }
 
+// Kampüs hero'su: arka plandaki haritada imleç EM binasına yaklaştıkça
+// hale parlar, etiket belirir (--em-glow 0→1). Grid-reveal ile aynı
+// disiplin: rect önden ölçülür, yazma yalnızca rAF içinde. Harita katmanı
+// section'ı tamamen kapladığı için ölçüm section üzerinden yapılır.
+const campusMap = document.getElementById("campusMapHero");
+if (campusMap && !reducedMotion) {
+  if (window.matchMedia("(hover: hover)").matches) {
+    // EM binasının merkezi, viewBox (1072×478) oranında sabittir.
+    // SVG "slice" ile kırpıldığı için panel içindeki gerçek konum ölçekle bulunur.
+    const EM = { x: 609 / 1072, y: 256 / 478 };
+    let rect = campusMap.getBoundingClientRect();
+    let emX = 0, emY = 0, erisim = 1;
+    const remeasure = () => {
+      rect = campusMap.getBoundingClientRect();
+      const olcek = Math.max(rect.width / 1072, rect.height / 478);
+      emX = (rect.width - 1072 * olcek) / 2 + 1072 * EM.x * olcek;
+      emY = (rect.height - 478 * olcek) / 2 + 478 * EM.y * olcek;
+      erisim = 300 * olcek; // parlamanın hissedilmeye başladığı uzaklık
+    };
+    remeasure();
+    window.addEventListener("resize", remeasure);
+    window.addEventListener("scroll", remeasure, { passive: true });
+
+    let hedef = 0, deger = 0, calisiyor = false;
+    const ciz = () => {
+      deger += (hedef - deger) * 0.16;
+      campusMap.style.setProperty("--em-glow", deger.toFixed(3));
+      if (Math.abs(hedef - deger) > 0.004) requestAnimationFrame(ciz);
+      else calisiyor = false;
+    };
+    const parla = (v) => {
+      hedef = v;
+      if (!calisiyor) { calisiyor = true; requestAnimationFrame(ciz); }
+    };
+    campusMap.addEventListener("pointermove", (e) => {
+      const dx = e.clientX - rect.left - emX;
+      const dy = e.clientY - rect.top - emY;
+      const t = Math.max(0, 1 - Math.hypot(dx, dy) / erisim);
+      parla(t * t * (3 - 2 * t)); // smoothstep: yaklaştıkça yumuşak hızlanır
+    });
+    campusMap.addEventListener("pointerleave", () => parla(0));
+  } else {
+    // Dokunmatik: imleç yok, hale yumuşak nabızla dikkat çeker (CSS keyframe)
+    campusMap.classList.add("map-pulse");
+  }
+}
+
 // Proje kapak görseli: net başlar, kaydırıp geçtikçe (yukarı çıktıkça) bulanıklaşır
 const blurEl = document.querySelector(".scroll-blur");
 if (blurEl && !reducedMotion) {

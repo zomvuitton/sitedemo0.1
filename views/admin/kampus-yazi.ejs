@@ -9,28 +9,46 @@
   <form id="editForm" data-save="/admin/api/kampus/<%= post.slug %>">
     <section class="asection">
       <h2>Temel bilgiler</h2>
-      <label>Başlık
-        <input type="text" name="title" value="<%= post.title %>" required>
-      </label>
-      <label>Tarih
-        <input type="date" name="date" value="<%= post.date %>">
-      </label>
-      <label>Yazar <span class="amuted">(isteğe bağlı)</span>
-        <input type="text" name="author" value="<%= post.author || '' %>" placeholder="Ad Soyad veya ODTÜ VT">
-      </label>
-      <label>Etiket <span class="amuted">(isteğe bağlı — örn. Kampüs rehberi)</span>
-        <input type="text" name="tag" value="<%= post.tag || '' %>">
-      </label>
+      <div class="agrid-2">
+        <label>Başlık
+          <input type="text" name="title" value="<%= post.title %>" required>
+        </label>
+        <label>Tarih
+          <input type="date" name="date" value="<%= post.date %>">
+        </label>
+      </div>
+      <div class="agrid-2">
+        <label>Yazar <span class="amuted">(isteğe bağlı)</span>
+          <input type="text" name="author" value="<%= post.author || '' %>" placeholder="Ad Soyad veya ODTÜ VT">
+        </label>
+        <label>Etiket <span class="amuted">(isteğe bağlı — örn. Kampüs rehberi)</span>
+          <input type="text" name="tag" value="<%= post.tag || '' %>">
+        </label>
+      </div>
       <label>Özet <span class="amuted">(kart ve arama sonuçlarında görünür)</span>
         <textarea name="excerpt" rows="2"><%= post.excerpt || '' %></textarea>
-      </label>
-      <label>Yazı metni <span class="amuted">(paragraflar arasında boş satır bırak)</span>
-        <textarea name="body" rows="16"><%= (post.body || []).join("\n\n") %></textarea>
       </label>
       <label class="acheck">
         <input type="checkbox" name="draft" <%= post.draft ? "checked" : "" %>>
         Taslak — bu yazı sitede görünmesin
       </label>
+    </section>
+
+    <section class="asection">
+      <h2>Yazı içeriği</h2>
+      <p class="amuted-block">
+        Yazı bloklardan oluşur. Alttaki butonlarla paragraf, ara başlık, alıntı,
+        madde listesi ve görsel ekleyebilir; ok butonlarıyla sırayı değiştirebilirsin.
+      </p>
+      <div class="ablocks" data-blocks="body"></div>
+      <div class="ablock-add">
+        <span class="amuted">Blok ekle:</span>
+        <button type="button" class="abtn abtn-ghost" data-add-block="p">+ Paragraf</button>
+        <button type="button" class="abtn abtn-ghost" data-add-block="h2">+ Ara başlık</button>
+        <button type="button" class="abtn abtn-ghost" data-add-block="quote">+ Alıntı</button>
+        <button type="button" class="abtn abtn-ghost" data-add-block="list">+ Liste</button>
+        <button type="button" class="abtn abtn-ghost" data-add-block="img">+ Görsel</button>
+      </div>
     </section>
 
     <section class="asection">
@@ -45,7 +63,7 @@
     </section>
 
     <section class="asection">
-      <h2>Galeri <span class="amuted">(isteğe bağlı)</span></h2>
+      <h2>Galeri <span class="amuted">(isteğe bağlı — yazının sonunda ayrı bölüm olarak çıkar)</span></h2>
       <div class="alist" data-list="gallery">
         <% (post.gallery || []).forEach(function (g) { %>
         <div class="arow arow-person">
@@ -66,12 +84,98 @@
   </form>
 </div>
 
+<%# Mevcut gövde, blok editörünün dolduracağı veri olarak gömülür (script kırılmasın diye < kaçışlı) %>
+<script type="application/json" data-blocks-data="body"><%- JSON.stringify(post.body || []).replace(/</g, "\\u003c") %></script>
+
 <template data-template="gallery">
   <div class="arow arow-person">
     <img class="aavatar" data-preview="url" src="" alt="">
     <input type="text" data-field="url" placeholder="Görsel yolu">
     <label class="abtn abtn-ghost aupload">Görsel<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="url" hidden></label>
     <button type="button" class="abtn abtn-danger arow-del" aria-label="Görseli kaldır">Kaldır</button>
+  </div>
+</template>
+
+<%# ---------- Blok şablonları — admin.js bunları klonlayıp değerleri doldurur ---------- %>
+
+<template data-blocktpl="p">
+  <div class="ablock" data-btype="p">
+    <div class="ablock-bar">
+      <span class="ablock-tag">Paragraf</span>
+      <div class="ablock-tools">
+        <button type="button" class="ablock-btn" data-bmove="up" title="Yukarı taşı" aria-label="Yukarı taşı">↑</button>
+        <button type="button" class="ablock-btn" data-bmove="down" title="Aşağı taşı" aria-label="Aşağı taşı">↓</button>
+        <button type="button" class="ablock-btn ablock-del" title="Bloğu sil" aria-label="Bloğu sil">×</button>
+      </div>
+    </div>
+    <textarea data-field="text" rows="3" placeholder="Paragraf metni…"></textarea>
+  </div>
+</template>
+
+<template data-blocktpl="h2">
+  <div class="ablock" data-btype="h2">
+    <div class="ablock-bar">
+      <span class="ablock-tag">Ara başlık</span>
+      <div class="ablock-tools">
+        <button type="button" class="ablock-btn" data-bmove="up" title="Yukarı taşı" aria-label="Yukarı taşı">↑</button>
+        <button type="button" class="ablock-btn" data-bmove="down" title="Aşağı taşı" aria-label="Aşağı taşı">↓</button>
+        <button type="button" class="ablock-btn ablock-del" title="Bloğu sil" aria-label="Bloğu sil">×</button>
+      </div>
+    </div>
+    <input type="text" data-field="text" placeholder="Ara başlık…">
+  </div>
+</template>
+
+<template data-blocktpl="quote">
+  <div class="ablock" data-btype="quote">
+    <div class="ablock-bar">
+      <span class="ablock-tag">Alıntı</span>
+      <div class="ablock-tools">
+        <button type="button" class="ablock-btn" data-bmove="up" title="Yukarı taşı" aria-label="Yukarı taşı">↑</button>
+        <button type="button" class="ablock-btn" data-bmove="down" title="Aşağı taşı" aria-label="Aşağı taşı">↓</button>
+        <button type="button" class="ablock-btn ablock-del" title="Bloğu sil" aria-label="Bloğu sil">×</button>
+      </div>
+    </div>
+    <textarea data-field="text" rows="2" placeholder="Alıntı metni…"></textarea>
+    <input type="text" data-field="cite" placeholder="Kimden / kaynak (isteğe bağlı)">
+  </div>
+</template>
+
+<template data-blocktpl="list">
+  <div class="ablock" data-btype="list">
+    <div class="ablock-bar">
+      <span class="ablock-tag">Liste</span>
+      <div class="ablock-tools">
+        <button type="button" class="ablock-btn" data-bmove="up" title="Yukarı taşı" aria-label="Yukarı taşı">↑</button>
+        <button type="button" class="ablock-btn" data-bmove="down" title="Aşağı taşı" aria-label="Aşağı taşı">↓</button>
+        <button type="button" class="ablock-btn ablock-del" title="Bloğu sil" aria-label="Bloğu sil">×</button>
+      </div>
+    </div>
+    <textarea data-field="items" rows="3" placeholder="Her satıra bir madde yaz"></textarea>
+    <label class="acheck-sm"><input type="checkbox" data-field="ordered"> Numaralı liste</label>
+  </div>
+</template>
+
+<template data-blocktpl="img">
+  <div class="ablock" data-btype="img">
+    <div class="ablock-bar">
+      <span class="ablock-tag">Görsel</span>
+      <div class="ablock-tools">
+        <button type="button" class="ablock-btn" data-bmove="up" title="Yukarı taşı" aria-label="Yukarı taşı">↑</button>
+        <button type="button" class="ablock-btn" data-bmove="down" title="Aşağı taşı" aria-label="Aşağı taşı">↓</button>
+        <button type="button" class="ablock-btn ablock-del" title="Bloğu sil" aria-label="Bloğu sil">×</button>
+      </div>
+    </div>
+    <div class="ablock-img">
+      <img class="ablock-thumb" data-preview="src" src="" alt="">
+      <div class="ablock-img-fields">
+        <div class="ablock-src">
+          <input type="text" data-field="src" placeholder="/img/... veya https://...">
+          <label class="abtn abtn-ghost aupload">Görsel yükle<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="src" hidden></label>
+        </div>
+        <input type="text" data-field="caption" placeholder="Alt yazı (isteğe bağlı)">
+      </div>
+    </div>
   </div>
 </template>
 
