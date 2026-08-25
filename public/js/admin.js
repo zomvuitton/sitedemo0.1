@@ -58,12 +58,14 @@ document.addEventListener("input", (e) => {
   if (img) img.src = input.value;
 });
 
-// Görseli tarayıcıda web için küçült: uzun kenar en çok 1920px, JPEG/WebP %85.
+// Görseli tarayıcıda web için küçült: uzun kenar en çok 1920px, WebP %85.
 // Amaç: 7MB'lık telefon fotosu birkaç yüz KB'a insin (hızlı yükleme, hafif depo).
-// PNG şeffaflığı korunur; zaten küçük/optimize dosyalar dokunulmadan geçer.
+// Çıktı her zaman WebP'dir: PNG olarak yeniden kodlamak fotoğrafları megabaytlarca
+// büyük bırakıyordu. WebP şeffaflığı da korur. Tarayıcı WebP üretemezse
+// (toBlob null döner) orijinal dosya olduğu gibi gönderilir.
 const UPLOAD_MAX = 1920;
 const UPLOAD_QUALITY = 0.85;
-const REENCODE_ESIK = 1.5 * 1024 * 1024; // 1.5MB altı + ölçek gerekmiyorsa orijinali gönder
+const REENCODE_ESIK = 1.5 * 1024 * 1024; // zaten WebP + küçük + ölçek gereksizse dokunma
 
 async function webIcinKucult(file) {
   const desteklenen = ["image/jpeg", "image/webp", "image/png"];
@@ -72,8 +74,8 @@ async function webIcinKucult(file) {
     const bitmap = await createImageBitmap(file);
     const { width, height } = bitmap;
     const olcek = Math.min(1, UPLOAD_MAX / Math.max(width, height));
-    // Zaten küçük ve dosya makulse: yeniden kodlamadan (kalite kaybı olmadan) gönder
-    if (olcek === 1 && file.size <= REENCODE_ESIK) {
+    // Zaten WebP, küçük ve ölçek gerekmiyorsa yeniden kodlamadan gönder
+    if (olcek === 1 && file.size <= REENCODE_ESIK && file.type === "image/webp") {
       bitmap.close && bitmap.close();
       return file;
     }
@@ -83,8 +85,7 @@ async function webIcinKucult(file) {
     const ctx = cv.getContext("2d");
     ctx.drawImage(bitmap, 0, 0, cv.width, cv.height);
     bitmap.close && bitmap.close();
-    const kalite = file.type === "image/png" ? undefined : UPLOAD_QUALITY;
-    const blob = await new Promise((çöz) => cv.toBlob(çöz, file.type, kalite));
+    const blob = await new Promise((çöz) => cv.toBlob(çöz, "image/webp", UPLOAD_QUALITY));
     // Blob üretilemediyse ya da beklenmedik şekilde büyüdüyse orijinale düş
     if (!blob || blob.size >= file.size) return file;
     return blob;
