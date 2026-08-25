@@ -12,8 +12,12 @@ npm start          # http://localhost:3000 (PORT env ile değişir)
 npm run dev        # --watch ile
 ```
 
-Admin paneli: `/admin` — parola `ADMIN_PASSWORD` env değişkeni
-(tanımsızsa varsayılan: verimlilik1992). Oturum imzası `SESSION_SECRET`.
+Admin paneli: `/admin` — parola `ADMIN_PASSWORD` env değişkeni. Tanımsızsa
+yerel geliştirme parolası `yerel-gelistirme` geçerlidir ve panel yalnızca
+sunucunun kendi makinesinden açılır; canlıda (`NODE_ENV=production`)
+ADMIN_PASSWORD zorunludur, yoksa sunucu başlamaz. Oturum imzası
+`SESSION_SECRET`. Canlı kurulum: `docker compose up -d --build` + `.env`
+(bkz. README "Canlıya alma").
 
 Kullanıcının kısayolları (kendisi teknik değil, bunlarla çalışıyor):
 - `npm run yayinla` → commit + pull + push (içeriği GitHub'a gönderir)

@@ -13,7 +13,9 @@ const PORT = process.env.PORT || 3000;
 const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, "data");
 const UPLOAD_DIR = path.join(__dirname, "public", "img", "uploads");
 
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "verimlilik1992";
+// Varsayılan yalnızca yerel geliştirme içindir: canlıda ADMIN_PASSWORD zorunlu,
+// tanımsızken panel sunucunun kendi makinesi dışına kapalı (bkz. panelKapali).
+const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "yerel-gelistirme";
 const SESSION_SECRET = process.env.SESSION_SECRET || crypto.randomBytes(32).toString("hex");
 const SESSION_HOURS = 12;
 
@@ -193,12 +195,32 @@ function clearSession(res) {
   res.setHeader("Set-Cookie", "vt_admin=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0");
 }
 
+// Güvenlik ağı: varsayılan parola herkese açık depoda yazılı olduğu için,
+// o parola kullanılırken yönetim paneli yalnızca sunucunun kendi makinesinden
+// açılabilir. NODE_ENV=production ayarlanmayı unutulsa bile panel dışarıya
+// kapalı kalır.
+const VARSAYILAN_PAROLA = !process.env.ADMIN_PASSWORD;
+
+function yerelIstek(req) {
+  const ip = String(req.ip || "").replace(/^::ffff:/, "");
+  return ip === "127.0.0.1" || ip === "::1";
+}
+
+function panelKapali(req) {
+  return VARSAYILAN_PAROLA && !yerelIstek(req);
+}
+
+const PANEL_KAPALI_MESAJ =
+  "Yönetim paneli kapalı: ADMIN_PASSWORD tanımlanmadığı için yalnızca sunucunun kendi makinesinden açılabilir.";
+
 function requireAdminPage(req, res, next) {
+  if (panelKapali(req)) return res.status(403).render("404", { title: `Sayfa bulunamadı — ${site.short}` });
   if (!isAdmin(req)) return res.redirect("/admin/giris");
   next();
 }
 
 function requireAdminApi(req, res, next) {
+  if (panelKapali(req)) return res.status(403).json({ ok: false, error: PANEL_KAPALI_MESAJ });
   if (!isAdmin(req)) return res.status(401).json({ ok: false, error: "Oturum gerekli." });
   next();
 }
@@ -429,6 +451,7 @@ app.get("/robots.txt", (req, res) => {
 // ---------- Admin: sayfalar ----------
 
 app.get("/admin/giris", (req, res) => {
+  if (panelKapali(req)) return res.status(403).render("404", { title: `Sayfa bulunamadı — ${site.short}` });
   if (isAdmin(req)) return res.redirect("/admin");
   res.render("admin/giris", { title: `Yönetici girişi — ${site.short}` });
 });
@@ -720,6 +743,7 @@ app.get("/admin/kurullar", requireAdminPage, (req, res) => {
 // ---------- Admin: API ----------
 
 app.post("/admin/api/login", girisLimiti, (req, res) => {
+  if (panelKapali(req)) return res.status(403).json({ ok: false, error: PANEL_KAPALI_MESAJ });
   const given = Buffer.from(clean(req.body.password, 200));
   const expected = Buffer.from(ADMIN_PASSWORD);
   const ok = given.length === expected.length && crypto.timingSafeEqual(given, expected);

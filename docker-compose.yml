@@ -1,0 +1,32 @@
+# Canlı kurulum. Kullanımı:
+#   1) .env.ornek dosyasını .env olarak kopyala ve doldur
+#   2) docker compose up -d --build
+#
+# restart: always → sunucu yeniden başlasa veya süreç çökse site kendiliğinden döner.
+
+services:
+  site:
+    build: .
+    restart: always
+    env_file: .env
+    environment:
+      NODE_ENV: production
+      # Cloudflare/Nginx arkasında gerçek ziyaretçi IP'si için
+      TRUST_PROXY: "1"
+    ports:
+      # Yalnız yerel arayüze açılır; dışarıya Nginx/Caddy veya Cloudflare Tunnel çıkarır.
+      - "127.0.0.1:3000:3000"
+    volumes:
+      # Kalıcı disk: içerik ve yüklenen görseller konteynerden bağımsız yaşar
+      - vt-data:/app/data
+      - vt-uploads:/app/public/img/uploads
+    logging:
+      # Loglar diski doldurmasın (yıl boyu çalışacak)
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "5"
+
+volumes:
+  vt-data:
+  vt-uploads:
