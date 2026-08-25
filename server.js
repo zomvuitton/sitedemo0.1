@@ -183,16 +183,21 @@ function isAdmin(req) {
   return sig.length === expected.length && crypto.timingSafeEqual(Buffer.from(sig), Buffer.from(expected));
 }
 
-function setSession(res) {
-  const exp = Date.now() + SESSION_HOURS * 3600_000;
-  res.setHeader(
-    "Set-Cookie",
-    `vt_admin=${exp}.${sign(exp)}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${SESSION_HOURS * 3600}`
-  );
+function cerezParcalari(req, ekler) {
+  const parcalar = ["Path=/", "HttpOnly", "SameSite=Lax", ...ekler];
+  // Secure: çerez yalnızca HTTPS üzerinden gönderilir. Canlıda her zaman açık;
+  // yerelde http://localhost ile çalışılabilsin diye orada kapalı.
+  if (CANLI || req.secure) parcalar.push("Secure");
+  return parcalar.join("; ");
 }
 
-function clearSession(res) {
-  res.setHeader("Set-Cookie", "vt_admin=; Path=/; HttpOnly; SameSite=Lax; Max-Age=0");
+function setSession(req, res) {
+  const exp = Date.now() + SESSION_HOURS * 3600_000;
+  res.setHeader("Set-Cookie", `vt_admin=${exp}.${sign(exp)}; ${cerezParcalari(req, [`Max-Age=${SESSION_HOURS * 3600}`])}`);
+}
+
+function clearSession(req, res) {
+  res.setHeader("Set-Cookie", `vt_admin=; ${cerezParcalari(req, ["Max-Age=0"])}`);
 }
 
 // Güvenlik ağı: varsayılan parola herkese açık depoda yazılı olduğu için,
@@ -219,8 +224,22 @@ function requireAdminPage(req, res, next) {
   next();
 }
 
+// SameSite=Lax çerezi siteler arası isteklerde zaten gönderilmiyor; bu kontrol
+// ikinci savunma katmanı. Origin başlığı varsa kendi alan adımızla eşleşmeli.
+// Tarayıcı Origin göndermediğinde (aynı kaynaklı bazı GET'ler) engellenmez.
+function farkliKaynak(req) {
+  const origin = req.get("origin");
+  if (!origin) return false;
+  try {
+    return new URL(origin).host !== req.get("host");
+  } catch {
+    return true;
+  }
+}
+
 function requireAdminApi(req, res, next) {
   if (panelKapali(req)) return res.status(403).json({ ok: false, error: PANEL_KAPALI_MESAJ });
+  if (farkliKaynak(req)) return res.status(403).json({ ok: false, error: "Geçersiz istek kaynağı." });
   if (!isAdmin(req)) return res.status(401).json({ ok: false, error: "Oturum gerekli." });
   next();
 }
@@ -283,8 +302,20 @@ function slugify(text) {
     .slice(0, 60);
 }
 
+// Kayıt dosyaları sınırsız büyüyebilir (form spam'i). Bu eşiği aşan dosya
+// arşive alınır; yenisi sıfırdan başlar. Böylece disk de bellek de korunur.
+const KAYIT_DOSYA_SINIRI = 8 * 1024 * 1024;
+
 function appendRecord(file, record) {
-  fs.appendFileSync(path.join(DATA_DIR, file), JSON.stringify({ ...record, at: new Date().toISOString() }) + "\n", "utf8");
+  const yol = path.join(DATA_DIR, file);
+  try {
+    if (fs.statSync(yol).size > KAYIT_DOSYA_SINIRI) {
+      fs.renameSync(yol, `${yol}.${Date.now()}.arsiv`);
+    }
+  } catch {
+    /* dosya henüz yoksa sorun değil */
+  }
+  fs.appendFileSync(yol, JSON.stringify({ ...record, at: new Date().toISOString() }) + "\n", "utf8");
 }
 
 // Basit bellek içi hız limiti. Sayaçlar IP başına tutulur; süresi dolan
@@ -404,6 +435,11 @@ app.get("/katil", (req, res) => {
 // ---------- Genel API ----------
 
 app.post("/api/contact", rateLimit, (req, res) => {
+  // Bot tuzağı dolduysa gönderim kaydedilmez; bota belli etmemek için
+  // normal başarı yanıtı döner.
+  if (clean(req.body.website, 200)) {
+    return res.json({ ok: true, message: "Mesajınız alındı. En kısa sürede dönüş yapacağız." });
+  }
   const name = clean(req.body.name, 120);
   const email = clean(req.body.email, 200);
   const subject = clean(req.body.subject, 200);
@@ -418,6 +454,9 @@ app.post("/api/contact", rateLimit, (req, res) => {
 });
 
 app.post("/api/newsletter", rateLimit, (req, res) => {
+  if (clean(req.body.website, 200)) {
+    return res.json({ ok: true, message: "Listeye eklendin. Etkinlik duyuruları e-postana gelecek." });
+  }
   const email = clean(req.body.email, 200);
   if (!emailRe.test(email)) return res.status(400).json({ ok: false, error: "Geçerli bir e-posta adresi girin." });
   appendRecord("newsletter.jsonl", { email });
@@ -618,20 +657,40 @@ function setPath(obj, path, value) {
 
 // ---------- Admin: Kayıtlar (form gönderileri) ----------
 
+// Panelde ve CSV'de en yeni kayıtlar gösterilir. Dosya büyükse tamamı belleğe
+// alınmaz; yalnızca sonundaki bölüm okunur — aksi halde tek bir sayfa açılışı
+// sunucunun belleğini tüketebilir.
+const KAYIT_OKUMA_SINIRI = 2 * 1024 * 1024;
+
 function readRecords(file) {
+  const yol = path.join(DATA_DIR, file);
+  let ham;
   try {
-    return fs
-      .readFileSync(path.join(DATA_DIR, file), "utf8")
-      .split("\n")
-      .filter(Boolean)
-      .map((line) => {
-        try { return JSON.parse(line); } catch { return null; }
-      })
-      .filter(Boolean)
-      .reverse();
+    const { size } = fs.statSync(yol);
+    if (size <= KAYIT_OKUMA_SINIRI) {
+      ham = fs.readFileSync(yol, "utf8");
+    } else {
+      const fd = fs.openSync(yol, "r");
+      try {
+        const arabellek = Buffer.alloc(KAYIT_OKUMA_SINIRI);
+        fs.readSync(fd, arabellek, 0, KAYIT_OKUMA_SINIRI, size - KAYIT_OKUMA_SINIRI);
+        ham = arabellek.toString("utf8");
+      } finally {
+        fs.closeSync(fd);
+      }
+      ham = ham.slice(ham.indexOf("\n") + 1); // ortasından kesilen ilk satırı at
+    }
   } catch {
     return [];
   }
+  return ham
+    .split("\n")
+    .filter(Boolean)
+    .map((line) => {
+      try { return JSON.parse(line); } catch { return null; }
+    })
+    .filter(Boolean)
+    .reverse();
 }
 
 app.get("/admin/kayitlar", requireAdminPage, (req, res) => {
@@ -744,17 +803,18 @@ app.get("/admin/kurullar", requireAdminPage, (req, res) => {
 
 app.post("/admin/api/login", girisLimiti, (req, res) => {
   if (panelKapali(req)) return res.status(403).json({ ok: false, error: PANEL_KAPALI_MESAJ });
+  if (farkliKaynak(req)) return res.status(403).json({ ok: false, error: "Geçersiz istek kaynağı." });
   const given = Buffer.from(clean(req.body.password, 200));
   const expected = Buffer.from(ADMIN_PASSWORD);
   const ok = given.length === expected.length && crypto.timingSafeEqual(given, expected);
   if (!ok) return res.status(401).json({ ok: false, error: "Parola hatalı." });
   girisLimiti.sifirla(req);
-  setSession(res);
+  setSession(req, res);
   res.json({ ok: true });
 });
 
 app.post("/admin/api/logout", (req, res) => {
-  clearSession(res);
+  clearSession(req, res);
   res.json({ ok: true });
 });
 

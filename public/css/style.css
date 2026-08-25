@@ -1763,3 +1763,13 @@ html[data-theme="dark"] .cm-tag rect { fill: #1d1d1f; stroke: rgba(255, 80, 99, 
 .post-hero-inner .post-meta { margin-bottom: var(--s-2); }
 .post-hero-inner .lede { margin-top: var(--s-3); }
 .post-byline { margin-top: var(--s-3); font-size: 15px; color: var(--ink-2); }
+
+/* Bot tuzağı: gerçek ziyaretçi görmez ve odaklanamaz; otomatik form
+   dolduran botlar doldurur, sunucu o gönderimi sessizce yok sayar. */
+.bot-tuzagi {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
