@@ -19,7 +19,7 @@
   <meta name="twitter:description" content="<%= pageDesc %>">
   <meta name="twitter:image" content="<%= siteUrl %>/img/og-image.png">
   <link rel="icon" href="/img/favicon.svg" type="image/svg+xml">
-  <script>
+  <script nonce="<%= nonce %>">
     // Tema: kayıtlı tercih > sistem tercihi. CSS'ten önce çalışır ki sayfa yanıp sönmesin.
     (function () {
       try {
@@ -29,6 +29,6 @@
       } catch (e) {}
     })();
   </script>
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/style.css?v=<%= v %>">
 </head>
 <body>

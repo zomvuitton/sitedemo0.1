@@ -26,7 +26,7 @@
   <% } %>
 </div>
 
-<script>
+<script nonce="<%= nonce %>">
 document.querySelectorAll("button[data-restore]").forEach((btn) => {
   btn.addEventListener("click", async () => {
     if (!confirm("İçerik bu yedekteki hâline dönecek; şu anki hâl de ayrıca yedeklenecek. Devam?")) return;

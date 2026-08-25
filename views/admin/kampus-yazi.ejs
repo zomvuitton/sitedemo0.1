@@ -85,7 +85,7 @@
 </div>
 
 <%# Mevcut gövde, blok editörünün dolduracağı veri olarak gömülür (script kırılmasın diye < kaçışlı) %>
-<script type="application/json" data-blocks-data="body"><%- JSON.stringify(post.body || []).replace(/</g, "\\u003c") %></script>
+<script nonce="<%= nonce %>" type="application/json" data-blocks-data="body"><%- JSON.stringify(post.body || []).replace(/</g, "\\u003c") %></script>
 
 <template data-template="gallery">
   <div class="arow arow-person">

@@ -10,7 +10,7 @@
       <a class="link-more" href="/komiteler">Tüm komiteler <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
     </div>
     <% if (committee.hero) { %>
-    <img class="feature-img" src="<%= committee.hero %>" alt="<%= committee.name %> çalışmasından bir kare">
+    <img class="feature-img" src="<%= committee.hero %>" alt="<%= committee.name %> çalışmasından bir kare" fetchpriority="high" decoding="async">
     <% } %>
   </div>
 </section>

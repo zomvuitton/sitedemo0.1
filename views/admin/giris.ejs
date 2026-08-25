@@ -21,7 +21,7 @@
     <p class="form-feedback" role="status" aria-live="polite"></p>
   </form>
 </main>
-<script>
+<script nonce="<%= nonce %>">
 document.getElementById("loginForm").addEventListener("submit", async (e) => {
   e.preventDefault();
   const feedback = document.querySelector(".form-feedback");

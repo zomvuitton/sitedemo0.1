@@ -17,7 +17,7 @@
       </div>
     </div>
     <% if (post.cover) { %>
-    <img class="feature-img" src="<%= post.cover %>" alt="<%= post.title %> yazısının kapak görseli">
+    <img class="feature-img" src="<%= post.cover %>" alt="<%= post.title %> yazısının kapak görseli" fetchpriority="high" decoding="async">
     <% } %>
   </div>
 </section>

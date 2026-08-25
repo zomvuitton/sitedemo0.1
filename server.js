@@ -8,6 +8,7 @@ const store = require("./lib/store");
 const { site, partners } = store;
 
 const app = express();
+const CANLI = process.env.NODE_ENV === "production";
 const PORT = process.env.PORT || 3000;
 const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, "data");
 const UPLOAD_DIR = path.join(__dirname, "public", "img", "uploads");
@@ -16,8 +17,21 @@ const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "verimlilik1992";
 const SESSION_SECRET = process.env.SESSION_SECRET || crypto.randomBytes(32).toString("hex");
 const SESSION_HOURS = 12;
 
+// ---------- Canlı ortam ön kontrolleri ----------
+// Depo herkese açık olduğu için varsayılan parola gizli sayılmaz: canlıda
+// tanımsızsa sunucu hiç açılmaz, sessizce savunmasız kalmaktansa durur.
+if (CANLI && !process.env.ADMIN_PASSWORD) {
+  console.error("HATA: Canlıda ADMIN_PASSWORD zorunludur (varsayılan parola herkese açık). Sunucu başlatılmadı.");
+  process.exit(1);
+}
 if (!process.env.ADMIN_PASSWORD) {
   console.warn("UYARI: ADMIN_PASSWORD tanımlı değil, varsayılan parola kullanılıyor. Canlıya çıkmadan önce ayarlayın.");
+}
+if (CANLI && !process.env.SESSION_SECRET) {
+  console.warn("UYARI: SESSION_SECRET tanımlı değil; sunucu her yeniden başladığında admin oturumu düşer.");
+}
+if (CANLI && !process.env.SITE_URL) {
+  console.warn("UYARI: SITE_URL tanımlı değil; canonical adresler ve paylaşım kartları localhost'u gösterir (SEO bozulur).");
 }
 
 fs.mkdirSync(DATA_DIR, { recursive: true });
@@ -27,10 +41,52 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.disable("x-powered-by");
 
+// Ters vekil (Cloudflare / Nginx) arkasında gerçek ziyaretçi IP'si için şart.
+// Kapalıyken req.ip herkes için vekilin IP'si olur ve hız limiti tüm siteyi
+// tek kişiymiş gibi sayıp formu bütün ziyaretçilere kapatır.
+app.set("trust proxy", Number(process.env.TRUST_PROXY ?? (CANLI ? 1 : 0)));
+
+// Statik sürüm damgası: CSS/JS içeriği değişince adresteki ?v= de değişir,
+// böylece dönen ziyaretçiler önbellekteki eski tasarımda takılı kalmaz.
+const ASSET_V = (() => {
+  const ozet = crypto.createHash("sha1");
+  ["css/style.css", "js/main.js", "js/admin.js"].forEach((f) => {
+    try {
+      const st = fs.statSync(path.join(__dirname, "public", f));
+      ozet.update(`${f}:${st.size}:${st.mtimeMs}`);
+    } catch {
+      /* dosya yoksa damgaya katkısı olmaz */
+    }
+  });
+  return ozet.digest("hex").slice(0, 8);
+})();
+
 app.use((req, res, next) => {
+  // Her istek için tek kullanımlık nonce: CSP yalnızca bizim bastığımız
+  // satır içi script'lere izin verir, enjekte edilene vermez.
+  res.locals.nonce = crypto.randomBytes(16).toString("base64");
+  res.locals.v = ASSET_V;
   res.setHeader("X-Content-Type-Options", "nosniff");
   res.setHeader("X-Frame-Options", "DENY");
   res.setHeader("Referrer-Policy", "strict-origin-when-cross-origin");
+  res.setHeader("Permissions-Policy", "camera=(), microphone=(), geolocation=(), payment=()");
+  res.setHeader(
+    "Content-Security-Policy",
+    [
+      "default-src 'self'",
+      "base-uri 'self'",
+      "object-src 'none'",
+      "frame-ancestors 'none'",
+      "form-action 'self'",
+      "img-src 'self' data: blob:",
+      "style-src 'self' 'unsafe-inline'",
+      `script-src 'self' 'nonce-${res.locals.nonce}'`,
+      "connect-src 'self'",
+      "font-src 'self'"
+    ].join("; ")
+  );
+  // HTTPS'e kilitle (tarayıcı düz http üzerinde bu başlığı yok sayar)
+  if (CANLI) res.setHeader("Strict-Transport-Security", "max-age=31536000; includeSubDomains");
   next();
 });
 
@@ -38,9 +94,35 @@ app.use(compression());
 app.use(express.json({ limit: "512kb" }));
 app.use(
   express.static(path.join(__dirname, "public"), {
-    maxAge: process.env.NODE_ENV === "production" ? "7d" : 0
+    maxAge: 0,
+    setHeaders(res, dosyaYolu) {
+      if (!CANLI) return;
+      if (res.req && res.req.query && res.req.query.v) {
+        // Sürümlenmiş adres: içerik değişirse adres de değişir, süresiz tutulabilir
+        res.setHeader("Cache-Control", "public, max-age=31536000, immutable");
+      } else if (/[\\/](img|vendor)[\\/]/.test(dosyaYolu)) {
+        res.setHeader("Cache-Control", "public, max-age=2592000"); // 30 gün
+      } else {
+        res.setHeader("Cache-Control", "public, max-age=3600"); // 1 saat
+      }
+    }
   })
 );
+
+// Genel sayfalar: tarayıcı her zaman taze alır, CDN (Cloudflare) 60 sn tutar.
+// Duyuru sonrası ani trafikte istekler kenarda karşılanır, Node'a inmez.
+app.use((req, res, next) => {
+  if (CANLI && req.method === "GET" && !req.path.startsWith("/admin") && !req.path.startsWith("/api")) {
+    res.setHeader("Cache-Control", "public, max-age=0, s-maxage=60, stale-while-revalidate=300");
+  }
+  next();
+});
+
+// Yönetim paneli hiçbir yerde önbelleğe alınmaz
+app.use("/admin", (req, res, next) => {
+  res.setHeader("Cache-Control", "no-store");
+  next();
+});
 
 // Çok satırlı metinleri güvenle <br>'e çevirir (önce HTML kaçışı yapılır)
 function escapeHtml(s) {
@@ -183,18 +265,43 @@ function appendRecord(file, record) {
   fs.appendFileSync(path.join(DATA_DIR, file), JSON.stringify({ ...record, at: new Date().toISOString() }) + "\n", "utf8");
 }
 
-// Basit bellek içi hız limiti: IP başına dakikada 10 POST
-const hits = new Map();
-function rateLimit(req, res, next) {
-  const now = Date.now();
-  const list = (hits.get(req.ip) || []).filter((t) => t > now - 60_000);
-  if (list.length >= 10) {
-    return res.status(429).json({ ok: false, error: "Çok fazla istek. Bir dakika sonra tekrar deneyin." });
+// Basit bellek içi hız limiti. Sayaçlar IP başına tutulur; süresi dolan
+// kayıtlar düzenli temizlenir, yoksa yıl boyu çalışan süreçte Map sınırsız
+// büyür ve sunucu belleği yavaşça dolar.
+const limitDepolari = [];
+
+function hizLimiti(maxIstek, pencereMs, mesaj) {
+  const depo = new Map();
+  limitDepolari.push({ depo, pencereMs });
+  function limit(req, res, next) {
+    const simdi = Date.now();
+    const liste = (depo.get(req.ip) || []).filter((t) => t > simdi - pencereMs);
+    if (liste.length >= maxIstek) return res.status(429).json({ ok: false, error: mesaj });
+    liste.push(simdi);
+    depo.set(req.ip, liste);
+    next();
   }
-  list.push(now);
-  hits.set(req.ip, list);
-  next();
+  // Başarılı işlemden sonra sayaç sıfırlanabilsin (doğru parolayı giren
+  // yönetici, önceki hatalı denemeler yüzünden kilitli kalmasın)
+  limit.sifirla = (req) => depo.delete(req.ip);
+  return limit;
 }
+
+setInterval(() => {
+  const simdi = Date.now();
+  limitDepolari.forEach(({ depo, pencereMs }) => {
+    for (const [ip, liste] of depo) {
+      const kalan = liste.filter((t) => t > simdi - pencereMs);
+      if (kalan.length) depo.set(ip, kalan);
+      else depo.delete(ip);
+    }
+  });
+}, 300_000).unref();
+
+// Formlar: IP başına dakikada 10 gönderim
+const rateLimit = hizLimiti(10, 60_000, "Çok fazla istek. Bir dakika sonra tekrar deneyin.");
+// Admin girişi ayrı ve çok daha dar: parola deneme saldırısını yavaşlatır
+const girisLimiti = hizLimiti(10, 15 * 60_000, "Çok fazla hatalı deneme. 15 dakika sonra tekrar deneyin.");
 
 // ---------- Genel sayfalar ----------
 
@@ -612,11 +719,12 @@ app.get("/admin/kurullar", requireAdminPage, (req, res) => {
 
 // ---------- Admin: API ----------
 
-app.post("/admin/api/login", rateLimit, (req, res) => {
+app.post("/admin/api/login", girisLimiti, (req, res) => {
   const given = Buffer.from(clean(req.body.password, 200));
   const expected = Buffer.from(ADMIN_PASSWORD);
   const ok = given.length === expected.length && crypto.timingSafeEqual(given, expected);
   if (!ok) return res.status(401).json({ ok: false, error: "Parola hatalı." });
+  girisLimiti.sifirla(req);
   setSession(res);
   res.json({ ok: true });
 });
@@ -918,6 +1026,28 @@ app.use((err, req, res, next) => {
   res.status(500).render("404", { title: `Bir şeyler ters gitti — ${site.short}` });
 });
 
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`ODTÜ VT sitesi çalışıyor: http://localhost:${PORT}`);
+});
+
+// ---------- Düzgün kapanma ----------
+// Docker/systemd yeniden başlatırken SIGTERM gönderir: açık istekleri
+// tamamlayıp çıkarız, böylece ziyaretçi yarıda kesilmiş sayfa görmez.
+let kapaniyor = false;
+function kapat(sinyal, kod = 0) {
+  if (kapaniyor) return;
+  kapaniyor = true;
+  console.log(`${sinyal} alındı, sunucu kapatılıyor…`);
+  server.close(() => process.exit(kod));
+  // Takılan bağlantı olursa 10 sn sonra yine de çık
+  setTimeout(() => process.exit(kod), 10_000).unref();
+}
+["SIGTERM", "SIGINT"].forEach((s) => process.on(s, () => kapat(s)));
+
+// Beklenmeyen hatalar kayda geçsin; süreç yöneticisi (restart: always)
+// yeniden başlatır, ama neden çöktüğü loglarda kalır.
+process.on("unhandledRejection", (err) => console.error("İşlenmemiş promise reddi:", err));
+process.on("uncaughtException", (err) => {
+  console.error("Yakalanmamış hata:", err);
+  kapat("uncaughtException", 1);
 });

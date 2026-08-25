@@ -6,7 +6,7 @@
      Görsele belirgin karartma; başlık ve butonlar üstünde durur. -->
 <section class="tile tile-dark project-hero project-hero--media">
   <div class="project-hero__media scroll-blur" aria-hidden="true">
-    <img src="<%= project.hero %>" alt="">
+    <img src="<%= project.hero %>" alt="" fetchpriority="high" decoding="async">
   </div>
   <div class="hero-inner reveal">
     <p class="eyebrow"><%= project.name %></p>
