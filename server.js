@@ -445,9 +445,6 @@ const TEXT_SCHEMA = [
     items: [
       ["texts.kampusTitle", "Sayfa başlığı", "textarea"],
       ["texts.kampusLede", "Sayfa alt yazısı", "textarea"],
-      ["texts.kampusHours", "Bilgi şeridi — \"Ne zaman\"", "textarea"],
-      ["texts.kampusHow", "Bilgi şeridi — \"Nasıl tanışılır\"", "textarea"],
-      ["texts.kampusIntro", "Giriş paragrafı", "textarea"],
       ["texts.kampusPostsTitle", "Yazılar bölümü başlığı"]
     ]
   },

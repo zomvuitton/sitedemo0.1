@@ -16,41 +16,6 @@
   </div>
 </section>
 
-<!-- Bilgi bölümü: topluluk odası nerede, ne zaman, nasıl tanışılır -->
-<section class="tile tile-gray campus-info">
-  <div class="container">
-    <div class="editorial-grid">
-      <div class="editorial-aside reveal">
-        <span class="card-icon"><%- include('partials/icon', { name: 'pin' }) %></span>
-        <h2>Topluluk odası</h2>
-      </div>
-      <div class="editorial-body reveal">
-        <p class="lede-dark"><%= texts.kampusIntro %></p>
-      </div>
-    </div>
-
-    <dl class="facts-row reveal">
-      <div class="fact">
-        <dt>Nerede</dt>
-        <dd><%= site.address %></dd>
-      </div>
-      <div class="fact">
-        <dt>Ne zaman</dt>
-        <dd><%= texts.kampusHours %></dd>
-      </div>
-      <div class="fact">
-        <dt>Nasıl tanışılır</dt>
-        <dd><%= texts.kampusHow %></dd>
-      </div>
-    </dl>
-
-    <div class="cta-row reveal">
-      <a class="link-more" href="https://www.google.com/maps/search/?api=1&amp;query=<%= encodeURIComponent(site.address) %>" target="_blank" rel="noopener">Haritada aç <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
-      <a class="link-more" href="/iletisim">Bize yaz <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></a>
-    </div>
-  </div>
-</section>
-
 <!-- Yazı akışı: panelden yönetilir, taslaklar burada görünmez -->
 <section class="tile tile-white">
   <div class="container">
