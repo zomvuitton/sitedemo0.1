@@ -586,40 +586,80 @@ html[data-theme="dark"] .theme-toggle:hover { background: rgba(255, 255, 255, 0.
 .card-committee { padding: var(--s-6) var(--s-4); }
 .card-committee h2 { font-size: clamp(21px, 2.5vw, 27px); letter-spacing: -0.01em; }
 
-/* ---------- Proje dizini: satır listesi ---------- */
+/* ---------- Proje dizini: kartsız editoryal liste ----------
+   Satırlar ince çizgiyle ayrılır; hover/odakta projenin görseli
+   arkada koyu bir örtüyle belirir ve metin beyaza döner. */
 
-.project-list { display: flex; flex-direction: column; gap: var(--s-2); }
+.project-index { padding-block: 0 var(--s-10); }
 
-.project-row {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--s-3);
-  background: var(--paper);
-  border-radius: var(--radius-card);
-  padding: var(--s-4);
+.project-strip {
+  position: relative;
+  display: block;
+  overflow: hidden;
+  border-top: 1px solid rgba(29, 29, 31, 0.12);
   color: var(--ink);
-  box-shadow: var(--shadow-rest);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
 }
-.project-row:hover {
-  transform: translateY(-3px);
-  box-shadow: var(--shadow-hover);
-  text-decoration: none;
-}
-.project-row h2 { font-size: clamp(21px, 2.5vw, 28px); }
-.project-row p { color: var(--ink-2); margin-top: var(--s-1); max-width: 560px; }
-.project-row-text { flex-grow: 1; }
-.project-row-go {
-  color: var(--vt-red);
-  align-self: center;
-  transition: transform 0.2s ease;
-}
-.project-row:hover .project-row-go { transform: translateX(4px); }
+.project-strip:last-of-type { border-bottom: 1px solid rgba(29, 29, 31, 0.12); }
+.project-strip:hover { text-decoration: none; }
 
-/* Kırık simetri: ilk satır (YMG) daha büyük, kırmızı kenarlıklı */
-.project-row-lead {
-  border: var(--border-soft);
-  padding-block: var(--s-6);
+.project-strip-bg {
+  position: absolute;
+  inset: 0;
+  background-image: var(--strip-img);
+  background-size: cover;
+  background-position: center 35%;
+  opacity: 0;
+  transform: scale(1.05);
+  transition: opacity 0.45s ease, transform 0.7s ease;
+}
+.project-strip-bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(12, 12, 14, 0.9) 25%, rgba(12, 12, 14, 0.62));
+}
+.project-strip:is(:hover, :focus-visible) .project-strip-bg {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.project-strip-inner {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--s-4);
+  padding-block: var(--s-5);
+}
+.project-strip-no {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--vt-red);
+  min-width: 2.2em;
+  transition: color 0.35s ease;
+}
+.project-strip-text { flex-grow: 1; }
+.project-strip h2 {
+  font-size: clamp(26px, 3.4vw, 40px);
+  letter-spacing: -0.02em;
+  transition: color 0.35s ease;
+}
+.project-strip p {
+  color: var(--ink-2);
+  margin-top: var(--s-1);
+  max-width: 620px;
+  transition: color 0.35s ease;
+}
+.project-strip-go {
+  color: var(--vt-red);
+  transition: transform 0.35s ease, color 0.35s ease;
+}
+.project-strip:is(:hover, :focus-visible) .project-strip-no { color: rgba(255, 255, 255, 0.75); }
+.project-strip:is(:hover, :focus-visible) h2 { color: #fff; }
+.project-strip:is(:hover, :focus-visible) p { color: rgba(255, 255, 255, 0.78); }
+.project-strip:is(:hover, :focus-visible) .project-strip-go {
+  color: #fff;
+  transform: translateX(6px);
 }
 
 /* ---------- Sayfa başlıkları ---------- */
@@ -1019,7 +1059,9 @@ html[data-theme="dark"] .theme-toggle:hover { background: rgba(255, 255, 255, 0.
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   .reveal { opacity: 1; transform: none; transition: none; }
-  .card, .duo-cell, .project-row, .btn { transition: none; }
+  .card, .duo-cell, .btn { transition: none; }
+  .project-strip-bg, .project-strip-no, .project-strip h2,
+  .project-strip p, .project-strip-go { transition: none; }
   .type-cursor { animation: none; }
 }
 
@@ -1141,9 +1183,12 @@ html[data-theme="dark"] .btn:hover { background: rgba(255, 255, 255, 0.2); }
 
 /* Yüzeyler: kart katmanı zeminden bir ton açık */
 html[data-theme="dark"] .card,
-html[data-theme="dark"] .project-row,
 html[data-theme="dark"] .form,
 html[data-theme="dark"] .duo-cell { background: #1d1d1f; }
+
+/* Proje dizini çizgileri koyu zeminde açık tona döner */
+html[data-theme="dark"] .project-strip,
+html[data-theme="dark"] .project-strip:last-of-type { border-color: rgba(255, 255, 255, 0.14); }
 
 /* Kırmızı yumuşak dolgular: koyu zeminde görünür kalsın */
 html[data-theme="dark"] .card-icon,

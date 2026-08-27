@@ -13,21 +13,22 @@
   </div>
 </section>
 
-<section class="tile tile-gray project-index">
-  <div class="container">
-    <div class="project-list">
-      <% projects.forEach(function (p, i) { %>
-      <a class="project-row reveal <%= i === 0 ? 'project-row-lead' : '' %>" href="/projeler/<%= p.slug %>">
-        <span class="card-icon"><%- include('partials/icon', { name: p.icon }) %></span>
-        <span class="project-row-text">
-          <h2><%= p.name %></h2>
-          <p><%= p.summary %></p>
-        </span>
-        <span class="project-row-go"><%- include('partials/icon', { name: 'arrow' }) %></span>
-      </a>
-      <% }) %>
-    </div>
-  </div>
+<!-- Proje dizini: kart yok, ince çizgilerle ayrılmış tam genişlik satırlar.
+     İmleç satıra gelince projenin görseli arkada belirir, yazı beyaza döner. -->
+<section class="tile tile-white project-index">
+  <% projects.forEach(function (p, i) { %>
+  <a class="project-strip reveal" href="/projeler/<%= p.slug %>" style="--strip-img:url('<%= p.hero %>')">
+    <span class="project-strip-bg" aria-hidden="true"></span>
+    <span class="container project-strip-inner">
+      <span class="project-strip-no">0<%= i + 1 %></span>
+      <span class="project-strip-text">
+        <h2><%= p.name %></h2>
+        <p><%= p.summary %></p>
+      </span>
+      <span class="project-strip-go"><%- include('partials/icon', { name: 'arrow' }) %></span>
+    </span>
+  </a>
+  <% }) %>
 </section>
 
 <%- include('partials/footer') %>
