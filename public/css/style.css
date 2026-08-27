@@ -1645,10 +1645,10 @@ html[data-theme="dark"] .timeline-dot.is-active::after {
 .cm-blds rect { fill: rgba(29, 29, 31, 0.075); }
 .cm-stadium ellipse { fill: none; stroke: rgba(29, 29, 31, 0.075); stroke-width: 3; }
 
-/* EM vurgusu: hale + bina + pin; etiket parlama ile görünür olur */
+/* EM vurgusu: hale + bina; etiket parlama ile görünür olur. Bina
+   dinlenirken yarı saydam durur, imleç yaklaştıkça tam kırmızıya döner */
 .cm-em-halo { fill: var(--vt-red); opacity: calc(0.1 + var(--em-glow, 0) * 0.8); }
-.cm-em, .cm-pin path { fill: var(--vt-red); }
-.cm-pin circle { fill: var(--paper); }
+.cm-em { fill: var(--vt-red); opacity: calc(0.5 + var(--em-glow, 0) * 0.5); }
 .cm-tag { opacity: var(--em-glow, 0); }
 .cm-tag rect { fill: var(--paper); stroke: rgba(166, 25, 46, 0.18); stroke-width: 1; }
 .cm-tag text {
