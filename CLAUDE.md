@@ -38,9 +38,9 @@ Kullanıcının kısayolları (kendisi teknik değil, bunlarla çalışıyor):
   scroll tilt, partner şeritleri, daktilo efekti, form gönderimi.
 - Kampüs hero'su: yazının ARKASINDA tam yüzey stilize kampüs haritası
   (`views/partials/campus-map.ejs`, geometri gerçek haritadan çıkarıldı;
-  dekoratif katman, ayrı panel DEĞİL). İmleç EM binasına yaklaşınca hale
-  parlar ve etiket belirir (`main.js` `--em-glow`, stiller
-  `style.css .campus-map-hero`). Dokunmatikte nabız, reduced-motion'da
+  dekoratif katman, ayrı panel DEĞİL). İmleç EM binasına yaklaşınca bina
+  tam kırmızıya döner ve hale parlar; ayrı pin/etiket YOK, sade kalsın
+  istendi (`main.js` `--em-glow`, stiller `style.css .campus-map-hero`). Dokunmatikte nabız, reduced-motion'da
   sabit parlaklık; sol tarafta okunurluk için kâğıt rengine geçiş var.
 - `public/js/hero-particles.js` + `campus-morph.js` — Three.js
   (vendored: `public/vendor/three.module.min.js`) partikül animasyonları;
