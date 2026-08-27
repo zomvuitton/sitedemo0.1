@@ -1645,24 +1645,11 @@ html[data-theme="dark"] .timeline-dot.is-active::after {
 .cm-blds rect { fill: rgba(29, 29, 31, 0.075); }
 .cm-stadium ellipse { fill: none; stroke: rgba(29, 29, 31, 0.075); stroke-width: 3; }
 
-/* EM vurgusu: hale + bina; etiket parlama ile görünür olur. Bina
-   dinlenirken yarı saydam durur, imleç yaklaştıkça tam kırmızıya döner */
+/* EM vurgusu: hale + bina. Bina dinlenirken yarı saydam durur,
+   imleç yaklaştıkça tam kırmızıya döner */
 .cm-em-halo { fill: var(--vt-red); opacity: calc(0.1 + var(--em-glow, 0) * 0.8); }
 .cm-em { fill: var(--vt-red); opacity: calc(0.5 + var(--em-glow, 0) * 0.5); }
-.cm-tag { opacity: var(--em-glow, 0); }
-.cm-tag rect { fill: var(--paper); stroke: rgba(166, 25, 46, 0.18); stroke-width: 1; }
-.cm-tag text {
-  font-family: var(--font-text);
-  font-size: 15px;
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  fill: var(--ink);
-  text-anchor: middle;
-}
-.cm-tag-short { display: none; }
 @media (max-width: 640px) {
-  .cm-tag-long { display: none; }
-  .cm-tag-short { display: block; }
   .campus-map-hero { min-height: 380px; }
 }
 
@@ -1681,7 +1668,6 @@ html[data-theme="dark"] .cm-forest ellipse { fill: rgba(255, 255, 255, 0.03); }
 html[data-theme="dark"] .cm-roads path { stroke: rgba(255, 255, 255, 0.055); }
 html[data-theme="dark"] .cm-blds rect { fill: rgba(255, 255, 255, 0.08); }
 html[data-theme="dark"] .cm-stadium ellipse { stroke: rgba(255, 255, 255, 0.08); }
-html[data-theme="dark"] .cm-tag rect { fill: #1d1d1f; stroke: rgba(255, 80, 99, 0.28); }
 
 @media (prefers-reduced-motion: reduce) {
   .campus-map-hero.map-pulse .cm-em-halo { animation: none; }
