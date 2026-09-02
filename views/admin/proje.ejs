@@ -47,7 +47,7 @@
     </section>
 
     <section class="asection">
-      <h2>Kapak görseli</h2>
+      <h2>Kapak görseli <span class="amuted">(proje sayfasının tam ekran arka planı — yatay 16:9, 1920×1080)</span></h2>
       <div class="aimg-field">
         <img class="aimg-preview" data-preview="hero" src="<%= project.hero %>" alt="">
         <div class="aimg-controls">
@@ -55,6 +55,18 @@
           <label class="abtn abtn-ghost aupload">Görsel yükle<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="hero" hidden></label>
         </div>
       </div>
+    </section>
+
+    <section class="asection">
+      <h2>Kart görseli <span class="amuted">(ana sayfadaki çerçevesiz proje kartı — dikey 5:6, 1100×1320)</span></h2>
+      <div class="aimg-field">
+        <img class="aimg-preview" data-preview="cardImage" src="<%= project.cardImage || '' %>" alt="">
+        <div class="aimg-controls">
+          <input type="text" name="cardImage" value="<%= project.cardImage || '' %>" placeholder="/img/... veya https://...">
+          <label class="abtn abtn-ghost aupload">Görsel yükle<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="cardImage" hidden></label>
+        </div>
+      </div>
+      <p class="amuted">Boş bırakılırsa ana sayfada kapak görselinin ortadan kırpılmış hâli kullanılır.</p>
     </section>
 
     <section class="asection">

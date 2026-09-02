@@ -49,7 +49,7 @@ document.addEventListener("click", (e) => {
 // Foto/görsel yolu değişince önizlemeyi tazele
 document.addEventListener("input", (e) => {
   const input = e.target;
-  if (!input.matches("[data-field], input[name='hero']")) return;
+  if (!input.matches("[data-field], input[name='hero'], input[name='cardImage']")) return;
   const row =
     input.closest(".arow") || input.closest(".ablock") || input.closest(".aimg-field") || input.closest("form");
   if (!row) return;

@@ -653,6 +653,8 @@ function sanitizeProject(input, existing) {
       facts: cleanFacts(input.facts),
       team: cleanMembers(input.team),
       hero: clean(input.hero, 400),
+      // Ana sayfadaki dikey kart görseli; boşsa kart hero'ya düşer
+      cardImage: clean(input.cardImage, 400),
       gallery: cleanGallery(input.gallery),
       icon: ICONS.includes(input.icon) ? input.icon : "spark",
       external: clean(input.external, 400),

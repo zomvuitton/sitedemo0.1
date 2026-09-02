@@ -41,7 +41,9 @@
 </section>
 <% } %>
 
-<!-- Projeler: 3+3 alfabetik ızgara -->
+<!-- Projeler: 3+3 alfabetik ızgara.
+     Çerçevesiz kart: kartın tamamı görsel, metin alttaki perdenin üzerinde.
+     Kart görseli (dikey 5:6) yoksa kapak görseli ortadan kırpılarak kullanılır. -->
 <section class="tile tile-gray others">
   <div class="container">
     <div class="section-head reveal">
@@ -50,15 +52,18 @@
     </div>
     <div class="card-row card-row-3">
       <% homeProjects.forEach(function (p) { %>
-      <a class="card card-project reveal" href="/projeler/<%= p.slug %>">
-        <% if (p.hero) { %>
-        <img class="card-img" src="<%= p.hero %>" alt="<%= p.name %> etkinliğinden bir kare" loading="lazy">
+      <% const kartGorseli = p.cardImage || p.hero; %>
+      <a class="card-project reveal" href="/projeler/<%= p.slug %>">
+        <% if (kartGorseli) { %>
+        <img class="cardp-img" src="<%= kartGorseli %>" alt="" loading="lazy">
         <% } else { %>
-        <span class="card-icon"><%- include('partials/icon', { name: p.icon }) %></span>
+        <span class="cardp-icon"><%- include('partials/icon', { name: p.icon }) %></span>
         <% } %>
-        <h3><%= p.name %></h3>
-        <p><%= p.tagline %></p>
-        <span class="card-more">İncele <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></span>
+        <span class="cardp-text">
+          <h3><%= p.name %></h3>
+          <p><%= p.tagline %></p>
+          <span class="cardp-more">İncele <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></span>
+        </span>
       </a>
       <% }) %>
     </div>
