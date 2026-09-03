@@ -655,6 +655,8 @@ function sanitizeProject(input, existing) {
       hero: clean(input.hero, 400),
       // Ana sayfadaki dikey kart görseli; boşsa kart hero'ya düşer
       cardImage: clean(input.cardImage, 400),
+      // Projeler dizinindeki geniş satır banner'ı; boşsa hero'ya düşer
+      bannerImage: clean(input.bannerImage, 400),
       gallery: cleanGallery(input.gallery),
       icon: ICONS.includes(input.icon) ? input.icon : "spark",
       external: clean(input.external, 400),

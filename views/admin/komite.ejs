@@ -30,7 +30,7 @@
     <section class="asection">
       <h2>Kapak görseli <span class="amuted">(isteğe bağlı)</span></h2>
       <div class="aimg-field">
-        <img class="aimg-preview" data-preview="hero" src="<%= committee.hero || '' %>" alt="">
+        <img class="aimg-preview" data-preview="hero" src="<%= committee.hero || '' %>" alt="" <%= (committee.hero || '') ? "" : "hidden" %>>
         <div class="aimg-controls">
           <input type="text" name="hero" value="<%= committee.hero || '' %>" placeholder="/img/... veya https://...">
           <label class="abtn abtn-ghost aupload">Görsel yükle<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="hero" hidden></label>

@@ -17,7 +17,8 @@
      İmleç satıra gelince projenin görseli arkada belirir, yazı beyaza döner. -->
 <section class="tile tile-white project-index">
   <% projects.forEach(function (p, i) { %>
-  <a class="project-strip reveal" href="/projeler/<%= p.slug %>" style="--strip-img:url('<%= p.hero %>')">
+  <% const satirGorseli = p.bannerImage || p.hero; %>
+  <a class="project-strip reveal" href="/projeler/<%= p.slug %>" style="--strip-img:url('<%= satirGorseli %>')">
     <span class="project-strip-bg" aria-hidden="true"></span>
     <span class="container project-strip-inner">
       <span class="project-strip-no">0<%= i + 1 %></span>

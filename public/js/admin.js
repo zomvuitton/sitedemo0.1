@@ -49,13 +49,17 @@ document.addEventListener("click", (e) => {
 // Foto/görsel yolu değişince önizlemeyi tazele
 document.addEventListener("input", (e) => {
   const input = e.target;
-  if (!input.matches("[data-field], input[name='hero'], input[name='cardImage']")) return;
+  if (!input.matches("[data-field], input[name='hero'], input[name='cardImage'], input[name='bannerImage']")) return;
   const row =
     input.closest(".arow") || input.closest(".ablock") || input.closest(".aimg-field") || input.closest("form");
   if (!row) return;
   const key = input.dataset.field || input.name;
   const img = row.querySelector(`[data-preview="${key}"]`);
-  if (img) img.src = input.value;
+  // Boş yolda kırık görsel ikonu çıkmasın: önizlemeyi tamamen gizle
+  if (img) {
+    img.src = input.value;
+    img.hidden = !input.value;
+  }
 });
 
 // Görseli tarayıcıda web için küçült: uzun kenar en çok 1920px, JPEG/WebP %85.
