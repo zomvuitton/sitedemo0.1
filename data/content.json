@@ -31,13 +31,17 @@
           "name": "İnanç Deniz Gözgözoğlu",
           "role": "ESTIEM'den Sorumlu Yönetim Kurulu Üyesi",
           "photo": "/img/odtuvt/inanc-deniz-gozgozoglu-UASM5F.jpeg",
-          "quote": "\"Don't tell me what I can't do\" - John Locke"
+          "quote": "\"Don't tell me what I can't do\" - John Locke",
+          "email": "gozgozogluinancdeniz@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/inan%C3%A7-deniz-g%C3%B6zg%C3%B6zo%C4%9Flu-96a1a7298"
         },
         {
           "name": "Çağlan Olurluk",
           "role": "ESTIEM Ankara METU Yerel Grup Sorumlusu",
           "photo": "/img/odtuvt/caglan-olurluk-5IEKZM.jpeg",
-          "quote": "Every journey Leads Right where you need to be."
+          "quote": "Every journey Leads Right where you need to be.",
+          "email": "caglanolrlk@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/%C3%A7a%C4%9Flan-olurluk-8a4bba382"
         },
         {
           "name": "Elif Türk",
@@ -77,6 +81,7 @@
       ],
       "hero": "/img/uploads/1788376137174-869b6952.jpg",
       "cardImage": "/img/uploads/1788377893971-09fe4662.jpg",
+      "bannerImage": "",
       "gallery": [
         "/img/odtuvt/estiem-galeri-resmi-59BQCS.jpeg",
         "/img/odtuvt/estiem-galeri-resmi-7ZTX42.jpeg",
@@ -117,13 +122,17 @@
           "name": "Azra Zöngür",
           "role": "Kybele'den Sorumlu Yönetim Kurulu Üyesi",
           "photo": "/img/odtuvt/azra-zongur-M6QH0K.jpeg",
-          "quote": "\"Gerek yok parlamam için senin o ışığına.\""
+          "quote": "\"Gerek yok parlamam için senin o ışığına.\"",
+          "email": "azrazongurr@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/azra-z%C3%B6ng%C3%BCr-490723251"
         },
         {
           "name": "Derin Nesil Çelik",
           "role": "Kybele Proje Lideri",
           "photo": "/img/odtuvt/derin-nesil-celik-GIOX1E.jpeg",
-          "quote": "\"But it's hard to stay mad, when there is so much beauty in the world.\" American Beauty (1999)"
+          "quote": "\"But it's hard to stay mad, when there is so much beauty in the world.\" American Beauty (1999)",
+          "email": "derinncelik@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/derin-nesil-%C3%A7elik-57b466341"
         }
       ],
       "hero": "/img/odtuvt/kybele-etkinlik-resmi-77FQVZ.jpg",
@@ -170,19 +179,25 @@
           "name": "Yiğit Efe Özdemir",
           "role": "OGP'den Sorumlu Yönetim Kurulu Üyesi",
           "photo": "/img/odtuvt/yigit-efe-ozdemir-JTGEXS.jpeg",
-          "quote": "Atmadığın her şutu kaçırırsın."
+          "quote": "Atmadığın her şutu kaçırırsın.",
+          "email": "yigitefeozdemirvt@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/yiğit-özdemir-230254348"
         },
         {
           "name": "Dicle Gül",
           "role": "OGP Proje Lideri",
           "photo": "/img/odtuvt/dicle-gul-Q2LUBD.jpeg",
-          "quote": "When life gives you lemons, make lemonade."
+          "quote": "When life gives you lemons, make lemonade.",
+          "email": "gull.diclee@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/diclegul"
         },
         {
           "name": "Gökay Altıntaş",
           "role": "OGP Proje Lideri",
           "photo": "/img/odtuvt/gokay-altintas-DYJQWK.jpeg",
-          "quote": "My turn."
+          "quote": "My turn.",
+          "email": "gokayaltintas33@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/g%C3%B6kayalt%C4%B1nta%C5%9F"
         }
       ],
       "hero": "/img/uploads/1788783005091-e92ecee3.png",
@@ -226,12 +241,16 @@
           "name": "Bengisu Çonoğlu",
           "role": "VakaVT'den Sorumlu Yönetim Kurulu Üyesi",
           "photo": "/img/odtuvt/bengisu-conoglu-IRLU2U.jpeg",
-          "quote": "Atmadığın hiçbir şutu kaçırmazsın."
+          "quote": "Atmadığın hiçbir şutu kaçırmazsın.",
+          "email": "conoglubengi@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/bengisu-çonoğlu-a759421b9"
         },
         {
           "name": "Aybike Balcı",
           "role": "VakaVT Proje Lideri",
-          "photo": "/img/odtuvt/aybike-balci-M9PR4E.jpeg"
+          "photo": "/img/odtuvt/aybike-balci-M9PR4E.jpeg",
+          "email": "aybikebalci23@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/aybike-balc%C4%B1-388192391"
         }
       ],
       "hero": "/img/uploads/1788446382740-ab74b304.png",
@@ -274,18 +293,24 @@
         {
           "name": "Berk Duran",
           "role": "W'EQUAL'dan Sorumlu Yönetim Kurulu Üyesi",
-          "photo": "/img/odtuvt/berk-duran-RDVHL4.jpeg"
+          "photo": "/img/odtuvt/berk-duran-RDVHL4.jpeg",
+          "email": "berkduran60@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/berk-duran-302146286"
         },
         {
           "name": "Ege Turan",
           "role": "W'EQUAL Proje Lideri",
-          "photo": "/img/odtuvt/ege-turan-2HR8ZP.jpeg"
+          "photo": "/img/odtuvt/ege-turan-2HR8ZP.jpeg",
+          "email": "egedturan@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/ege-turan-096878389"
         },
         {
           "name": "Esila Bulut",
           "role": "W'EQUAL Proje Lideri",
           "photo": "/img/odtuvt/esila-bulut-NSLI5S.jpeg",
-          "quote": "\"Life is about more than just surviving.\""
+          "quote": "\"Life is about more than just surviving.\"",
+          "email": "esilabulut284@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/esila-bulut-855999380"
         }
       ],
       "hero": "/img/odtuvt/wequal-etkinlik-resmi-GH30FK.jpg",
@@ -327,19 +352,25 @@
         {
           "name": "Fuat Tuna Tümer",
           "role": "YMG'den Sorumlu Yönetim Kurulu Üyesi",
-          "photo": "/img/odtuvt/fuat-tuna-tumer-840POP.jpeg"
+          "photo": "/img/odtuvt/fuat-tuna-tumer-840POP.jpeg",
+          "email": "fuattunatumer@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/fuat-tuna-tümer-ba640523b"
         },
         {
           "name": "Cevat Miraç Aydoğan",
           "role": "YMG Proje Lideri",
           "photo": "/img/odtuvt/cevat-mirac-aydogan-ZFPS8Z.jpeg",
-          "quote": "Gnothi seauton. Meden agan. Engya para d'ate.  ~Delphic Maxims, Temple of Apollo"
+          "quote": "Gnothi seauton. Meden agan. Engya para d'ate.  ~Delphic Maxims, Temple of Apollo",
+          "email": "miraccayd@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/miraccayd"
         },
         {
           "name": "Candan Tok",
           "role": "YMG Proje Lideri",
           "photo": "/img/odtuvt/candan-tok-0N7EAA.jpeg",
-          "quote": "Nodum secare. -Alexander the Great"
+          "quote": "Nodum secare. -Alexander the Great",
+          "email": "candantok13@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/candan-tok-5a853b31a"
         }
       ],
       "hero": "/img/uploads/1788378738721-88f0aa17.jpg",
@@ -371,13 +402,17 @@
           "name": "Yiğit Efe Özdemir",
           "role": "İnovasyon Komitesinden Sorumlu YK Üyesi",
           "photo": "/img/odtuvt/yigit-efe-ozdemir-JTGEXS.jpeg",
-          "quote": "Atmadığın her şutu kaçırırsın."
+          "quote": "Atmadığın her şutu kaçırırsın.",
+          "email": "yigitefeozdemirvt@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/yiğit-özdemir-230254348"
         },
         {
           "name": "Atahan Akharman",
           "role": "İnovasyon Komitesi Koordinatörü",
           "photo": "/img/odtuvt/atahan-akharman-J9RQ58.jpeg",
-          "quote": "6'yı ters çevirdim, o artık 9."
+          "quote": "6'yı ters çevirdim, o artık 9.",
+          "email": "atahan@akharman.com",
+          "linkedin": "https://www.linkedin.com/in/atahanakharman"
         }
       ]
     },
@@ -401,23 +436,31 @@
           "name": "İnanç Deniz Gözgözoğlu",
           "role": "Dizayn Komitesinden Sorumlu YK Üyesi",
           "photo": "/img/odtuvt/inanc-deniz-gozgozoglu-UASM5F.jpeg",
-          "quote": "\"Don't tell me what I can't do\" - John Locke"
+          "quote": "\"Don't tell me what I can't do\" - John Locke",
+          "email": "gozgozogluinancdeniz@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/inan%C3%A7-deniz-g%C3%B6zg%C3%B6zo%C4%9Flu-96a1a7298"
         },
         {
           "name": "Başbuğ Ergenekon Önder",
           "role": "Dizayn Komitesi Koordinatörü",
           "photo": "/img/odtuvt/basbug-ergenekon-onder-XJXFXT.jpeg",
-          "quote": "Büyük dönüşümler devasa sıçramalarla değil, her gün dünden bir adım daha iyi olmayı hedefleyen küçük ve kesintisiz adımlarla inşa edilir"
+          "quote": "Büyük dönüşümler devasa sıçramalarla değil, her gün dünden bir adım daha iyi olmayı hedefleyen küçük ve kesintisiz adımlarla inşa edilir",
+          "email": "basbugondermetu@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/ba%C5%9Fbu%C4%9F-%C3%B6nder-a09235368"
         },
         {
           "name": "Sudegül Şen",
           "role": "Dizayn Komitesi Koordinatörü",
-          "photo": "/img/odtuvt/sudegul-sen-IH65RI.jpeg"
+          "photo": "/img/odtuvt/sudegul-sen-IH65RI.jpeg",
+          "email": "sdglsenn@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/sudeg%C3%BCl-%C5%9Fen-a02758205"
         },
         {
           "name": "Roni Baran Dağ",
           "role": "Dizayn Komitesi Koordinatörü",
-          "photo": "/img/odtuvt/roni-baran-dag-OVA3D6.jpeg"
+          "photo": "/img/odtuvt/roni-baran-dag-OVA3D6.jpeg",
+          "email": "ronid401@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/roni-baran-da%C4%9F-854246204"
         }
       ]
     },
@@ -438,25 +481,33 @@
           "name": "Azra Zöngür",
           "role": "İletişim ve Pazarlamadan Sorumlu YK Üyesi",
           "photo": "/img/odtuvt/azra-zongur-M6QH0K.jpeg",
-          "quote": "\"Gerek yok parlamam için senin o ışığına.\""
+          "quote": "\"Gerek yok parlamam için senin o ışığına.\"",
+          "email": "azrazongurr@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/azra-z%C3%B6ng%C3%BCr-490723251"
         },
         {
           "name": "Alper Bozkaya",
           "role": "İletişim ve Pazarlama Komitesi Koordinatörü",
           "photo": "/img/odtuvt/alper-bozkaya-2Q308X.jpeg",
-          "quote": "\"Sanma kanarım bunlara, copycat on numara...\""
+          "quote": "\"Sanma kanarım bunlara, copycat on numara...\"",
+          "email": "alperbozkaya06@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/alper-bozkaya-661627398"
         },
         {
           "name": "Yağmur Çakırca",
           "role": "İletişim ve Pazarlama Komitesi Koordinatörü",
           "photo": "/img/odtuvt/yagmur-cakirca-YWUKK1.jpeg",
-          "quote": "\"Boş bakışların dolu kıskançlık, ele veriyor.\""
+          "quote": "\"Boş bakışların dolu kıskançlık, ele veriyor.\"",
+          "email": "cakircayagmur443@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/ya%C4%9Fmur-%C3%A7ak%C4%B1rca-4849393b2"
         },
         {
           "name": "Mert Kaş",
           "role": "İletişim ve Pazarlama Komitesi Koordinatörü",
           "photo": "/img/odtuvt/mert-kas-003EG8.jpeg",
-          "quote": "\"Yüksek hızda gidiyoruz, birikiyo' kumbara.\""
+          "quote": "\"Yüksek hızda gidiyoruz, birikiyo' kumbara.\"",
+          "email": "mertmkas@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/mert-kas"
         }
       ]
     },
@@ -477,18 +528,24 @@
           "name": "Demir Uluocak",
           "role": "Organizasyon Komitesinden Sorumlu YK Üyesi",
           "photo": "/img/odtuvt/demir-uluocak-VZ2KRC.jpeg",
-          "quote": "\"Life moves pretty fast. If you don't stop and look around once in a while, you could miss it.\" Ferris Bueller's Day Off (1986)"
+          "quote": "\"Life moves pretty fast. If you don't stop and look around once in a while, you could miss it.\" Ferris Bueller's Day Off (1986)",
+          "email": "demiruluocak@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/demiruluocak"
         },
         {
           "name": "Metin Efe Şahin",
           "role": "Organizasyon Komitesi Koordinatörü",
-          "photo": "/img/odtuvt/metin-efe-sahin-GUZ2IX.jpeg"
+          "photo": "/img/odtuvt/metin-efe-sahin-GUZ2IX.jpeg",
+          "email": "metinefesahinn@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/metin-efe-%C5%9Fahin-7a7547395"
         },
         {
           "name": "Can Özbayramoğlu",
           "role": "Organizasyon Komitesi Koordinatörü",
           "photo": "/img/odtuvt/can-ozbayramoglu-RRZUHQ.jpeg",
-          "quote": "1 değil 3"
+          "quote": "1 değil 3",
+          "email": "canozbayramoglu@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/can-%C3%B6zbayramo%C4%9Flu-407361397"
         }
       ]
     }
@@ -501,37 +558,51 @@
         {
           "name": "Berk Duran",
           "role": "Yönetim Kurulu Başkanı",
-          "photo": "/img/odtuvt/berk-duran-RDVHL4.jpeg"
+          "photo": "/img/odtuvt/berk-duran-RDVHL4.jpeg",
+          "email": "berkduran60@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/berk-duran-302146286"
         },
         {
           "name": "Azra Zöngür",
           "role": "Başkan Yardımcısı",
-          "photo": "/img/odtuvt/azra-zongur-M6QH0K.jpeg"
+          "photo": "/img/odtuvt/azra-zongur-M6QH0K.jpeg",
+          "email": "azrazongurr@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/azra-z%C3%B6ng%C3%BCr-490723251"
         },
         {
           "name": "Yiğit Efe Özdemir",
           "role": "Genel Sekreter",
-          "photo": "/img/odtuvt/yigit-efe-ozdemir-JTGEXS.jpeg"
+          "photo": "/img/odtuvt/yigit-efe-ozdemir-JTGEXS.jpeg",
+          "email": "yigitefeozdemirvt@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/yiğit-özdemir-230254348"
         },
         {
           "name": "Bengisu Çonoğlu",
           "role": "Ulusal İlişkilerden Sorumlu Yönetim Kurulu Üyesi",
-          "photo": "/img/uploads/1784634177674-26dc8087.png"
+          "photo": "/img/uploads/1784634177674-26dc8087.png",
+          "email": "conoglubengi@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/bengisu-çonoğlu-a759421b9"
         },
         {
           "name": "İnanç Deniz Gözgözoğlu",
           "role": "Uluslararası İlişkilerden Sorumlu Yönetim Kurulu Üyesi",
-          "photo": "/img/odtuvt/inanc-deniz-gozgozoglu-UASM5F.jpeg"
+          "photo": "/img/odtuvt/inanc-deniz-gozgozoglu-UASM5F.jpeg",
+          "email": "gozgozogluinancdeniz@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/inan%C3%A7-deniz-g%C3%B6zg%C3%B6zo%C4%9Flu-96a1a7298"
         },
         {
           "name": "Fuat Tuna Tümer",
           "role": "Halkla İlişkilerden Sorumlu Yönetim Kurulu Üyesi",
-          "photo": "/img/odtuvt/fuat-tuna-tumer-840POP.jpeg"
+          "photo": "/img/odtuvt/fuat-tuna-tumer-840POP.jpeg",
+          "email": "fuattunatumer@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/fuat-tuna-tümer-ba640523b"
         },
         {
           "name": "Demir Uluocak",
           "role": "Mali İşlerden Sorumlu Yönetim Kurulu Üyesi",
-          "photo": "/img/odtuvt/demir-uluocak-VZ2KRC.jpeg"
+          "photo": "/img/odtuvt/demir-uluocak-VZ2KRC.jpeg",
+          "email": "demiruluocak@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/demiruluocak"
         }
       ]
     },
@@ -542,17 +613,23 @@
         {
           "name": "Ceren Kaya",
           "role": "Denetleme ve Danışma Kurulu Üyesi",
-          "photo": "/img/odtuvt/ceren-kaya-1U1IDC.jpeg"
+          "photo": "/img/odtuvt/ceren-kaya-1U1IDC.jpeg",
+          "email": "gamzecerenkayaa@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/ceren-kaya-71b01a297"
         },
         {
           "name": "Ebru Başak Arıkan",
           "role": "Denetleme ve Danışma Kurulu Üyesi",
-          "photo": "/img/odtuvt/ebru-basak-arikan-NDCSKE.jpeg"
+          "photo": "/img/odtuvt/ebru-basak-arikan-NDCSKE.jpeg",
+          "email": "arikanebrubasak@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/ebru-başak-arikan-a7921a29b"
         },
         {
           "name": "Mehmet Ali Konyalıoğlu",
           "role": "Denetleme ve Danışma Kurulu Üyesi",
-          "photo": "/img/odtuvt/mehmet-ali-konyalioglu-IZU4VS.jpg"
+          "photo": "/img/odtuvt/mehmet-ali-konyalioglu-IZU4VS.jpg",
+          "email": "konyalioglumehmetali@gmail.com",
+          "linkedin": "https://www.linkedin.com/in/mehmet-ali-konyalıoğlu-23707529b"
         }
       ]
     }
