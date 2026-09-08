@@ -1,0 +1,22 @@
+<%
+// Çerçevesiz proje kartı — ana sayfa (3'lü) ve proje sayfası "Diğer projeler" (5'li).
+// Kartın tamamı görseldir; metin alttaki karartma perdesinin üzerinde durur.
+// Kart görseli (dikey 5:6) yoksa kapak görseline düşer, o da yoksa marka ikonu.
+// ozet: false verilirse slogan gizlenir (dar 5'li sırada yer yok).
+const kartGorseli = p.cardImage || p.hero;
+const ozetGoster = typeof ozet === "undefined" ? true : ozet;
+%>
+<a class="card-project reveal" href="/projeler/<%= p.slug %>">
+  <% if (kartGorseli) { %>
+  <img class="cardp-img" src="<%= kartGorseli %>" alt="" loading="lazy">
+  <% } else { %>
+  <span class="cardp-icon"><%- include('icon', { name: p.icon }) %></span>
+  <% } %>
+  <span class="cardp-text">
+    <h3><%= p.name %></h3>
+    <% if (ozetGoster) { %>
+    <p><%= p.tagline %></p>
+    <% } %>
+    <span class="cardp-more">İncele <%- include('icon', { name: 'chevron', cls: 'icon-inline' }) %></span>
+  </span>
+</a>

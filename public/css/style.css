@@ -698,7 +698,7 @@ html[data-theme="dark"] .theme-toggle:hover { background: rgba(255, 255, 255, 0.
   display: flex;
   align-items: center;
   gap: var(--s-4);
-  padding-block: var(--s-5);
+  padding-block: var(--s-6);
 }
 .project-strip-no {
   font-size: 13px;
@@ -1203,8 +1203,9 @@ html[data-theme="dark"] .theme-toggle:hover { background: rgba(255, 255, 255, 0.
   .card-row-2 > * { flex-basis: calc((100% - var(--s-2)) / 2); }
   /* 5'li sıra: diğer projeler tek satıra sığsın diye hafif sıkıştırılmış */
   .card-row-5 > * { flex-basis: calc((100% - 4 * var(--s-2)) / 5); }
-  .card-row-5 .card { padding: var(--s-3); }
-  .card-row-5 .card h3 { font-size: 19px; }
+  .card-row-5 .cardp-text { padding: var(--s-2); gap: 4px; }
+  .card-row-5 .cardp-text h3 { font-size: 17px; }
+  .card-row-5 .cardp-more { font-size: 14px; }
   .footer-grid { grid-template-columns: 1.4fr 1fr 1fr 1.2fr; }
   .people-grid .person { flex-basis: calc((100% - 3 * var(--s-3)) / 4); }
   .partner-grid { grid-template-columns: repeat(7, 1fr); }

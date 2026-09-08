@@ -114,12 +114,7 @@
     </div>
     <div class="card-row card-row-5">
       <% projects.filter(p => p.slug !== project.slug).forEach(function (p) { %>
-      <a class="card reveal" href="/projeler/<%= p.slug %>">
-        <span class="card-icon"><%- include('partials/icon', { name: p.icon }) %></span>
-        <h3><%= p.name %></h3>
-        <p><%= p.tagline %></p>
-        <span class="card-more">İncele <%- include('partials/icon', { name: 'chevron', cls: 'icon-inline' }) %></span>
-      </a>
+      <%- include('partials/project-card', { p: p, ozet: false }) %>
       <% }) %>
     </div>
   </div>

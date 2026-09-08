@@ -49,7 +49,7 @@
     <section class="asection">
       <h2>Kapak görseli <span class="amuted">(proje sayfasının tam ekran arka planı — yatay 16:9, 1920×1080)</span></h2>
       <div class="aimg-field">
-        <img class="aimg-preview" data-preview="hero" src="<%= project.hero %>" alt="">
+        <img class="aimg-preview" data-preview="hero" src="<%= project.hero %>" alt="" <%= (project.hero) ? "" : "hidden" %>>
         <div class="aimg-controls">
           <input type="text" name="hero" value="<%= project.hero %>" placeholder="/img/... veya https://...">
           <label class="abtn abtn-ghost aupload">Görsel yükle<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="hero" hidden></label>
@@ -60,13 +60,25 @@
     <section class="asection">
       <h2>Kart görseli <span class="amuted">(ana sayfadaki çerçevesiz proje kartı — dikey 5:6, 1100×1320)</span></h2>
       <div class="aimg-field">
-        <img class="aimg-preview" data-preview="cardImage" src="<%= project.cardImage || '' %>" alt="">
+        <img class="aimg-preview" data-preview="cardImage" src="<%= project.cardImage || '' %>" alt="" <%= (project.cardImage || '') ? "" : "hidden" %>>
         <div class="aimg-controls">
           <input type="text" name="cardImage" value="<%= project.cardImage || '' %>" placeholder="/img/... veya https://...">
           <label class="abtn abtn-ghost aupload">Görsel yükle<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="cardImage" hidden></label>
         </div>
       </div>
       <p class="amuted">Boş bırakılırsa ana sayfada kapak görselinin ortadan kırpılmış hâli kullanılır.</p>
+    </section>
+
+    <section class="asection">
+      <h2>Banner <span class="amuted">(projeler sayfasındaki satıra gelince beliren görsel — yatay, 1920×400)</span></h2>
+      <div class="aimg-field">
+        <img class="aimg-preview" data-preview="bannerImage" src="<%= project.bannerImage || '' %>" alt="" <%= (project.bannerImage || '') ? "" : "hidden" %>>
+        <div class="aimg-controls">
+          <input type="text" name="bannerImage" value="<%= project.bannerImage || '' %>" placeholder="/img/... veya https://...">
+          <label class="abtn abtn-ghost aupload">Görsel yükle<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="bannerImage" hidden></label>
+        </div>
+      </div>
+      <p class="amuted">Boş bırakılırsa kapak görseli kullanılır. Masaüstünde ortadan yaklaşık 200px yükseklikte bir şerit görünür; sol yarı yazı için koyulaştırıldığından konu sağ tarafta dursun.</p>
     </section>
 
     <section class="asection">
