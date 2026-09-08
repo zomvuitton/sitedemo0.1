@@ -11,13 +11,21 @@
     <section class="asection">
       <div class="alist" data-list="events">
         <% events.forEach(function (e) { %>
-        <div class="arow arow-person">
-          <input type="date" data-field="date" value="<%= e.date %>" aria-label="Tarih">
-          <input type="text" data-field="time" value="<%= e.time || '' %>" placeholder="Saat (örn. 13.30)" class="ain-sm">
-          <input type="text" data-field="title" value="<%= e.title %>" placeholder="Etkinlik adı">
-          <input type="text" data-field="place" value="<%= e.place || '' %>" placeholder="Yer">
-          <input type="text" data-field="link" value="<%= e.link || '' %>" placeholder="Bağlantı (isteğe bağlı)">
-          <button type="button" class="abtn abtn-danger arow-del" aria-label="Etkinliği sil">Sil</button>
+        <div class="arow arow-stack">
+          <div class="astack">
+            <div class="astack-line">
+              <input type="date" data-field="date" value="<%= e.date %>" aria-label="Tarih">
+              <input type="text" data-field="time" value="<%= e.time || '' %>" placeholder="Saat (örn. 13.30)" class="ain-sm">
+              <input type="text" data-field="title" value="<%= e.title %>" placeholder="Etkinlik adı">
+            </div>
+            <div class="astack-line">
+              <input type="text" data-field="place" value="<%= e.place || '' %>" placeholder="Yer">
+              <input type="text" data-field="link" value="<%= e.link || '' %>" placeholder="Bağlantı (isteğe bağlı)">
+            </div>
+          </div>
+          <div class="astack-actions">
+            <button type="button" class="abtn abtn-danger arow-del" aria-label="Etkinliği sil">Sil</button>
+          </div>
         </div>
         <% }) %>
       </div>
@@ -32,13 +40,21 @@
 </div>
 
 <template data-template="events">
-  <div class="arow arow-person">
-    <input type="date" data-field="date" aria-label="Tarih">
-    <input type="text" data-field="time" placeholder="Saat (örn. 13.30)" class="ain-sm">
-    <input type="text" data-field="title" placeholder="Etkinlik adı">
-    <input type="text" data-field="place" placeholder="Yer">
-    <input type="text" data-field="link" placeholder="Bağlantı (isteğe bağlı)">
-    <button type="button" class="abtn abtn-danger arow-del" aria-label="Etkinliği sil">Sil</button>
+  <div class="arow arow-stack">
+    <div class="astack">
+      <div class="astack-line">
+        <input type="date" data-field="date" aria-label="Tarih">
+        <input type="text" data-field="time" placeholder="Saat (örn. 13.30)" class="ain-sm">
+        <input type="text" data-field="title" placeholder="Etkinlik adı">
+      </div>
+      <div class="astack-line">
+        <input type="text" data-field="place" placeholder="Yer">
+        <input type="text" data-field="link" placeholder="Bağlantı (isteğe bağlı)">
+      </div>
+    </div>
+    <div class="astack-actions">
+      <button type="button" class="abtn abtn-danger arow-del" aria-label="Etkinliği sil">Sil</button>
+    </div>
   </div>
 </template>
 
