@@ -14,15 +14,23 @@
     </label>
     <div class="alist" data-list="members">
       <% b.members.forEach(function (m) { %>
-      <div class="arow arow-person">
+      <div class="arow arow-person arow-stack">
         <img class="aavatar" data-preview="photo" src="<%= m.photo %>" alt="">
-        <input type="text" data-field="name" value="<%= m.name %>" placeholder="Ad Soyad">
-        <input type="text" data-field="role" value="<%= m.role %>" placeholder="Görev">
-        <input type="text" data-field="photo" value="<%= m.photo %>" placeholder="Fotoğraf yolu">
-        <input type="email" data-field="email" value="<%= m.email || '' %>" placeholder="E-posta (isteğe bağlı)">
-        <input type="url" data-field="linkedin" value="<%= m.linkedin || '' %>" placeholder="LinkedIn bağlantısı (isteğe bağlı)">
-        <label class="abtn abtn-ghost aupload">Foto<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="photo" hidden></label>
-        <button type="button" class="abtn abtn-danger arow-del" aria-label="Üyeyi sil">Sil</button>
+        <div class="astack">
+          <div class="astack-line">
+            <input type="text" data-field="name" value="<%= m.name %>" placeholder="Ad Soyad">
+            <input type="text" data-field="role" value="<%= m.role %>" placeholder="Görev">
+          </div>
+          <div class="astack-line">
+            <input type="email" data-field="email" value="<%= m.email || '' %>" placeholder="E-posta (isteğe bağlı)">
+            <input type="url" data-field="linkedin" value="<%= m.linkedin || '' %>" placeholder="LinkedIn bağlantısı (isteğe bağlı)">
+          </div>
+          <input type="text" data-field="photo" value="<%= m.photo %>" placeholder="Fotoğraf yolu">
+        </div>
+        <div class="astack-actions">
+          <label class="abtn abtn-ghost aupload">Foto<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="photo" hidden></label>
+          <button type="button" class="abtn abtn-danger arow-del" aria-label="Üyeyi sil">Sil</button>
+        </div>
       </div>
       <% }) %>
     </div>
@@ -42,20 +50,28 @@
   <h3 class="agroup-head">Proje Liderleri</h3>
   <div class="alist" data-list="leads">
     <% leads.forEach(function (m) { %>
-    <div class="arow arow-person">
+    <div class="arow arow-person arow-stack">
       <img class="aavatar" data-preview="photo" src="<%= m.photo %>" alt="">
-      <select data-field="source" aria-label="Proje">
-        <% projects.forEach(function (p) { %>
-        <option value="<%= p.slug %>" <%= m.source === p.slug ? "selected" : "" %>><%= p.short %></option>
-        <% }) %>
-      </select>
-      <input type="text" data-field="name" value="<%= m.name %>" placeholder="Ad Soyad">
-      <input type="text" data-field="role" value="<%= m.role %>" placeholder="Görev">
-      <input type="text" data-field="photo" value="<%= m.photo %>" placeholder="Fotoğraf yolu">
-      <input type="email" data-field="email" value="<%= m.email || '' %>" placeholder="E-posta (isteğe bağlı)">
-      <input type="url" data-field="linkedin" value="<%= m.linkedin || '' %>" placeholder="LinkedIn bağlantısı (isteğe bağlı)">
-      <label class="abtn abtn-ghost aupload">Foto<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="photo" hidden></label>
-      <button type="button" class="abtn abtn-danger arow-del" aria-label="Kişiyi kaldır">Sil</button>
+      <div class="astack">
+        <div class="astack-line">
+          <select data-field="source" aria-label="Proje">
+            <% projects.forEach(function (p) { %>
+            <option value="<%= p.slug %>" <%= m.source === p.slug ? "selected" : "" %>><%= p.short %></option>
+            <% }) %>
+          </select>
+          <input type="text" data-field="name" value="<%= m.name %>" placeholder="Ad Soyad">
+          <input type="text" data-field="role" value="<%= m.role %>" placeholder="Görev">
+        </div>
+        <div class="astack-line">
+          <input type="email" data-field="email" value="<%= m.email || '' %>" placeholder="E-posta (isteğe bağlı)">
+          <input type="url" data-field="linkedin" value="<%= m.linkedin || '' %>" placeholder="LinkedIn bağlantısı (isteğe bağlı)">
+        </div>
+        <input type="text" data-field="photo" value="<%= m.photo %>" placeholder="Fotoğraf yolu">
+      </div>
+      <div class="astack-actions">
+        <label class="abtn abtn-ghost aupload">Foto<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="photo" hidden></label>
+        <button type="button" class="abtn abtn-danger arow-del" aria-label="Kişiyi kaldır">Sil</button>
+      </div>
     </div>
     <% }) %>
   </div>
@@ -64,20 +80,28 @@
   <h3 class="agroup-head">Komite Koordinatörleri</h3>
   <div class="alist" data-list="coords">
     <% coords.forEach(function (m) { %>
-    <div class="arow arow-person">
+    <div class="arow arow-person arow-stack">
       <img class="aavatar" data-preview="photo" src="<%= m.photo %>" alt="">
-      <select data-field="source" aria-label="Komite">
-        <% committees.forEach(function (c) { %>
-        <option value="<%= c.slug %>" <%= m.source === c.slug ? "selected" : "" %>><%= c.name.replace(' Komitesi', '') %></option>
-        <% }) %>
-      </select>
-      <input type="text" data-field="name" value="<%= m.name %>" placeholder="Ad Soyad">
-      <input type="text" data-field="role" value="<%= m.role %>" placeholder="Görev">
-      <input type="text" data-field="photo" value="<%= m.photo %>" placeholder="Fotoğraf yolu">
-      <input type="email" data-field="email" value="<%= m.email || '' %>" placeholder="E-posta (isteğe bağlı)">
-      <input type="url" data-field="linkedin" value="<%= m.linkedin || '' %>" placeholder="LinkedIn bağlantısı (isteğe bağlı)">
-      <label class="abtn abtn-ghost aupload">Foto<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="photo" hidden></label>
-      <button type="button" class="abtn abtn-danger arow-del" aria-label="Kişiyi kaldır">Sil</button>
+      <div class="astack">
+        <div class="astack-line">
+          <select data-field="source" aria-label="Komite">
+            <% committees.forEach(function (c) { %>
+            <option value="<%= c.slug %>" <%= m.source === c.slug ? "selected" : "" %>><%= c.name.replace(' Komitesi', '') %></option>
+            <% }) %>
+          </select>
+          <input type="text" data-field="name" value="<%= m.name %>" placeholder="Ad Soyad">
+          <input type="text" data-field="role" value="<%= m.role %>" placeholder="Görev">
+        </div>
+        <div class="astack-line">
+          <input type="email" data-field="email" value="<%= m.email || '' %>" placeholder="E-posta (isteğe bağlı)">
+          <input type="url" data-field="linkedin" value="<%= m.linkedin || '' %>" placeholder="LinkedIn bağlantısı (isteğe bağlı)">
+        </div>
+        <input type="text" data-field="photo" value="<%= m.photo %>" placeholder="Fotoğraf yolu">
+      </div>
+      <div class="astack-actions">
+        <label class="abtn abtn-ghost aupload">Foto<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="photo" hidden></label>
+        <button type="button" class="abtn abtn-danger arow-del" aria-label="Kişiyi kaldır">Sil</button>
+      </div>
     </div>
     <% }) %>
   </div>
@@ -89,49 +113,73 @@
 </form>
 
 <template data-template="members">
-  <div class="arow arow-person">
+  <div class="arow arow-person arow-stack">
     <img class="aavatar" data-preview="photo" src="" alt="">
-    <input type="text" data-field="name" placeholder="Ad Soyad">
-    <input type="text" data-field="role" placeholder="Görev">
-    <input type="text" data-field="photo" placeholder="Fotoğraf yolu">
-    <input type="email" data-field="email" placeholder="E-posta (isteğe bağlı)">
-    <input type="url" data-field="linkedin" placeholder="LinkedIn bağlantısı (isteğe bağlı)">
-    <label class="abtn abtn-ghost aupload">Foto<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="photo" hidden></label>
-    <button type="button" class="abtn abtn-danger arow-del" aria-label="Üyeyi sil">Sil</button>
+    <div class="astack">
+      <div class="astack-line">
+        <input type="text" data-field="name" placeholder="Ad Soyad">
+        <input type="text" data-field="role" placeholder="Görev">
+      </div>
+      <div class="astack-line">
+        <input type="email" data-field="email" placeholder="E-posta (isteğe bağlı)">
+        <input type="url" data-field="linkedin" placeholder="LinkedIn bağlantısı (isteğe bağlı)">
+      </div>
+      <input type="text" data-field="photo" placeholder="Fotoğraf yolu">
+    </div>
+    <div class="astack-actions">
+      <label class="abtn abtn-ghost aupload">Foto<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="photo" hidden></label>
+      <button type="button" class="abtn abtn-danger arow-del" aria-label="Üyeyi sil">Sil</button>
+    </div>
   </div>
 </template>
 <template data-template="leads">
-  <div class="arow arow-person">
+  <div class="arow arow-person arow-stack">
     <img class="aavatar" data-preview="photo" src="" alt="">
-    <select data-field="source" aria-label="Proje">
-      <% projects.forEach(function (p) { %>
-      <option value="<%= p.slug %>"><%= p.short %></option>
-      <% }) %>
-    </select>
-    <input type="text" data-field="name" placeholder="Ad Soyad">
-    <input type="text" data-field="role" placeholder="Görev">
-    <input type="text" data-field="photo" placeholder="Fotoğraf yolu">
-    <input type="email" data-field="email" placeholder="E-posta (isteğe bağlı)">
-    <input type="url" data-field="linkedin" placeholder="LinkedIn bağlantısı (isteğe bağlı)">
-    <label class="abtn abtn-ghost aupload">Foto<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="photo" hidden></label>
-    <button type="button" class="abtn abtn-danger arow-del" aria-label="Kişiyi kaldır">Sil</button>
+    <div class="astack">
+      <div class="astack-line">
+        <select data-field="source" aria-label="Proje">
+          <% projects.forEach(function (p) { %>
+          <option value="<%= p.slug %>"><%= p.short %></option>
+          <% }) %>
+        </select>
+        <input type="text" data-field="name" placeholder="Ad Soyad">
+        <input type="text" data-field="role" placeholder="Görev">
+      </div>
+      <div class="astack-line">
+        <input type="email" data-field="email" placeholder="E-posta (isteğe bağlı)">
+        <input type="url" data-field="linkedin" placeholder="LinkedIn bağlantısı (isteğe bağlı)">
+      </div>
+      <input type="text" data-field="photo" placeholder="Fotoğraf yolu">
+    </div>
+    <div class="astack-actions">
+      <label class="abtn abtn-ghost aupload">Foto<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="photo" hidden></label>
+      <button type="button" class="abtn abtn-danger arow-del" aria-label="Kişiyi kaldır">Sil</button>
+    </div>
   </div>
 </template>
 <template data-template="coords">
-  <div class="arow arow-person">
+  <div class="arow arow-person arow-stack">
     <img class="aavatar" data-preview="photo" src="" alt="">
-    <select data-field="source" aria-label="Komite">
-      <% committees.forEach(function (c) { %>
-      <option value="<%= c.slug %>"><%= c.name.replace(' Komitesi', '') %></option>
-      <% }) %>
-    </select>
-    <input type="text" data-field="name" placeholder="Ad Soyad">
-    <input type="text" data-field="role" placeholder="Görev">
-    <input type="text" data-field="photo" placeholder="Fotoğraf yolu">
-    <input type="email" data-field="email" placeholder="E-posta (isteğe bağlı)">
-    <input type="url" data-field="linkedin" placeholder="LinkedIn bağlantısı (isteğe bağlı)">
-    <label class="abtn abtn-ghost aupload">Foto<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="photo" hidden></label>
-    <button type="button" class="abtn abtn-danger arow-del" aria-label="Kişiyi kaldır">Sil</button>
+    <div class="astack">
+      <div class="astack-line">
+        <select data-field="source" aria-label="Komite">
+          <% committees.forEach(function (c) { %>
+          <option value="<%= c.slug %>"><%= c.name.replace(' Komitesi', '') %></option>
+          <% }) %>
+        </select>
+        <input type="text" data-field="name" placeholder="Ad Soyad">
+        <input type="text" data-field="role" placeholder="Görev">
+      </div>
+      <div class="astack-line">
+        <input type="email" data-field="email" placeholder="E-posta (isteğe bağlı)">
+        <input type="url" data-field="linkedin" placeholder="LinkedIn bağlantısı (isteğe bağlı)">
+      </div>
+      <input type="text" data-field="photo" placeholder="Fotoğraf yolu">
+    </div>
+    <div class="astack-actions">
+      <label class="abtn abtn-ghost aupload">Foto<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="photo" hidden></label>
+      <button type="button" class="abtn abtn-danger arow-del" aria-label="Kişiyi kaldır">Sil</button>
+    </div>
   </div>
 </template>
 

@@ -847,13 +847,21 @@ app.put("/admin/api/idari-kurul", requireAdminApi, (req, res) => {
   function cleanAssigned(value, validSlugs) {
     if (!Array.isArray(value)) return [];
     return value
-      .map((m) => ({
-        source: clean(m.source, 80),
-        name: clean(m.name, 120),
-        role: clean(m.role, 160),
-        photo: clean(m.photo, 400),
-        quote: clean(m.quote, 240)
-      }))
+      .map((m) => {
+        const out = {
+          source: clean(m.source, 80),
+          name: clean(m.name, 120),
+          role: clean(m.role, 160),
+          photo: clean(m.photo, 400)
+        };
+        // Bu sayfada düzenlenen alanlar: anahtar boş da olsa yazılır ki
+        // temizleme isteği carryQuote'a ulaşsın (oradaki `in` kontrolüne bak).
+        const email = clean(m.email, 200);
+        out.email = emailRe.test(email) ? email : "";
+        out.linkedin = clean(m.linkedin, 400);
+        // quote bu sayfada yok: anahtarı hiç yazma, mevcut değer korunsun.
+        return out;
+      })
       .filter((m) => m.name && validSlugs.includes(m.source))
       .slice(0, 80);
   }
@@ -862,13 +870,14 @@ app.put("/admin/api/idari-kurul", requireAdminApi, (req, res) => {
   const coords = cleanAssigned(req.body.coords, store.content.committees.map((c) => c.slug));
 
   // YK üyeleri ve "yalnızca proje sayfasında" işaretli kişiler korunur.
-  // Quote/e-posta/LinkedIn kurullar sayfasından düzenlenmediği için
-  // mevcut kayıttan (isimle eşleşerek) taşınır.
+  // Üye ekstraları isimle eşleşerek taşınır: alıntı bu sayfada düzenlenmediği
+  // için mevcut kayıttan gelir, e-posta/LinkedIn ise formda olduğundan
+  // gönderilen değer kazanır (boş gönderim = alanı temizle).
   function carryQuote(team, m) {
     const existing = (team || []).find((t) => t.name === m.name) || {};
     const member = { name: m.name, role: m.role, photo: m.photo };
     for (const key of ["quote", "email", "linkedin"]) {
-      const val = m[key] || existing[key];
+      const val = key in m ? m[key] : existing[key];
       if (val) member[key] = val;
     }
     return member;

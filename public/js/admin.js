@@ -39,7 +39,13 @@ document.addEventListener("click", (e) => {
     const scope = addBtn.closest("form") || document;
     const list = scope.querySelector(`[data-list="${key}"]`);
     const tpl = document.querySelector(`template[data-template="${key}"]`);
-    if (list && tpl) list.appendChild(tpl.content.cloneNode(true));
+    if (list && tpl) {
+      const parca = tpl.content.cloneNode(true);
+      const satir = parca.firstElementChild;
+      list.appendChild(parca);
+      // Ölçüm DOM'a girdikten sonra: kopuk elemanda scrollHeight 0 döner
+      if (satir) satir.querySelectorAll("textarea").forEach(textareaBuyut);
+    }
     return;
   }
   const delBtn = e.target.closest(".arow-del");
@@ -198,10 +204,14 @@ document.addEventListener("click", (e) => {
   }
 });
 
-// Blok metin alanları yazdıkça uzar
+// Panelin tüm metin alanları yazdıkça uzar (sabit rows değerleri içeriğe yetmiyordu)
 document.addEventListener("input", (e) => {
-  if (e.target.matches(".ablock textarea")) textareaBuyut(e.target);
+  if (e.target.matches(".asection textarea")) textareaBuyut(e.target);
 });
+
+// Sayfa açılışında mevcut değerler içeriğine göre boylansın.
+// admin.js defer ile yüklendiği için DOM ve CSS hazır; scrollHeight doğru okunur.
+document.querySelectorAll(".asection textarea").forEach(textareaBuyut);
 
 // Blokları kayıt yüküne çevir (boşları sunucu ayıklar)
 function readBlocks(wrap) {

@@ -58,7 +58,7 @@ body.admin {
 
 .amain { padding: var(--s-4) var(--s-3) var(--s-12); }
 
-.apage { max-width: 880px; margin: 0 auto; }
+.apage { max-width: 1024px; margin: 0 auto; }
 .apage h1 { font-size: clamp(26px, 4vw, 36px); }
 
 .apage-head {
@@ -182,6 +182,8 @@ body.admin {
 
 .asection input[type="text"],
 .asection input[type="url"],
+.asection input[type="email"],
+.asection input[type="date"],
 .asection input[type="password"],
 .asection textarea,
 .asection select {
@@ -204,7 +206,9 @@ body.admin {
   border-color: var(--vt-red);
   background: var(--paper);
 }
-.asection textarea { resize: vertical; }
+/* Yükseklik içerikten hesaplanır (admin.js textareaBuyut); overflow:hidden
+   scrollHeight ölçümünün ön şartıdır, resize tutamağı onunla çakışır. */
+.asection textarea { resize: none; overflow: hidden; }
 
 .agrid-2 { display: grid; gap: 0 var(--s-2); }
 .agrid-3 { display: grid; gap: 0 var(--s-2); align-items: end; }
@@ -247,10 +251,41 @@ body.admin {
   flex: 0 0 130px;
   font-size: 13px !important;
 }
-.arow-person input[data-field="name"] { flex: 1.1; }
-.arow-person input[data-field="role"] { flex: 1.6; }
-.arow-person input[data-field="photo"],
-.arow-person input[data-field="url"] { flex: 1.2; font-size: 12px !important; }
+.arow-person input[data-field="url"] { font-size: 12px !important; }
+
+/* Katmanlı satır: alanlar tek sıraya sıkışmak yerine anlamlı gruplara ayrılır.
+   Tek sırada 6 alan + sabit ögeler 880px'e sığmıyordu (alan başına ~4 karakter).
+   Sınıf .arow-person'a değil ayrıca veriliyor — galeri satırları da o sınıfı
+   taşıyor ve tek alanlı oldukları için katmanlanmamalı. */
+.arow-stack { align-items: flex-start; }
+
+.astack {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--s-1);
+}
+.astack-line { display: flex; gap: var(--s-1); }
+.astack-line > * { flex: 1; min-width: 0; }
+
+.astack textarea {
+  margin-top: 0;
+  background: var(--paper);
+  font-size: 14px;
+  line-height: 1.45;
+  min-height: 42px;
+}
+
+/* Buton/işaret sütunu: alan bloğunun sağında dikey dizilir */
+.astack-actions {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.astack-actions .acheck-sm { justify-content: center; }
 
 .aavatar {
   width: 44px;
@@ -278,7 +313,12 @@ body.admin {
 
 @media (max-width: 720px) {
   .arow { flex-wrap: wrap; }
-  .arow input { flex-basis: 100%; }
+  .arow input, .arow textarea { flex-basis: 100%; }
+  /* Katmanlı satır: buton sütunu kendi satırına insin, yoksa alan bloğunu
+     (flex-basis:0 olduğu için) birkaç piksele sıkıştırır. */
+  .astack-actions { flex-basis: 100%; flex-direction: row; flex-wrap: wrap; align-items: center; }
+  .astack-line { flex-wrap: wrap; }
+  .astack-line > * { flex-basis: 100%; }
 }
 
 /* ---------- Kampüs blok editörü ---------- */

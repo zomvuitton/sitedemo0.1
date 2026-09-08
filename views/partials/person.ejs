@@ -19,6 +19,6 @@
   <h3><%= m.name %></h3>
   <p class="person-role"><%= m.role %></p>
   <% if (typeof showQuote !== "undefined" && showQuote && m.quote) { %>
-  <p class="person-quote">“<%= m.quote %>”</p>
+  <p class="person-quote">“<%- br(m.quote) %>”</p>
   <% } %>
 </div>

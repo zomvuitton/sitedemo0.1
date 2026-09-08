@@ -57,16 +57,25 @@
       <h2>Komite ekibi <span class="amuted">(görev alanları buradan ata veya kaldır)</span></h2>
       <div class="alist" data-list="team">
         <% committee.team.forEach(function (m) { %>
-        <div class="arow arow-person">
+        <div class="arow arow-person arow-stack">
           <img class="aavatar" data-preview="photo" src="<%= m.photo %>" alt="">
-          <input type="text" data-field="name" value="<%= m.name %>" placeholder="Ad Soyad">
-          <input type="text" data-field="role" value="<%= m.role %>" placeholder="Görev">
-          <input type="text" data-field="photo" value="<%= m.photo %>" placeholder="Fotoğraf yolu">
-          <input type="text" data-field="quote" value="<%= m.quote || '' %>" placeholder="Alıntı (bir cümle, isteğe bağlı)">
-          <input type="email" data-field="email" value="<%= m.email || '' %>" placeholder="E-posta (isteğe bağlı)">
-          <input type="url" data-field="linkedin" value="<%= m.linkedin || '' %>" placeholder="LinkedIn bağlantısı (isteğe bağlı)">
-          <label class="abtn abtn-ghost aupload">Foto<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="photo" hidden></label>
-          <button type="button" class="abtn abtn-danger arow-del" aria-label="Kişiyi kaldır">Kaldır</button>
+          <div class="astack">
+            <div class="astack-line">
+              <input type="text" data-field="name" value="<%= m.name %>" placeholder="Ad Soyad">
+              <input type="text" data-field="role" value="<%= m.role %>" placeholder="Görev">
+            </div>
+            <div class="astack-line">
+              <input type="email" data-field="email" value="<%= m.email || '' %>" placeholder="E-posta (isteğe bağlı)">
+              <input type="url" data-field="linkedin" value="<%= m.linkedin || '' %>" placeholder="LinkedIn bağlantısı (isteğe bağlı)">
+            </div>
+            <input type="text" data-field="photo" value="<%= m.photo %>" placeholder="Fotoğraf yolu">
+            <textarea data-field="quote" rows="2" maxlength="240" aria-label="Alıntı"
+              placeholder="Alıntı (bir cümle, en çok 240 karakter)"><%= m.quote || '' %></textarea>
+          </div>
+          <div class="astack-actions">
+            <label class="abtn abtn-ghost aupload">Foto<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="photo" hidden></label>
+            <button type="button" class="abtn abtn-danger arow-del" aria-label="Kişiyi kaldır">Kaldır</button>
+          </div>
         </div>
         <% }) %>
       </div>
@@ -89,16 +98,25 @@
   </div>
 </template>
 <template data-template="team">
-  <div class="arow arow-person">
+  <div class="arow arow-person arow-stack">
     <img class="aavatar" data-preview="photo" src="" alt="">
-    <input type="text" data-field="name" placeholder="Ad Soyad">
-    <input type="text" data-field="role" placeholder="Görev">
-    <input type="text" data-field="photo" placeholder="Fotoğraf yolu">
-    <input type="text" data-field="quote" placeholder="Alıntı (bir cümle, isteğe bağlı)">
-    <input type="email" data-field="email" placeholder="E-posta (isteğe bağlı)">
-    <input type="url" data-field="linkedin" placeholder="LinkedIn bağlantısı (isteğe bağlı)">
-    <label class="abtn abtn-ghost aupload">Foto<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="photo" hidden></label>
-    <button type="button" class="abtn abtn-danger arow-del" aria-label="Kişiyi kaldır">Kaldır</button>
+    <div class="astack">
+      <div class="astack-line">
+        <input type="text" data-field="name" placeholder="Ad Soyad">
+        <input type="text" data-field="role" placeholder="Görev">
+      </div>
+      <div class="astack-line">
+        <input type="email" data-field="email" placeholder="E-posta (isteğe bağlı)">
+        <input type="url" data-field="linkedin" placeholder="LinkedIn bağlantısı (isteğe bağlı)">
+      </div>
+      <input type="text" data-field="photo" placeholder="Fotoğraf yolu">
+      <textarea data-field="quote" rows="2" maxlength="240" aria-label="Alıntı"
+        placeholder="Alıntı (bir cümle, en çok 240 karakter)"></textarea>
+    </div>
+    <div class="astack-actions">
+      <label class="abtn abtn-ghost aupload">Foto<input type="file" accept="image/png,image/jpeg,image/webp" data-upload-to="photo" hidden></label>
+      <button type="button" class="abtn abtn-danger arow-del" aria-label="Kişiyi kaldır">Kaldır</button>
+    </div>
   </div>
 </template>
 
