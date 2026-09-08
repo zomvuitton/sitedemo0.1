@@ -31,7 +31,7 @@
           "name": "İnanç Deniz Gözgözoğlu",
           "role": "ESTIEM'den Sorumlu Yönetim Kurulu Üyesi",
           "photo": "/img/odtuvt/inanc-deniz-gozgozoglu-UASM5F.jpeg",
-          "quote": "\"Don't tell me what I can't do\" - John Locke",
+          "quote": "Don't tell me what I can't do - John Locke",
           "email": "gozgozogluinancdeniz@gmail.com",
           "linkedin": "https://www.linkedin.com/in/inan%C3%A7-deniz-g%C3%B6zg%C3%B6zo%C4%9Flu-96a1a7298"
         },
@@ -48,7 +48,7 @@
           "role": "VP of Human Resources",
           "photo": "/img/uploads/1783979480392-4a786e25.jpg",
           "onlyProject": true,
-          "quote": "\"We are the creators of the world that we are looking for.\" -Hagisho Molema"
+          "quote": "We are the creators of the world that we are looking for. -Hagisho Molema"
         },
         {
           "name": "Kerem Beşkardeşler",
@@ -62,7 +62,7 @@
           "role": "VP of Activities",
           "photo": "/img/uploads/1783979560336-2c35abd3.jpg",
           "onlyProject": true,
-          "quote": "\"I remember you was conflicted.\" -Kendrick Lamar"
+          "quote": "I remember you was conflicted. -Kendrick Lamar"
         },
         {
           "name": "Bensu Kesekler",
@@ -76,7 +76,7 @@
           "role": "VP of PR",
           "photo": "/img/uploads/1783979612626-b7bfa900.jpg",
           "onlyProject": true,
-          "quote": "\"There are three responses to a piece of design: yes, no, and WOW! Wow is the one to aim for.\" -Milton Glaser"
+          "quote": "There are three responses to a piece of design: yes, no, and WOW! Wow is the one to aim for. -Milton Glaser"
         }
       ],
       "hero": "/img/uploads/1788376137174-869b6952.jpg",
@@ -122,7 +122,7 @@
           "name": "Azra Zöngür",
           "role": "Kybele'den Sorumlu Yönetim Kurulu Üyesi",
           "photo": "/img/odtuvt/azra-zongur-M6QH0K.jpeg",
-          "quote": "\"Gerek yok parlamam için senin o ışığına.\"",
+          "quote": "Gerek yok parlamam için senin o ışığına.",
           "email": "azrazongurr@gmail.com",
           "linkedin": "https://www.linkedin.com/in/azra-z%C3%B6ng%C3%BCr-490723251"
         },
@@ -130,12 +130,14 @@
           "name": "Derin Nesil Çelik",
           "role": "Kybele Proje Lideri",
           "photo": "/img/odtuvt/derin-nesil-celik-GIOX1E.jpeg",
-          "quote": "\"But it's hard to stay mad, when there is so much beauty in the world.\" American Beauty (1999)",
+          "quote": "But it's hard to stay mad, when there is so much beauty in the world. American Beauty (1999)",
           "email": "derinncelik@gmail.com",
           "linkedin": "https://www.linkedin.com/in/derin-nesil-%C3%A7elik-57b466341"
         }
       ],
       "hero": "/img/odtuvt/kybele-etkinlik-resmi-77FQVZ.jpg",
+      "cardImage": "",
+      "bannerImage": "",
       "gallery": [
         "/img/odtuvt/kybele-galeri-resmi-97LDUB.jpeg",
         "/img/odtuvt/kybele-galeri-resmi-FVS9NS.jpeg",
